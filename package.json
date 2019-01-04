@@ -2,6 +2,7 @@
   "name": "kanban-app",
   "version": "0.1.0",
   "private": true,
+  "homepage" : "https://dmibod.github.io/kanban-ui",
   "dependencies": {
     "react": "^16.7.0",
     "react-dom": "^16.7.0",

@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/kanban-ui/static/js/runtime~main.1175c037.js"
   },
   {
-    "revision": "ca0f57fef7dd894f67e7",
-    "url": "/kanban-ui/static/js/main.ca0f57fe.chunk.js"
+    "revision": "c6279dc3d1eead56a11f",
+    "url": "/kanban-ui/static/js/main.c6279dc3.chunk.js"
   },
   {
     "revision": "cf4440cb7cce1c806218",
     "url": "/kanban-ui/static/js/1.cf4440cb.chunk.js"
   },
   {
-    "revision": "ca0f57fef7dd894f67e7",
+    "revision": "c6279dc3d1eead56a11f",
     "url": "/kanban-ui/static/css/main.39444962.chunk.css"
   },
   {
-    "revision": "08e74b9d9d10ed74dcd5f56ae980c403",
+    "revision": "7324611dae43dada5e383c9b7782cfab",
     "url": "/kanban-ui/index.html"
   }
 ];

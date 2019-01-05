@@ -6,10 +6,10 @@ import * as serviceWorker from './serviceWorker';
 import App from './components/App';
 import configureStore from './configureStore';
 
-//const secure = 's';
-//const host = 'dmitrybodnar.com';
-const secure = '';
-const host = 'localhost:8080';
+const secure = 's';
+const host = 'dmitrybodnar.com';
+//const secure = '';
+//const host = 'localhost:8080';
 const api   = `http${secure}://${host}`;
 const wsapi = `ws${secure}://${host}`;
 let store;

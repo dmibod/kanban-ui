@@ -1,6 +1,8 @@
 const todos = (state = [], action) => {
   switch (action.type) {
-    case 'ADD_TODO':
+    case 'ADD_TODO_STARTED':
+      return state;
+    case 'ADD_TODO_SUCCESS':
       return [
         ...state,
         {
@@ -9,6 +11,8 @@ const todos = (state = [], action) => {
           completed: false
         }
       ];
+    case 'ADD_TODO_FAILURE':
+      return state;
     case 'REMOVE_TODO_STARTED':
       return state;
     case 'REMOVE_TODO_SUCCESS':

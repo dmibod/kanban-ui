@@ -1,10 +1,39 @@
 import { api } from '../api';
 
-let nextTodoId = 0;
-export const addTodo = text => ({
-  type: 'ADD_TODO',
-  id: '' + nextTodoId++,
+export const addTodo = text => {
+  return dispatch => {
+    dispatch(addTodoStarted(text));
+
+    fetch(`${api}/v1/api/board`, {
+      method: 'post',
+      body: JSON.stringify({ name: text })
+    })
+      .then(res => {
+        return res.json()
+      })
+      .then(data => {
+        dispatch(addTodoSuccess(data.id, text));
+      })
+      .catch(err => {
+        dispatch(addTodoFailure(err.message));
+      });
+  };
+};
+
+export const addTodoStarted = text => ({
+  type: 'ADD_TODO_STARTED',
   text
+});
+
+export const addTodoSuccess = (id, text) => ({
+  type: 'ADD_TODO_SUCCESS',
+  id,
+  text
+});
+
+export const addTodoFailure = error => ({
+  type: 'ADD_TODO_FAILURE',
+  error
 });
 
 export const removeTodo = id => {

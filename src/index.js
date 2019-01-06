@@ -39,28 +39,16 @@ function handleChange() {
   let previousValue = currentValue;
   currentValue = store.getState().todos;
   if (currentValue.length > previousValue.length) {
-    const todo = currentValue[currentValue.length - 1];
-    fetch(`${api}/v1/api/board`, {
-      method: 'post',
-      body: JSON.stringify({ name: todo.text })
-    })
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(data) {
-        console.log('Created board:', data);
-      });
-
-      let cmd = [
-        {
-          "id": "5c3016bc4d74f1000177ed11",
-          "type": 5,
-          "payload": {
-            "lane_id": "5c30169d4d74f1000177ed10"
-          }
+    let cmd = [
+      {
+        id: '5c3016bc4d74f1000177ed11',
+        type: 5,
+        payload: {
+          lane_id: '5c30169d4d74f1000177ed10'
         }
-      ];
-      postCommands(cmd);
+      }
+    ];
+    postCommands(cmd);
   }
 }
 
@@ -85,13 +73,13 @@ function postCommands(cmd) {
 }
 
 if (window.SharedWorker) {
-    sharedWorker = new SharedWorker('worker.js');
-    sharedWorker.port.start();
-    console.log('shared worker is started');
-    sharedWorker.port.addEventListener('message', event => {
-      console.log('message received by main is...');
-      console.log(event.data);
-    });
+  sharedWorker = new SharedWorker('worker.js');
+  sharedWorker.port.start();
+  console.log('shared worker is started');
+  sharedWorker.port.addEventListener('message', event => {
+    console.log('message received by main is...');
+    console.log(event.data);
+  });
 }
 
 // If you want your app to work offline and load faster, you can change

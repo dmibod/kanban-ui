@@ -8,15 +8,20 @@ const todos = (state = [], action) => {
           text: action.text,
           completed: false
         }
-      ]
+      ];
+    case 'REMOVE_TODO_STARTED':
+      return state;
+    case 'REMOVE_TODO_SUCCESS':
+      return state.filter(todo => todo.id !== action.id);
+    case 'REMOVE_TODO_FAILURE':
+      return state;
     case 'TOGGLE_TODO':
-      return state.map(
-        todo =>
-          todo.id === action.id ? { ...todo, completed: !todo.completed } : todo
-      )
+      return state.map(todo =>
+        todo.id === action.id ? { ...todo, completed: !todo.completed } : todo
+      );
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default todos
+export default todos;

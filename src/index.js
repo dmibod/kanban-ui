@@ -1,17 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+import { api, wsapi } from './api';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import App from './components/App';
 import configureStore from './configureStore';
 
-const secure = 's';
-const host = 'dmitrybodnar.com';
-//const secure = '';
-//const host = 'localhost:8080';
-const api   = `http${secure}://${host}`;
-const wsapi = `ws${secure}://${host}`;
 let store;
 
 fetch(`${api}/v1/api/board`)
@@ -38,6 +33,7 @@ fetch(`${api}/v1/api/board`)
   });
 
 let currentValue = [];
+let sharedWorker = null;
 
 function handleChange() {
   let previousValue = currentValue;
@@ -54,11 +50,22 @@ function handleChange() {
       .then(function(data) {
         console.log('Created board:', data);
       });
+
+      let cmd = [
+        {
+          "id": "5c3016bc4d74f1000177ed11",
+          "type": 5,
+          "payload": {
+            "lane_id": "5c30169d4d74f1000177ed10"
+          }
+        }
+      ];
+      postCommands(cmd);
   }
 }
 
 (function() {
-  var conn = new WebSocket(`${wsapi}/v1/api/notify/ws`);
+  let conn = new WebSocket(`${wsapi}/v1/api/notify/ws`);
   conn.onclose = function(evt) {
     console.log('Connection closed');
   };
@@ -66,6 +73,26 @@ function handleChange() {
     console.log('notification received', evt.data);
   };
 })();
+
+function postCommands(cmd) {
+  console.log('post commands: ', cmd);
+  if (!sharedWorker) {
+    console.log('shared worker is not available');
+    return;
+  }
+  console.log('commands posted to shared worker');
+  sharedWorker.port.postMessage(cmd);
+}
+
+if (window.SharedWorker) {
+    sharedWorker = new SharedWorker('worker.js');
+    sharedWorker.port.start();
+    console.log('shared worker is started');
+    sharedWorker.port.addEventListener('message', event => {
+      console.log('message received by main is...');
+      console.log(event.data);
+    });
+}
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

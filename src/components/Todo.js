@@ -6,7 +6,7 @@ const Todo = ({ onClick, onTrash, id, text, selected }) => (
   <div id={`${id}`} className="card-wrapper float-left m-3" onClick={onClick}>
     <div className="card shadow">
       <div className="card-header">
-        <div className="card-title mb-0"><Link to={`/board/${id}`}>{text}</Link></div>
+        <div className="card-title mb-0"><Link style={{'text-decoration':'none', 'font-weight':'500'}} to={`/board/${id}`}>{text}</Link></div>
         <div className="text-white position-absolute card-badges card-badges-left">
           <div
             className="bg-success shadow-sm m-1 p-1 text-center small rounded-circle card-badge"

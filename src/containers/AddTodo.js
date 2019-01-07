@@ -16,8 +16,9 @@ const AddTodo = ({ dispatch }) => {
         >
           <div className="input-group">
             <input
-              type="text"
+              type="search"
               className="form-control form-control-sm"
+              placeholder="Board name..."
               ref={node => (input = node)}
             />
             <div className="input-group-append">
@@ -32,17 +33,6 @@ const AddTodo = ({ dispatch }) => {
                 }}
               >
                 Create
-              </button>
-            </div>
-            <div className="input-group-append">
-              <button
-                className="btn btn-warning btn-sm"
-                onClick={e => {
-                  input.value = '';
-                  dispatch(setVisibilityFilter(''));
-                }}
-              >
-                Reset
               </button>
             </div>
             <div className="input-group-append">

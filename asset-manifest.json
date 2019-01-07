@@ -1,16 +1,16 @@
 {
-  "main.css": "/kanban-ui/static/css/main.2a12b8b9.chunk.css",
-  "main.js": "/kanban-ui/static/js/main.1d6b4d01.chunk.js",
-  "main.js.map": "/kanban-ui/static/js/main.1d6b4d01.chunk.js.map",
+  "main.css": "/kanban-ui/static/css/main.0d651087.chunk.css",
+  "main.js": "/kanban-ui/static/js/main.1a9586d3.chunk.js",
+  "main.js.map": "/kanban-ui/static/js/main.1a9586d3.chunk.js.map",
   "static/css/1.01e404f5.chunk.css": "/kanban-ui/static/css/1.01e404f5.chunk.css",
   "static/js/1.21bec54f.chunk.js": "/kanban-ui/static/js/1.21bec54f.chunk.js",
   "static/js/1.21bec54f.chunk.js.map": "/kanban-ui/static/js/1.21bec54f.chunk.js.map",
   "runtime~main.js": "/kanban-ui/static/js/runtime~main.1175c037.js",
   "runtime~main.js.map": "/kanban-ui/static/js/runtime~main.1175c037.js.map",
   "static/media/font-awesome.min.css": "/kanban-ui/static/media/fontawesome-webfont.674f50d2.eot",
+  "static/css/main.0d651087.chunk.css.map": "/kanban-ui/static/css/main.0d651087.chunk.css.map",
   "static/css/1.01e404f5.chunk.css.map": "/kanban-ui/static/css/1.01e404f5.chunk.css.map",
-  "static/css/main.2a12b8b9.chunk.css.map": "/kanban-ui/static/css/main.2a12b8b9.chunk.css.map",
   "index.html": "/kanban-ui/index.html",
-  "precache-manifest.03ae911d12c83c8b1f4be69f4a7a6c65.js": "/kanban-ui/precache-manifest.03ae911d12c83c8b1f4be69f4a7a6c65.js",
+  "precache-manifest.b14067b9a8c6ec91a3fb0cb464f85146.js": "/kanban-ui/precache-manifest.b14067b9a8c6ec91a3fb0cb464f85146.js",
   "service-worker.js": "/kanban-ui/service-worker.js"
 }

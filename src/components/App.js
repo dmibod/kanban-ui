@@ -17,7 +17,9 @@ const App = () => (
   <Router>
     <div>
       <Route path="/" exact component={Index} />
+      <Route path="/kanban-ui/" exact component={Index} />
       <Route path="/board/:id" component={Board} />
+      <Route path="/kanban-ui/board/:id" component={Board} />      
     </div>
   </Router>
 );

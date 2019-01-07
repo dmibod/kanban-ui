@@ -6,7 +6,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
@@ -19,11 +19,11 @@ code {
 }
 
 .card-badges {
-  top: 0px; 
+  top: 0px;
 }
 
 ul.card-badges {
-  list-style-type: none; 
+  list-style-type: none;
 }
 
 .card-badges-right {
@@ -34,9 +34,10 @@ ul.card-badges {
   left: -17px;
 }
 
-.card-badges > li, .card-badges > div {
-  width:26px; 
-  height:26px;
+.card-badges > li,
+.card-badges > div {
+  width: 26px;
+  height: 26px;
 }
 
 .lane-body {
@@ -45,8 +46,8 @@ ul.card-badges {
   user-select: none;
 }
 
-.card-wrapper[draggable=true]>.card, 
-.lane-wrapper[draggable=true]>.lane-header {
+.card-wrapper[draggable='true'] > .card,
+.lane-wrapper[draggable='true'] > .lane-header {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
@@ -61,4 +62,14 @@ ul.card-badges {
 
 .card-badge {
   cursor: pointer;
+}
+
+.card {
+  width: 300px;
+  height: 250px;
+}
+
+.card-body-wrapper {
+  height: 155px;
+  overflow: hidden;
 }

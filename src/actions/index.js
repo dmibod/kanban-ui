@@ -77,3 +77,9 @@ export const toggleTodo = id => ({
   type: 'TOGGLE_TODO',
   id
 });
+
+export const renameBoard = (id, text) => ({
+  type: 'RENAME_BOARD',
+  id,
+  text
+});

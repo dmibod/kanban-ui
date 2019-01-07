@@ -6,6 +6,7 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import App from './components/App';
 import configureStore from './configureStore';
+import 'bootstrap/dist/css/bootstrap.css';
 
 let store;
 

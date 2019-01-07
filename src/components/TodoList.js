@@ -1,14 +1,18 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Todo from './Todo'
+import React from 'react';
+import PropTypes from 'prop-types';
+import Todo from './Todo';
+import AddTodo from '../containers/AddTodo';
 
 const TodoList = ({ todos, toggleTodo, removeTodo }) => (
-  <ul>
-    {todos.map(todo => (
-      <Todo key={todo.id} {...todo} onClick={() => removeTodo(todo.id)} />
-    ))}
-  </ul>
-)
+  <div className="lane-wrapper lane-item">
+    <AddTodo />
+    <div className="lane-body">
+      {todos.map(todo => (
+        <Todo key={todo.id} {...todo} onClick={() => removeTodo(todo.id)} />
+      ))}
+    </div>
+  </div>
+);
 
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(
@@ -20,6 +24,6 @@ TodoList.propTypes = {
   ).isRequired,
   toggleTodo: PropTypes.func.isRequired,
   removeTodo: PropTypes.func.isRequired
-}
+};
 
-export default TodoList
+export default TodoList;

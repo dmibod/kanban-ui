@@ -6,6 +6,7 @@ const AddTodo = ({ dispatch }) => {
   let input;
 
   return (
+    <div  className="d-flex flex-row ml-3 mt-4">
     <form
       onSubmit={e => {
         e.preventDefault();
@@ -33,6 +34,7 @@ const AddTodo = ({ dispatch }) => {
         </div>
       </div>
     </form>
+    </div>
   );
 };
 

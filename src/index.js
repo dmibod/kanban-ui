@@ -6,7 +6,8 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import App from './components/App';
 import configureStore from './configureStore';
-import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.min.css';
 
 let store;
 
@@ -15,7 +16,7 @@ fetch(`${api}/v1/api/board`)
   .then(boards => {
     let state = {
       todos: boards.map(board => {
-        return { id: board.id, text: board.name, completed: false };
+        return { id: board.id, text: board.name, selected: false };
       })
     };
 

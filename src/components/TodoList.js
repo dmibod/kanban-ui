@@ -3,11 +3,18 @@ import PropTypes from 'prop-types';
 import Todo from './Todo';
 
 const TodoList = ({ todos, toggleTodo, removeTodo }) => (
-  <div className="lane-wrapper lane-item">
-    <div className="lane-body">
-      {todos.map(todo => (
-        <Todo key={todo.id} {...todo} onTrash={() => removeTodo(todo.id)} onClick={() => toggleTodo(todo.id)} />
-      ))}
+  <div className="container-fluid board-list">
+    <div className="lane-wrapper lane-item">
+      <div className="lane-body">
+        {todos.map(todo => (
+          <Todo
+            key={todo.id}
+            {...todo}
+            onTrash={() => removeTodo(todo.id)}
+            onClick={() => toggleTodo(todo.id)}
+          />
+        ))}
+      </div>
     </div>
   </div>
 );

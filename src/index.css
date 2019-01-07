@@ -10,6 +10,14 @@ code {
     monospace;
 }
 
+.navbar {
+  opacity: 0.8;
+}
+
+.board-list {
+  padding-top: 65px;
+}
+
 .card-badges {
   top: 0px; 
 }

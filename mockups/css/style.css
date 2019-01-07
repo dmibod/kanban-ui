@@ -1,3 +1,11 @@
+.navbar {
+  opacity: 0.8;
+}
+
+#main-section {
+  padding-top: 65px;
+}
+
 .card-badges {
   top: 0px; 
 }

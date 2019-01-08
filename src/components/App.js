@@ -2,7 +2,9 @@ import React from 'react';
 import VisibleTodoList from '../containers/VisibleTodoList';
 import AddTodo from '../containers/AddTodo';
 import Board from './Board';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { root } from '../apis/urls';
+import { Router, Route, Switch } from 'react-router-dom';
+import history from '../history';
 
 const Index = () => {
   return (
@@ -14,12 +16,12 @@ const Index = () => {
 };
 
 const App = () => (
-  <Router>
+  <Router history={history}>
     <div>
-      <Route path="/" exact component={Index} />
-      <Route path="/kanban-ui/" exact component={Index} />
-      <Route path="/board/:id" component={Board} />
-      <Route path="/kanban-ui/board/:id" component={Board} />      
+      <Switch>
+        <Route path={`${root}/`} exact component={Index} />
+        <Route path={`${root}/board/:id`} component={Board} />
+      </Switch>
     </div>
   </Router>
 );

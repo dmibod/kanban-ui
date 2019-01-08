@@ -2,24 +2,22 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const Todo = ({ onClick, onTrash, id, text, selected }) => (
-  <div id={`${id}`} className="card-wrapper float-left m-3" onClick={onClick}>
+const BoardListItem = ({ id, text }) => (
+  <div id={`${id}`} className="card-wrapper float-left m-3">
     <div className="card shadow">
       <div className="card-header">
-        <div className="card-title mb-0"><Link style={{textDecoration:'none', fontWeight:'500'}} to={`/board/${id}`}>{text}</Link></div>
-        <div className="text-white position-absolute card-badges card-badges-left">
-          <div
-            className="bg-success shadow-sm m-1 p-1 text-center small rounded-circle card-badge"
-            style={{ display: selected ? 'block' : 'none' }}
+        <div className="card-title mb-0">
+          <Link
+            style={{ textDecoration: 'none', fontWeight: '500' }}
+            to={`/board/${id}`}
           >
-            <i className="fa fa-fw fa-check" />
-          </div>
-          <div
-            className="bg-danger shadow-sm m-1 p-1 text-center small rounded-circle card-badge hover-card-badges"
-            onClick={onTrash}
+            {text}
+          </Link>
+          <Link
+            to={`/board/delete/${id}`}
           >
-            <i className="fa fa-fw fa-trash" />
-          </div>
+          <i className="fa fa-fw fa-trash ml-auto"/>
+          </Link>
         </div>
       </div>
       <div className="card-body">
@@ -67,12 +65,9 @@ const Todo = ({ onClick, onTrash, id, text, selected }) => (
   </div>
 );
 
-Todo.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  onTrash: PropTypes.func.isRequired,
+BoardListItem.propTypes = {
   id: PropTypes.string.isRequired,
-  selected: PropTypes.bool.isRequired,
   text: PropTypes.string.isRequired
 };
 
-export default Todo;
+export default BoardListItem;

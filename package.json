@@ -4,9 +4,11 @@
   "private": true,
   "homepage": "https://dmibod.github.io/kanban-ui",
   "dependencies": {
+    "axios": "^0.18.0",
     "bootstrap": "^4.2.1",
     "font-awesome": "^4.7.0",
     "jquery": "^3.0.0",
+    "lodash": "^4.17.11",
     "popper.js": "^1.14.6",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",

@@ -1,9 +1,33 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { addTodo, setVisibilityFilter } from '../actions';
+import GoogleAuth from '../components/GoogleAuth';
 
-const AddTodo = ({ dispatch }) => {
+const AddTodo = ({ secure, dispatch }) => {
   let input;
+
+  const create = () => {
+    if (!secure) {
+      return null;
+    }
+
+    return (
+      <div className="input-group-append">
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={e => {
+            if (!input.value.trim()) {
+              return;
+            }
+            dispatch(addTodo(input.value));
+            input.value = '';
+          }}
+        >
+          Create
+        </button>
+      </div>
+    );
+  };
 
   return (
     <nav className="navbar bg-dark navbar-dark fixed-top">
@@ -15,26 +39,16 @@ const AddTodo = ({ dispatch }) => {
           }}
         >
           <div className="input-group">
+            <div className="input-group-append">
+              <GoogleAuth />
+            </div>
             <input
               type="search"
               className="form-control form-control-sm"
-              placeholder="Board name..."
+              placeholder="Board title..."
               ref={node => (input = node)}
             />
-            <div className="input-group-append">
-              <button
-                className="btn btn-primary btn-sm"
-                onClick={e => {
-                  if (!input.value.trim()) {
-                    return;
-                  }
-                  dispatch(addTodo(input.value));
-                  input.value = '';
-                }}
-              >
-                Create
-              </button>
-            </div>
+            {create()}
             <div className="input-group-append">
               <button
                 className="btn btn-success btn-sm"
@@ -42,7 +56,7 @@ const AddTodo = ({ dispatch }) => {
                   dispatch(setVisibilityFilter(input.value.trim()));
                 }}
               >
-                Search
+                <i className="fa fa-fw fa-search" />
               </button>
             </div>
           </div>
@@ -52,4 +66,6 @@ const AddTodo = ({ dispatch }) => {
   );
 };
 
-export default connect()(AddTodo);
+const mapStateToProps = state => ({ secure: state.auth.isSignedIn });
+
+export default connect(mapStateToProps)(AddTodo);

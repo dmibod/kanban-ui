@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { api } from './apis/urls';
 import socket from './apis/socket';
 import worker from './apis/worker';
 import './index.css';
@@ -13,36 +12,24 @@ import 'font-awesome/css/font-awesome.min.css';
 
 socket();
 
-let store;
+const store = configure();
 
-fetch(`${api}/v1/api/board`)
-  .then(response => response.json())
-  .then(boards => {
-    let state = {
-      todos: boards.map(board => {
-        return { id: board.id, text: board.name, selected: false };
-      })
-    };
+//const unsubscribe =
+store.subscribe(handleChange);
+//unsubscribe();
 
-    store = configure(state);
-
-    //const unsubscribe =
-    store.subscribe(handleChange);
-    //unsubscribe();
-
-    render(
-      <Provider store={store}>
-        <App />
-      </Provider>,
-      document.getElementById('root')
-    );
-  });
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
 
 let currentValue = [];
 
 function handleChange() {
   let previousValue = currentValue;
-  currentValue = store.getState().todos;
+  currentValue = store.getState().boards;
   if (currentValue.length > previousValue.length) {
     let cmd = [
       {

@@ -1,12 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addTodo, setVisibilityFilter } from '../actions';
-import GoogleAuth from '../components/GoogleAuth';
+import { editBoard } from '../../actions';
 
-const AddTodo = ({ secure, dispatch }) => {
+const Header = ({ secure, update, board }) => {
   let input;
 
-  const create = () => {
+  const updateButton = () => {
     if (!secure) {
       return null;
     }
@@ -19,11 +19,11 @@ const AddTodo = ({ secure, dispatch }) => {
             if (!input.value.trim()) {
               return;
             }
-            dispatch(addTodo(input.value));
+            update(board.id, input.value);
             input.value = '';
           }}
         >
-          Create
+          Update
         </button>
       </div>
     );
@@ -39,26 +39,19 @@ const AddTodo = ({ secure, dispatch }) => {
           }}
         >
           <div className="input-group">
-            <div className="input-group-append">
-              <GoogleAuth />
-            </div>
+            <Link
+              to="/"
+              className="btn btn-secondary btn-sm"
+            >
+              <i className="fa fa-fw fa-home" />
+            </Link>
             <input
               type="search"
               className="form-control form-control-sm"
-              placeholder="Board title..."
+              defaultValue={board.name}
               ref={node => (input = node)}
             />
-            {create()}
-            <div className="input-group-append">
-              <button
-                className="btn btn-success btn-sm"
-                onClick={e => {
-                  dispatch(setVisibilityFilter(input.value.trim()));
-                }}
-              >
-                <i className="fa fa-fw fa-search" />
-              </button>
-            </div>
+            {updateButton()}
           </div>
         </form>
       </div>
@@ -66,6 +59,17 @@ const AddTodo = ({ secure, dispatch }) => {
   );
 };
 
-const mapStateToProps = state => ({ secure: state.auth.isSignedIn });
+const mapStateToProps = state => {
+  return {
+    secure: state.auth.isSignedIn
+  };
+};
 
-export default connect(mapStateToProps)(AddTodo);
+const mapDispatchToProps = dispatch => ({
+  update: (id, title) => dispatch(editBoard(id, { name: title }))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);

@@ -2,22 +2,31 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const BoardListItem = ({ id, text }) => (
+const Item = ({ id, name, admin, deleteBoard }) => (
   <div id={`${id}`} className="card-wrapper float-left m-3">
     <div className="card shadow">
       <div className="card-header">
         <div className="card-title mb-0">
-          <Link
-            style={{ textDecoration: 'none', fontWeight: '500' }}
-            to={`/board/${id}`}
-          >
-            {text}
-          </Link>
-          <Link
-            to={`/board/delete/${id}`}
-          >
-          <i className="fa fa-fw fa-trash ml-auto"/>
-          </Link>
+          <div className="row mx-0">
+            <div className="mr-auto">
+              <Link
+                className="text-info"
+                style={{ textDecoration: 'none', fontWeight: '500' }}
+                to={`/board/${id}`}
+              >
+                {name}
+              </Link>
+            </div>
+            <div
+              className="hover-card-badges"
+              style={{ display: admin ? 'inline' : 'none' }}
+            >
+              <i className="fa fa-fw fa-pencil text-muted" title="edit" />
+              <i className="fa fa-fw fa-eye text-muted" title="private" />
+              <i className="fa fa-fw fa-eye-slash text-muted" title="publish" />
+              <i className="fa fa-fw fa-trash text-muted" title="delete" onClick={() => deleteBoard(id)}/>
+            </div>
+          </div>
         </div>
       </div>
       <div className="card-body">
@@ -65,9 +74,9 @@ const BoardListItem = ({ id, text }) => (
   </div>
 );
 
-BoardListItem.propTypes = {
+Item.propTypes = {
   id: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired
 };
 
-export default BoardListItem;
+export default Item;

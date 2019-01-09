@@ -1,7 +1,7 @@
 import { wsapi } from './urls';
 
 export default () => {
-  let conn = new WebSocket(`${wsapi}/v1/api/notify/ws`);
+  let conn = new WebSocket(`${wsapi}/v1/api/notify`);
   conn.onopen = function (evt) {
     console.log('websocket opened');
   };  

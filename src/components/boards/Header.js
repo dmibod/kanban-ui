@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createBoard, setVisibilityFilter } from '../../actions';
 import GoogleAuth from '../GoogleAuth';
 
-const Header = ({secure, create, filter}) => {
+const Header = ({ secure, owner, create, filter }) => {
   let input;
 
   const createButton = () => {
@@ -19,7 +19,8 @@ const Header = ({secure, create, filter}) => {
             if (!input.value.trim()) {
               return;
             }
-            create(input.value);
+            console.log(secure, owner);
+            create(input.value, secure ? owner : 'anonymous');
             input.value = '';
           }}
         >
@@ -66,10 +67,17 @@ const Header = ({secure, create, filter}) => {
   );
 };
 
-const mapStateToProps = state => ({ secure: state.auth.isSignedIn });
+const mapStateToProps = state => ({
+  secure: state.auth.isSignedIn,
+  owner: state.auth.userProfile && state.auth.userProfile.id
+});
+
 const mapDispatchToProps = dispatch => ({
-  create: title => dispatch(createBoard(title)),
+  create: (title, owner) => createBoard(title, owner)(dispatch),
   filter: title => dispatch(setVisibilityFilter(title))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);

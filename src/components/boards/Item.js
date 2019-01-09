@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { root } from '../../apis/urls';
 
-const Item = ({ id, name, admin, deleteBoard }) => (
+const Item = ({ id, name, shared, admin, shareBoard, deleteBoard }) => (
   <div id={`${id}`} className="card-wrapper float-left m-3">
     <div className="card shadow">
       <div className="card-header">
@@ -23,9 +23,23 @@ const Item = ({ id, name, admin, deleteBoard }) => (
               style={{ display: admin ? 'inline' : 'none' }}
             >
               <i className="fa fa-fw fa-pencil text-muted" title="edit" />
-              <i className="fa fa-fw fa-eye text-muted" title="public" />
-              <i className="fa fa-fw fa-eye-slash text-muted" title="private" />
-              <i className="fa fa-fw fa-trash text-muted" title="delete" onClick={() => deleteBoard(id)}/>
+              <i
+                className="fa fa-fw fa-eye text-muted"
+                title="public"
+                style={{ display: shared ? 'inline' : 'none' }}
+                onClick={() => shareBoard(id, false)}
+              />
+              <i
+                className="fa fa-fw fa-eye-slash text-muted"
+                title="private"
+                style={{ display: shared ? 'none' : 'inline' }}
+                onClick={() => shareBoard(id, true)}
+              />
+              <i
+                className="fa fa-fw fa-trash text-muted"
+                title="delete"
+                onClick={() => deleteBoard(id)}
+              />
             </div>
           </div>
         </div>

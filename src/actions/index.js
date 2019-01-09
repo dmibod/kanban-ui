@@ -9,7 +9,8 @@ import {
   FETCH_BOARDS,
   FETCH_BOARD,
   DELETE_BOARD,
-  EDIT_BOARD
+  RENAME_BOARD,
+  SHARE_BOARD
 } from './types';
 
 export const signIn = userId => {
@@ -30,8 +31,10 @@ export const setVisibilityFilter = filter => ({
   filter
 });
 
-export const fetchBoards = () => async dispatch => {
-  const response = await server.get('/v1/api/board/');
+export const fetchBoards = owner => async dispatch => {
+  const response = owner 
+  ? await server.get(`/v1/api/board?owner=${owner}`)
+  : await server.get('/v1/api/board');
 
   dispatch({ type: FETCH_BOARDS, payload: response.data });
 };
@@ -42,8 +45,8 @@ export const fetchBoard = id => async dispatch => {
   dispatch({ type: FETCH_BOARD, payload: response.data });
 };
 
-export const createBoard = name => async dispatch => {
-  let response = await server.post('/v1/api/board', { name });
+export const createBoard = (name, owner) => async dispatch => {
+  let response = await server.post('/v1/api/board', { name, owner });
 
   response = await server.get(`/v1/api/board/${response.data.id}`);
 
@@ -52,12 +55,16 @@ export const createBoard = name => async dispatch => {
   history.push(`${root}/`);
 };
 
-export const editBoard = (id, formValues) => async dispatch => {
-  const response = await server.put(`/v1/api/board/${id}`, formValues);
+export const renameBoard = (id, name) => async dispatch => {
+  const response = await server.put(`/v1/api/board/${id}/rename`, { name });
 
-  dispatch({ type: EDIT_BOARD, payload: response.data });
-  
-  history.push(`${root}/board/${id}`);
+  dispatch({ type: RENAME_BOARD, payload: response.data });
+};
+
+export const shareBoard = (id, shared) => async dispatch => {
+  const response = await server.put(`/v1/api/board/${id}/share`, { shared });
+
+  dispatch({ type: SHARE_BOARD, payload: response.data });
 };
 
 export const deleteBoard = id => async dispatch => {

@@ -1,11 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Item from './Item';
-import { fetchBoards, deleteBoard } from '../../actions';
+import {
+  fetchBoards,
+  renameBoard,
+  shareBoard,
+  deleteBoard
+} from '../../actions';
 
 class List extends React.Component {
   componentDidMount() {
-    this.props.fetchBoards();
+    this.props.fetchBoards(this.props.currentUserId);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.currentUserId !== prevProps.currentUserId) {
+      this.props.fetchBoards(this.props.currentUserId);
+    }
   }
 
   render() {
@@ -16,7 +27,13 @@ class List extends React.Component {
             {this.props.boards.map(board => (
               <Item
                 key={board.id}
-                { ...{...board, admin: this.props.isSignedIn, deleteBoard: this.props.deleteBoard } }
+                {...{
+                  ...board,
+                  admin: this.props.isSignedIn,
+                  shareBoard: this.props.shareBoard,
+                  privateBoard: this.props.privateBoard,
+                  deleteBoard: this.props.deleteBoard
+                }}
               />
             ))}
           </div>
@@ -45,13 +62,13 @@ const mapStateToProps = state => {
   let filter = state.visibilityFilter.toLowerCase();
 
   return {
-    boards: boards.filter(t => t.name.toLowerCase().includes(filter)),
-    currentUserId: state.auth.userId,
+    boards: boards.filter(board => board.name.toLowerCase().includes(filter)),
+    currentUserId: state.auth.isSignedIn ? state.auth.userProfile.id : null,
     isSignedIn: state.auth.isSignedIn
   };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchBoards, deleteBoard }
+  { fetchBoards, renameBoard, shareBoard, deleteBoard }
 )(List);

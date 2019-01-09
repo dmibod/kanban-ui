@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { editBoard } from '../../actions';
+import { renameBoard } from '../../actions';
 import { root } from '../../apis/urls';
 
 
@@ -68,7 +68,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  update: (id, title) => dispatch(editBoard(id, { name: title }))
+  update: (id, title) => dispatch(renameBoard(id, title))
 });
 
 export default connect(

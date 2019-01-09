@@ -1,7 +1,7 @@
 const secure = 's';
 const host = 'dmitrybodnar.com';
 //const secure = '';
-//const host = 'localhost:8080';
+//const host = 'localhost:3001';
 const api = `http${secure}://${host}`;
 const wsapi = `ws${secure}://${host}`;
 

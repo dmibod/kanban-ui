@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { root } from '../../apis/urls';
 
 const Item = ({ id, name, admin, deleteBoard }) => (
   <div id={`${id}`} className="card-wrapper float-left m-3">
@@ -12,7 +13,7 @@ const Item = ({ id, name, admin, deleteBoard }) => (
               <Link
                 className="text-info"
                 style={{ textDecoration: 'none', fontWeight: '500' }}
-                to={`/board/${id}`}
+                to={`${root}/board/${id}`}
               >
                 {name}
               </Link>
@@ -22,8 +23,8 @@ const Item = ({ id, name, admin, deleteBoard }) => (
               style={{ display: admin ? 'inline' : 'none' }}
             >
               <i className="fa fa-fw fa-pencil text-muted" title="edit" />
-              <i className="fa fa-fw fa-eye text-muted" title="private" />
-              <i className="fa fa-fw fa-eye-slash text-muted" title="publish" />
+              <i className="fa fa-fw fa-eye text-muted" title="public" />
+              <i className="fa fa-fw fa-eye-slash text-muted" title="private" />
               <i className="fa fa-fw fa-trash text-muted" title="delete" onClick={() => deleteBoard(id)}/>
             </div>
           </div>

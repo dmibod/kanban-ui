@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { editBoard } from '../../actions';
+import { root } from '../../apis/urls';
+
 
 const Header = ({ secure, update, board }) => {
   let input;
@@ -40,7 +42,7 @@ const Header = ({ secure, update, board }) => {
         >
           <div className="input-group">
             <Link
-              to="/"
+              to={`${root}/`}
               className="btn btn-secondary btn-sm"
             >
               <i className="fa fa-fw fa-home" />

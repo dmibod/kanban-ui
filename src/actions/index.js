@@ -1,5 +1,7 @@
 import server from '../apis/index';
+import { root } from '../apis/urls';
 import history from '../history';
+
 import {
   SIGN_IN,
   SIGN_OUT,
@@ -46,8 +48,8 @@ export const createBoard = name => async dispatch => {
   response = await server.get(`/v1/api/board/${response.data.id}`);
 
   dispatch({ type: CREATE_BOARD, payload: response.data });
-  //history.push(`/board/${response.data.id}`);
-  history.push('/');
+  //history.push(`${root}/board/${response.data.id}`);
+  history.push(`${root}/`);
 };
 
 export const editBoard = (id, formValues) => async dispatch => {
@@ -55,12 +57,12 @@ export const editBoard = (id, formValues) => async dispatch => {
 
   dispatch({ type: EDIT_BOARD, payload: response.data });
   
-  history.push(`/board/${id}`);
+  history.push(`${root}/board/${id}`);
 };
 
 export const deleteBoard = id => async dispatch => {
   await server.delete(`/v1/api/board/${id}`);
 
   dispatch({ type: DELETE_BOARD, payload: id });
-  history.push('/');
+  history.push(`${root}/`);
 };

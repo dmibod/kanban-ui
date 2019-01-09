@@ -5,11 +5,11 @@ import { renameBoard } from '../../actions';
 import { root } from '../../apis/urls';
 
 
-const Header = ({ secure, update, board }) => {
+const Header = ({ editable, update, board }) => {
   let input;
 
   const updateButton = () => {
-    if (!secure) {
+    if (!editable) {
       return null;
     }
 
@@ -61,9 +61,9 @@ const Header = ({ secure, update, board }) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    secure: state.auth.isSignedIn
+    editable: state.auth.isSignedIn && ownProps.board && ownProps.board.owner === state.auth.userProfile.id
   };
 };
 

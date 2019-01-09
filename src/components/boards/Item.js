@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { root } from '../../apis/urls';
 
-const Item = ({ id, name, shared, admin, shareBoard, deleteBoard }) => (
+const Item = ({ id, name, shared, editable, shareBoard, deleteBoard }) => (
   <div id={`${id}`} className="card-wrapper float-left m-3">
     <div className="card shadow">
       <div className="card-header">
@@ -20,7 +20,7 @@ const Item = ({ id, name, shared, admin, shareBoard, deleteBoard }) => (
             </div>
             <div
               className="hover-card-badges"
-              style={{ display: admin ? 'inline' : 'none' }}
+              style={{ display: editable ? 'inline' : 'none' }}
             >
               <i className="fa fa-fw fa-pencil text-muted" title="edit" />
               <i

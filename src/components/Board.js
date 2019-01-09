@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Header from './board/Header';
+import Body from './board/Body';
 import { fetchBoard } from '../actions';
 
 class Board extends React.Component {
-  componentDidMount () {
+  componentDidMount() {
     const { id } = this.props.match.params;
 
     this.props.fetchBoard(id);
@@ -18,6 +19,7 @@ class Board extends React.Component {
     return (
       <div>
         <Header board={this.props.board} />
+        <Body />
       </div>
     );
   }
@@ -29,4 +31,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchBoard })(Board);
+export default connect(
+  mapStateToProps,
+  { fetchBoard }
+)(Board);

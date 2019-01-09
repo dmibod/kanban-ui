@@ -1,6 +1,6 @@
 import server from '../apis/index';
-import { root } from '../apis/urls';
-import history from '../history';
+//import { root } from '../apis/urls';
+//import history from '../history';
 
 import {
   SIGN_IN,
@@ -51,8 +51,6 @@ export const createBoard = (name, owner) => async dispatch => {
   response = await server.get(`/v1/api/board/${response.data.id}`);
 
   dispatch({ type: CREATE_BOARD, payload: response.data });
-  //history.push(`${root}/board/${response.data.id}`);
-  history.push(`${root}/`);
 };
 
 export const renameBoard = (id, name) => async dispatch => {
@@ -71,5 +69,4 @@ export const deleteBoard = id => async dispatch => {
   await server.delete(`/v1/api/board/${id}`);
 
   dispatch({ type: DELETE_BOARD, payload: id });
-  history.push(`${root}/`);
 };

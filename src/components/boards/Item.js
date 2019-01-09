@@ -5,7 +5,7 @@ import { root } from '../../apis/urls';
 
 const Item = ({ id, name, shared, editable, shareBoard, deleteBoard }) => (
   <div id={`${id}`} className="card-wrapper float-left m-3">
-    <div className="card shadow">
+    <div className="card shadow board">
       <div className="card-header">
         <div className="card-title mb-0">
           <div className="row mx-0">
@@ -45,7 +45,7 @@ const Item = ({ id, name, shared, editable, shareBoard, deleteBoard }) => (
         </div>
       </div>
       <div className="card-body">
-        <div className="card-body-wrapper">
+        <div className="board-body-wrapper">
           <div className="card-text small text-justify">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Error quis,
             sed temporibus numquam voluptas cupiditate nemo corrupti quia velit

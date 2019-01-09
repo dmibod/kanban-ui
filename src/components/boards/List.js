@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Item from './Item';
 import {
   fetchBoards,
-  renameBoard,
   shareBoard,
   deleteBoard
 } from '../../actions';
@@ -31,7 +30,6 @@ class List extends React.Component {
                   ...board,
                   editable: this.props.isSignedIn && this.props.currentUserId === board.owner,
                   shareBoard: this.props.shareBoard,
-                  privateBoard: this.props.privateBoard,
                   deleteBoard: this.props.deleteBoard
                 }}
               />
@@ -70,5 +68,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchBoards, renameBoard, shareBoard, deleteBoard }
+  { fetchBoards, shareBoard, deleteBoard }
 )(List);

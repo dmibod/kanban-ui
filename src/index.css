@@ -64,12 +64,22 @@ ul.card-badges {
   cursor: pointer;
 }
 
-.card {
+.item {
+  width: 150px;
+  height: 150px;
+}
+
+.board {
   width: 300px;
   height: 250px;
 }
 
-.card-body-wrapper {
+.board-body-wrapper {
   height: 155px;
+  overflow: hidden;
+}
+
+.card-body-wrapper {
+  height: 80px;
   overflow: hidden;
 }

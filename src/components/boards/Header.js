@@ -14,7 +14,7 @@ const Header = ({ secure, owner, create, filter }) => {
     return (
       <div className="input-group-append">
         <button
-          className="btn btn-primary btn-sm"
+          className="btn btn-info btn-sm"
           onClick={e => {
             if (!input.value.trim()) {
               return;
@@ -24,7 +24,7 @@ const Header = ({ secure, owner, create, filter }) => {
             input.value = '';
           }}
         >
-          Create
+          <i className="fa fa-fw fa-check" />
         </button>
       </div>
     );
@@ -32,36 +32,38 @@ const Header = ({ secure, owner, create, filter }) => {
 
   return (
     <nav className="navbar bg-dark navbar-dark fixed-top">
-      <div className="container-fluid">
-        <form
-          className="input-group ml-auto mr-auto"
-          onSubmit={e => {
-            e.preventDefault();
-          }}
-        >
-          <div className="input-group">
-            <div className="input-group-append">
-              <GoogleAuth />
+      <div className="container-fluid no-gutters">
+        <div className="col-12 col-sm-9 col-md-6 col-lg-3 ml-auto mr-auto">
+          <form
+            className="input-group"
+            onSubmit={e => {
+              e.preventDefault();
+            }}
+          >
+            <div className="input-group">
+              <div className="input-group-prepend">
+                <GoogleAuth />
+              </div>
+              <input
+                type="search"
+                className="form-control form-control-sm"
+                placeholder="Board title..."
+                ref={node => (input = node)}
+              />
+              {createButton()}
+              <div className="input-group-append">
+                <button
+                  className="btn btn-info btn-sm"
+                  onClick={e => {
+                    filter(input.value.trim());
+                  }}
+                >
+                  <i className="fa fa-fw fa-search" />
+                </button>
+              </div>
             </div>
-            <input
-              type="search"
-              className="form-control form-control-sm"
-              placeholder="Board title..."
-              ref={node => (input = node)}
-            />
-            {createButton()}
-            <div className="input-group-append">
-              <button
-                className="btn btn-success btn-sm"
-                onClick={e => {
-                  filter(input.value.trim());
-                }}
-              >
-                <i className="fa fa-fw fa-search" />
-              </button>
-            </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </nav>
   );

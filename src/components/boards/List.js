@@ -29,7 +29,7 @@ class List extends React.Component {
                 key={board.id}
                 {...{
                   ...board,
-                  admin: this.props.isSignedIn && this.props.currentUserId === board.owner,
+                  editable: this.props.isSignedIn && this.props.currentUserId === board.owner,
                   shareBoard: this.props.shareBoard,
                   privateBoard: this.props.privateBoard,
                   deleteBoard: this.props.deleteBoard

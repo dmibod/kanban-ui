@@ -1,4 +1,5 @@
 import server from '../apis/index';
+import worker, { LayoutBoard } from '../apis/worker';
 //import { root } from '../apis/urls';
 //import history from '../history';
 
@@ -10,7 +11,8 @@ import {
   FETCH_BOARD,
   DELETE_BOARD,
   RENAME_BOARD,
-  SHARE_BOARD
+  SHARE_BOARD,
+  LAYOUT_BOARD
 } from './types';
 
 export const signIn = userId => {
@@ -32,9 +34,9 @@ export const setVisibilityFilter = filter => ({
 });
 
 export const fetchBoards = owner => async dispatch => {
-  const response = owner 
-  ? await server.get(`/v1/api/board?owner=${owner}`)
-  : await server.get('/v1/api/board');
+  const response = owner
+    ? await server.get(`/v1/api/board?owner=${owner}`)
+    : await server.get('/v1/api/board');
 
   dispatch({ type: FETCH_BOARDS, payload: response.data });
 };
@@ -51,6 +53,12 @@ export const createBoard = (name, owner) => async dispatch => {
   response = await server.get(`/v1/api/board/${response.data.id}`);
 
   dispatch({ type: CREATE_BOARD, payload: response.data });
+};
+
+export const layoutBoard = (id, layout) => async dispatch => {
+  worker([{ id, type: LayoutBoard, payload: { layout } }]);
+
+  dispatch({ type: LAYOUT_BOARD, payload: { id, layout } });
 };
 
 export const renameBoard = (id, name) => async dispatch => {

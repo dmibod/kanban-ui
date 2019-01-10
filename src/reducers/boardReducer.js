@@ -5,7 +5,8 @@ import {
   CREATE_BOARD,
   RENAME_BOARD,
   SHARE_BOARD,
-  DELETE_BOARD
+  DELETE_BOARD,
+  LAYOUT_BOARD
 } from '../actions/types';
 
 export default (state = {}, action) => {
@@ -18,10 +19,13 @@ export default (state = {}, action) => {
       return { ...state, [action.payload.id]: action.payload };
     case RENAME_BOARD:
       return { ...state, [action.payload.id]: action.payload };
-      case SHARE_BOARD:
+    case SHARE_BOARD:
       return { ...state, [action.payload.id]: action.payload };
     case DELETE_BOARD:
       return _.omit(state, action.payload);
+    case LAYOUT_BOARD:
+      let board = { ...state[action.payload.id], layout: action.payload.layout };
+      return { ...state, [action.payload.id]: board };
     default:
       return state;
   }

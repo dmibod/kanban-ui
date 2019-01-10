@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { renameBoard } from '../../actions';
+import { renameBoard, layoutBoard } from '../../actions';
 import { root } from '../../apis/urls';
 
-const Header = ({ editable, update, board }) => {
+const Header = ({ editable, update, layout, board }) => {
   let input;
 
   const updateButton = () => {
@@ -27,6 +27,25 @@ const Header = ({ editable, update, board }) => {
           <i className="fa fa-fw fa-check" />
         </button>
       </div>
+    );
+  };
+
+  const layoutButton = () => {
+    if (!editable) {
+      return null;
+    }
+
+    const layoutIcon = board.layout === 'V' ? 'fa-table' : 'fa-columns';
+
+    return (
+      <button
+        className="btn btn-sm text-white"
+        onClick={e => {
+          layout(board.id, board.layout === 'V' ? 'H' : 'V');
+        }}
+      >
+        <i className={`fa fa-fw ${layoutIcon}`} />
+      </button>
     );
   };
 
@@ -63,9 +82,7 @@ const Header = ({ editable, update, board }) => {
           <button className="btn btn-sm text-white">
             <i className="fa fa-fw fa-filter" />
           </button>
-          <button className="btn btn-sm text-white">
-            <i className="fa fa-fw fa-eye" />
-          </button>
+          {layoutButton()}
           <button className="btn btn-sm text-white">
             <i className="fa fa-fw fa-gear" />
           </button>
@@ -88,7 +105,8 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  update: (id, title) => renameBoard(id, title)(dispatch)
+  update: (id, title) => renameBoard(id, title)(dispatch),
+  layout: (id, layout) => layoutBoard(id, layout)(dispatch)
 });
 
 export default connect(

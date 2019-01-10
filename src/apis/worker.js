@@ -1,7 +1,14 @@
+export const UpdateCard = 0;
+export const RemoveCard = 1;
+export const ExcludeChild = 2;
+export const InsertBefore = 3;
+export const InsertAfter = 4;
+export const AppendChild = 5;
+export const LayoutBoard = 6;
+
 let sharedWorker = null;
 
 if (window.SharedWorker) {
-
   sharedWorker = new SharedWorker('worker.js');
   sharedWorker.port.start();
 
@@ -13,7 +20,6 @@ if (window.SharedWorker) {
 }
 
 export default cmd => {
-
   if (!sharedWorker) {
     console.log('main: shared worker is not available');
     return;

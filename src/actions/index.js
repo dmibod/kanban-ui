@@ -64,9 +64,7 @@ export const fetchBoard = id => async dispatch => {
 };
 
 export const createBoard = (name, owner) => async dispatch => {
-  let response = await server.post('/v1/api/board', { name, owner, layout: 'H', shared: false });
-
-  response = await server.get(`/v1/api/board/${response.data.id}`);
+  const response = await server.post('/v1/api/board', { name, owner, layout: 'H', shared: false });
 
   dispatch({ type: CREATE_BOARD, payload: response.data });
 };
@@ -102,9 +100,7 @@ export const fetchLaneLanes = id => async dispatch => {
 };
 
 export const createLane = (name, parentId) => async dispatch => {
-  let response = await server.post('/v1/api/lane', { name, layout: 'H', type: 'L' });
-
-  response = await server.get(`/v1/api/lane/${response.data.id}`);
+  const response = await server.post('/v1/api/lane', { name, layout: 'H', type: 'L' });
 
   worker([{ id: response.data.id, type: APPENDCHILD, payload: { parent_id: parentId } }]);
 
@@ -112,9 +108,7 @@ export const createLane = (name, parentId) => async dispatch => {
 };
 
 export const createCardLane = (name, laneId) => async dispatch => {
-  let response = await server.post('/v1/api/lane', { name, type: 'C' });
-
-  response = await server.get(`/v1/api/lane/${response.data.id}`);
+  const response = await server.post('/v1/api/lane', { name, type: 'C' });
 
   worker([{ id: response.data.id, type: APPENDCHILD, payload: { parent_id: laneId } }]);
 
@@ -128,9 +122,7 @@ export const fetchLaneCards = id => async dispatch => {
 };
 
 export const createCard = (name, laneId) => async dispatch => {
-  let response = await server.post('/v1/api/card', { name });
-
-  response = await server.get(`/v1/api/card/${response.data.id}`);
+  const response = await server.post('/v1/api/card', { name });
 
   worker([{ id: response.data.id, type: APPENDCHILD, payload: { parent_id: laneId } }]);
 

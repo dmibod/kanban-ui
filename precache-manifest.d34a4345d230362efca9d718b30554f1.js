@@ -4,24 +4,24 @@ self.__precacheManifest = [
     "url": "/kanban-ui/static/media/fontawesome-webfont.af7ae505.woff2"
   },
   {
-    "revision": "a3b10e4c1052d9e1aab1",
-    "url": "/kanban-ui/static/css/main.4b36ccdd.chunk.css"
+    "revision": "fd4c212495c7d5ffec87",
+    "url": "/kanban-ui/static/css/main.8ec3b97f.chunk.css"
   },
   {
     "revision": "912ec66d7572ff821749319396470bde",
     "url": "/kanban-ui/static/media/fontawesome-webfont.912ec66d.svg"
   },
   {
-    "revision": "908b18bf81484480be72",
-    "url": "/kanban-ui/static/js/1.908b18bf.chunk.js"
+    "revision": "2ea56ac3415e47358cac",
+    "url": "/kanban-ui/static/js/1.2ea56ac3.chunk.js"
   },
   {
     "revision": "1175c037c60d23bedf74",
     "url": "/kanban-ui/static/js/runtime~main.1175c037.js"
   },
   {
-    "revision": "a3b10e4c1052d9e1aab1",
-    "url": "/kanban-ui/static/js/main.a3b10e4c.chunk.js"
+    "revision": "fd4c212495c7d5ffec87",
+    "url": "/kanban-ui/static/js/main.fd4c2124.chunk.js"
   },
   {
     "revision": "674f50d287a8c48dc19ba404d20fe713",
@@ -36,11 +36,11 @@ self.__precacheManifest = [
     "url": "/kanban-ui/static/media/fontawesome-webfont.b06871f2.ttf"
   },
   {
-    "revision": "908b18bf81484480be72",
+    "revision": "2ea56ac3415e47358cac",
     "url": "/kanban-ui/static/css/1.13478038.chunk.css"
   },
   {
-    "revision": "71145e0e15947d8c2cf686d51f40dfc2",
+    "revision": "d316b46002a2c35479b366a3d3b835bb",
     "url": "/kanban-ui/index.html"
   }
 ];

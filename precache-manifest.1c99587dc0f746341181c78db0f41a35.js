@@ -1,10 +1,10 @@
 self.__precacheManifest = [
   {
-    "revision": "674f50d287a8c48dc19ba404d20fe713",
-    "url": "/kanban-ui/static/media/fontawesome-webfont.674f50d2.eot"
+    "revision": "af7ae505a9eed503f8b8e6982036873e",
+    "url": "/kanban-ui/static/media/fontawesome-webfont.af7ae505.woff2"
   },
   {
-    "revision": "ba60f318ec64a0b93331",
+    "revision": "a3b10e4c1052d9e1aab1",
     "url": "/kanban-ui/static/css/main.4b36ccdd.chunk.css"
   },
   {
@@ -20,27 +20,27 @@ self.__precacheManifest = [
     "url": "/kanban-ui/static/js/runtime~main.1175c037.js"
   },
   {
-    "revision": "ba60f318ec64a0b93331",
-    "url": "/kanban-ui/static/js/main.ba60f318.chunk.js"
+    "revision": "a3b10e4c1052d9e1aab1",
+    "url": "/kanban-ui/static/js/main.a3b10e4c.chunk.js"
   },
   {
-    "revision": "af7ae505a9eed503f8b8e6982036873e",
-    "url": "/kanban-ui/static/media/fontawesome-webfont.af7ae505.woff2"
-  },
-  {
-    "revision": "b06871f281fee6b241d60582ae9369b9",
-    "url": "/kanban-ui/static/media/fontawesome-webfont.b06871f2.ttf"
+    "revision": "674f50d287a8c48dc19ba404d20fe713",
+    "url": "/kanban-ui/static/media/fontawesome-webfont.674f50d2.eot"
   },
   {
     "revision": "fee66e712a8a08eef5805a46892932ad",
     "url": "/kanban-ui/static/media/fontawesome-webfont.fee66e71.woff"
   },
   {
+    "revision": "b06871f281fee6b241d60582ae9369b9",
+    "url": "/kanban-ui/static/media/fontawesome-webfont.b06871f2.ttf"
+  },
+  {
     "revision": "908b18bf81484480be72",
     "url": "/kanban-ui/static/css/1.13478038.chunk.css"
   },
   {
-    "revision": "db101852ba0f3bb03cf2c19a2449ed92",
+    "revision": "71145e0e15947d8c2cf686d51f40dfc2",
     "url": "/kanban-ui/index.html"
   }
 ];

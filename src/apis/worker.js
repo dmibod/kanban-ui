@@ -1,15 +1,18 @@
-export const UpdateCard = 0;
-export const RemoveCard = 1;
-export const ExcludeChild = 2;
-export const InsertBefore = 3;
-export const InsertAfter = 4;
-export const AppendChild = 5;
-export const LayoutBoard = 6;
+import server from './index';
+import { root } from './urls';
+
+export const UPDATECARD = 0;
+export const REMOVECARD = 1;
+export const EXCLUDECHILD = 2;
+export const APPENDCHILD = 3;
+export const INSERTBEFORE = 4;
+export const INSERTAFTER = 5;
+export const LAYOUTBOARD = 6;
 
 let sharedWorker = null;
 
 if (window.SharedWorker) {
-  sharedWorker = new SharedWorker('worker.js');
+  sharedWorker = new SharedWorker(`${root}/worker.js`);
   sharedWorker.port.start();
 
   console.log('shared worker: started');
@@ -22,6 +25,9 @@ if (window.SharedWorker) {
 export default cmd => {
   if (!sharedWorker) {
     console.log('main: shared worker is not available');
+    
+    server.post(`/v1/api/command`, cmd);
+    
     return;
   }
 

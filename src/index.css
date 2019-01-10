@@ -60,6 +60,10 @@ ul.card-badges {
   visibility: visible;
 }
 
+.lane-wrapper:hover .hover-card-badges {
+  visibility: visible;
+}
+
 .card-badge {
   cursor: pointer;
 }

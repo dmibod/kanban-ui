@@ -1,9 +1,5 @@
-//const secure = 's';
-//const host = 'dmitrybodnar.com';
-const secure = '';
-const host = 'localhost:3001';
-const api = `http${secure}://${host}`;
-const wsapi = `ws${secure}://${host}`;
+const api = 'https://dmitrybodnar.com';
+//const api = 'http://localhost:3001';
 
 this.addEventListener('connect', event => {
   console.log(event);

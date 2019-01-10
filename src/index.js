@@ -4,11 +4,9 @@ import { Provider } from 'react-redux';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import App from './components/App';
-import configure from './store';
+import store from './store';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
-
-const store = configure();
 
 render(
   <Provider store={store}>

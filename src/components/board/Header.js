@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { renameBoard, layoutBoard } from '../../actions';
+import { renameBoard, layoutBoard, createLane } from '../../actions';
 import { root } from '../../apis/urls';
 
-const Header = ({ editable, update, layout, board }) => {
+const Header = ({ editable, update, layout, lane, board }) => {
   let input;
 
   const updateButton = () => {
@@ -21,7 +21,6 @@ const Header = ({ editable, update, layout, board }) => {
               return;
             }
             update(board.id, input.value);
-            input.value = '';
           }}
         >
           <i className="fa fa-fw fa-check" />
@@ -45,6 +44,23 @@ const Header = ({ editable, update, layout, board }) => {
         }}
       >
         <i className={`fa fa-fw ${layoutIcon}`} />
+      </button>
+    );
+  };
+
+  const laneButton = () => {
+    if (!editable) {
+      return null;
+    }
+
+    return (
+      <button
+        className="btn btn-sm text-white"
+        onClick={e => {
+          lane('Lane', board.id);
+        }}
+      >
+        <i className="fa fa-fw fa-file" />
       </button>
     );
   };
@@ -76,9 +92,7 @@ const Header = ({ editable, update, layout, board }) => {
           </form>
         </div>
         <div className="mr-auto">
-          <button className="btn btn-sm text-white">
-            <i className="fa fa-fw fa-file" />
-          </button>
+          {laneButton()}
           <button className="btn btn-sm text-white">
             <i className="fa fa-fw fa-filter" />
           </button>
@@ -106,7 +120,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => ({
   update: (id, title) => renameBoard(id, title)(dispatch),
-  layout: (id, layout) => layoutBoard(id, layout)(dispatch)
+  layout: (id, layout) => layoutBoard(id, layout)(dispatch),
+  lane: (name, boardId) => createLane(name, boardId)(dispatch)
 });
 
 export default connect(

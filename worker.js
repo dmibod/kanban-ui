@@ -1,5 +1,5 @@
-const api = 'https://dmitrybodnar.com';
-//const api = 'http://localhost:3001';
+//const api = 'https://dmitrybodnar.com';
+const api = 'http://localhost:3001';
 
 this.addEventListener('connect', event => {
   console.log(event);
@@ -9,12 +9,12 @@ this.addEventListener('connect', event => {
 
   port.addEventListener('message', function(e) {
     console.log('message received by worker is...');
-    if (e.data && e.data.length > 0) {
+    if (e.data && e.data.boardId) {
       console.log(e.data);
       try {
-        self.fetch(`${api}/v1/api/command`, {
+        self.fetch(`${api}/v1/api/command/${e.data.boardId}`, {
           method: 'post',
-          body: JSON.stringify(e.data)
+          body: JSON.stringify(e.data.commands)
         })
           .then(function(response) {
             return response.json();

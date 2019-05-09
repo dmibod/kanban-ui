@@ -1,35 +1,35 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  fetchLaneCards,
-  createCard
+  createCard,
+  deleteCard
 } from '../../actions';
 import Card from './Card';
 
 class CardLane extends React.Component {
-  componentDidMount() {
-    const { lane, fetchLaneCards } = this.props;
-
-    if (lane && fetchLaneCards) {
-        fetchLaneCards(lane.id);
-    }
-  }
-
   renderCards() {
-    const { record } = this.props;
+    const { lane } = this.props;
 
-    if (!record) {
+    if (!lane || !lane.cards) {
       return null;
     }
 
-    return record.cards.map(card => <Card key={card.id} name={card.name} />);
+    return lane.cards.map(card => <Card key={card.id} card={card} deleteCard={this.deleteCard}/>);
   }
 
   createCard = () => {
-    const { lane, createCard } = this.props;
+    const { lane, board, createCard } = this.props;
 
     if (lane && createCard) {
-      createCard('Card', lane.id);
+      createCard(board.id, 'Card', lane.id);
+    }
+  };
+
+  deleteCard = (id) => {
+    const { lane, deleteCard } = this.props;
+
+    if (lane && deleteCard) {
+      deleteCard(id, lane.id);
     }
   };
 
@@ -65,13 +65,32 @@ class CardLane extends React.Component {
   }
 }
 
+function findLane(lanes, id) {
+  lanes = lanes || [];
+
+  let found = lanes.find(el => el.id === id);
+
+  if (found) {
+    return found;
+  }
+
+  for (let i = 0; i < lanes.length; i++) {
+    found = findLane(lanes[i].lanes, id);
+    if (found) {
+      return found;
+    }
+  }
+
+  return null;
+}
+
 const mapStateToProps = (state, ownProps) => {
-  return {
-    record: state.laneCards[ownProps.lane.id]
-  };
+  let board = state.boards[ownProps.board.id];
+  let lane  = findLane(board.lanes, ownProps.lane.id);
+  return { board, lane };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchLaneCards, createCard }
+  { createCard, deleteCard }
 )(CardLane);

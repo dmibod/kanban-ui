@@ -22,18 +22,18 @@ if (window.SharedWorker) {
   });
 }
 
-export default cmd => {
+export default (boardId, commands) => {
   if (!sharedWorker) {
     console.log('main: shared worker is not available');
-    
-    server.post(`/v1/api/command`, cmd);
+
+    server.post(`/v1/api/command/${boardId}`, commands);
     
     return;
   }
 
-  console.log('main: post commands to shared worker', cmd);
+  console.log('main: post commands to shared worker', commands);
 
-  sharedWorker.port.postMessage(cmd);
+  sharedWorker.port.postMessage({ boardId, commands });
 
   console.log('main: commands posted to shared worker');
 };

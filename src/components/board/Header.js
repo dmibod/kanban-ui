@@ -118,13 +118,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  update: (id, title) => renameBoard(id, title)(dispatch),
-  layout: (id, layout) => layoutBoard(id, layout)(dispatch),
-  lane: (name, boardId) => createLane(name, boardId)(dispatch)
-});
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { update: renameBoard, layout: layoutBoard, lane: createLane }
 )(Header);

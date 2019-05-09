@@ -1,5 +1,5 @@
 import server from '../apis/index';
-import worker, { LAYOUTBOARD, APPENDCHILD } from '../apis/worker';
+import worker, { LAYOUTBOARD, APPENDCHILD, REMOVECARD } from '../apis/worker';
 //import { root } from '../apis/urls';
 //import history from '../history';
 
@@ -21,7 +21,8 @@ import {
   CREATE_LANE,
 
   FETCH_LANE_CARDS,
-  CREATE_CARD
+  CREATE_CARD,
+  DELETE_CARD
 
 } from './types';
 
@@ -44,7 +45,7 @@ export const setVisibilityFilter = filter => ({
 });
 
 export const fetchBoardLanes = id => async dispatch => {
-  const response = await server.get(`/v1/api/board/${id}/lane`);
+  const response = await server.get(`/v1/api/board/${id}/lanes`);
 
   dispatch({ type: FETCH_BOARD_LANES, payload: { id, lanes: response.data }});
 };
@@ -70,7 +71,7 @@ export const createBoard = (name, owner) => async dispatch => {
 };
 
 export const layoutBoard = (id, layout) => async dispatch => {
-  worker([{ id, type: LAYOUTBOARD, payload: { layout } }]);
+  worker(id, [{ id, board_id: id, type: LAYOUTBOARD, payload: { layout } }]);
 
   dispatch({ type: LAYOUT_BOARD, payload: { id, layout } });
 };
@@ -100,17 +101,17 @@ export const fetchLaneLanes = id => async dispatch => {
 };
 
 export const createLane = (name, parentId) => async dispatch => {
-  const response = await server.post('/v1/api/lane', { name, layout: 'H', type: 'L' });
+  const response = await server.post(`/v1/api/board/${parentId}/lanes`, { name, layout: 'H', type: 'L' });
 
-  worker([{ id: response.data.id, type: APPENDCHILD, payload: { parent_id: parentId } }]);
+  worker(parentId, [{ id: response.data.id, board_id: parentId, type: APPENDCHILD, payload: { parent_id: parentId } }]);
 
   dispatch({ type: CREATE_LANE, payload: response.data });
 };
 
-export const createCardLane = (name, laneId) => async dispatch => {
-  const response = await server.post('/v1/api/lane', { name, type: 'C' });
+export const createCardLane = (boardId, name, laneId) => async dispatch => {
+  const response = await server.post(`/v1/api/board/${boardId}/lanes`, { name, type: 'C' });
 
-  worker([{ id: response.data.id, type: APPENDCHILD, payload: { parent_id: laneId } }]);
+  worker(boardId, [{ id: response.data.id, board_id: boardId, type: APPENDCHILD, payload: { parent_id: laneId } }]);
 
   dispatch({ type: CREATE_LANE, payload: response.data });
 };
@@ -121,10 +122,16 @@ export const fetchLaneCards = id => async dispatch => {
   dispatch({ type: FETCH_LANE_CARDS, payload: { id, cards: response.data }});
 };
 
-export const createCard = (name, laneId) => async dispatch => {
-  const response = await server.post('/v1/api/card', { name });
+export const createCard = (boardId, name, laneId) => async dispatch => {
+  const response = await server.post(`/v1/api/board/${boardId}/cards`, { name });
 
-  worker([{ id: response.data.id, type: APPENDCHILD, payload: { parent_id: laneId } }]);
+  worker(boardId, [{ id: response.data.id, board_id: boardId, type: APPENDCHILD, payload: { parent_id: laneId } }]);
 
   dispatch({ type: CREATE_CARD, payload: response.data });
+};
+
+export const deleteCard = (id, laneId) => dispatch => {
+  worker([{ id: id, type: REMOVECARD, payload: { parent_id: laneId } }]);
+
+  dispatch({ type: DELETE_CARD, payload: id });
 };

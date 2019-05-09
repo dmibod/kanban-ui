@@ -18,3 +18,4 @@ export const CREATE_LANE = 'CREATE_LANE';
 export const FETCH_LANE_CARDS = 'FETCH_LANE_CARDS'
 
 export const CREATE_CARD = 'CREATE_CARD';
+export const DELETE_CARD = 'DELETE_CARD';

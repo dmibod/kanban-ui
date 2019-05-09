@@ -1,32 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchBoardLanes } from '../../actions';
 import Lane from './Lane';
 
 class Body extends React.Component {
-  componentDidMount() {
-    const board = this.props.board;
-    if (board) {
-      this.props.fetchBoardLanes(board.id);
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    /*
-    if (this.props.record.lanes.length !== prevProps.record.lanes.length) {
-      this.props.fetchBoardLanes(this.props.record.id);
-    }
-    */
-  }
-
   renderLanes() {
-    const { record } = this.props;
+    const { board } = this.props;
 
-    if (!record) {
+    if (!board || !board.lanes) {
       return null;
     }
 
-    return record.lanes.map(lane => <Lane key={lane.id} lane={lane} />);
+    return board.lanes.map(lane => <Lane key={lane.id} lane={lane} board={board} />);
   }
 
   render() {
@@ -39,12 +23,9 @@ class Body extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    record: state.boardLanes[ownProps.board.id]
+    board: state.boards[ownProps.board.id]
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { fetchBoardLanes }
-)(Body);
+export default connect(mapStateToProps)(Body);
 

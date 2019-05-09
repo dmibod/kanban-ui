@@ -19,6 +19,7 @@ class Board extends React.Component {
   }
 
   render() {
+    console.log('render board')
     if (!this.props.board) {
       return <div>Loading...</div>;
     }

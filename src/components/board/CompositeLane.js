@@ -1,36 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-  fetchLaneLanes,
-  createLane,
-  createCardLane
-} from '../../actions';
+import { createLane, createCardLane } from '../../actions';
 import Lane from './Lane';
 
 class CompositeLane extends React.Component {
-  componentDidMount() {
-    const { lane, fetchLaneLanes } = this.props;
-
-    if (lane && fetchLaneLanes) {
-      fetchLaneLanes(lane.id);
-    }
-  }
-
   renderLanes() {
-    const { record } = this.props;
+    const { lane, board } = this.props;
 
-    if (!record) {
+    if (!lane || !lane.lanes) {
       return null;
     }
 
-    return record.lanes.map(lane => <Lane key={lane.id} lane={lane} />);
+    return lane.lanes.map(lane => (
+      <Lane key={lane.id} lane={lane} board={board} />
+    ));
   }
 
   createChild = () => {
-    const { lane, createCardLane } = this.props;
+    const { lane, board, createCardLane } = this.props;
 
     if (lane && createCardLane) {
-      createCardLane('CardLane', lane.id);
+      createCardLane(board.id, 'CardLane', lane.id);
     }
   };
 
@@ -47,7 +37,7 @@ class CompositeLane extends React.Component {
               >
                 <i
                   className="fa fa-fw fa-file text-muted"
-                  title="card"
+                  title="lane"
                   onClick={this.createChild}
                 />
                 <i className="fa fa-fw fa-pencil text-muted" title="edit" />
@@ -66,13 +56,32 @@ class CompositeLane extends React.Component {
   }
 }
 
+function findLane(lanes, id) {
+  lanes = lanes || [];
+
+  let found = lanes.find(el => el.id === id);
+
+  if (found) {
+    return found;
+  }
+
+  for (let i = 0; i < lanes.length; i++) {
+    found = findLane(lanes[i].lanes, id);
+    if (found) {
+      return found;
+    }
+  }
+
+  return null;
+}
+
 const mapStateToProps = (state, ownProps) => {
-  return {
-    record: state.laneLanes[ownProps.lane.id]
-  };
+  let board = state.boards[ownProps.board.id];
+  let lane = findLane(board.lanes, ownProps.lane.id);
+  return { board, lane };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchLaneLanes, createLane, createCardLane }
+  { createLane, createCardLane }
 )(CompositeLane);

@@ -1,13 +1,13 @@
 import { wsapi } from './urls';
-import { fetchBoard, fetchBoardLanes } from '../actions';
+import { fetchBoard } from '../actions';
 import store from '../store';
 
-export const REFRESHCARDNOTIFICATION = 0;
-export const REFRESHLANENOTIFICATION = 1;
-export const REFRESHBOARDNOTIFICATION = 2;
-export const REMOVECARDNOTIFICATION = 3;
-export const REMOVELANENOTIFICATION = 4;
-export const REMOVEBOARDNOTIFICATION = 5;
+const REFRESHCARDNOTIFICATION = 0;
+const REFRESHLANENOTIFICATION = 1;
+const REFRESHBOARDNOTIFICATION = 2;
+const REMOVECARDNOTIFICATION = 3;
+const REMOVELANENOTIFICATION = 4;
+const REMOVEBOARDNOTIFICATION = 5;
 
 let socket = null;
 
@@ -27,7 +27,7 @@ function createSocket(msg) {
   conn.onmessage = function(evt) {
     const notifiactions = JSON.parse(evt.data);
     console.log('websocket: receive', notifiactions);
-    if (notifiactions && notifiactions.length){
+    if (notifiactions && notifiactions.length) {
       for (let notification of notifiactions) {
         processNotification(notification);
       }
@@ -50,8 +50,7 @@ function processNotification(msg) {
     case REFRESHLANENOTIFICATION:
     case REFRESHBOARDNOTIFICATION:
       console.log('REFRESHBOARDNOTIFICATION: fetchBoard', msg);
-      fetchBoard(msg.context)(store.dispatch);
-      fetchBoardLanes(msg.context)(store.dispatch);
+      fetchBoard(msg.board_id)(store.dispatch);
       return;
     case REMOVECARDNOTIFICATION:
     case REMOVELANENOTIFICATION:

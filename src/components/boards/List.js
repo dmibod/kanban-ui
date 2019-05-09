@@ -60,7 +60,7 @@ const mapStateToProps = state => {
   let filter = state.visibilityFilter.toLowerCase();
 
   return {
-    boards: boards.filter(board => board.name.toLowerCase().includes(filter)),
+    boards: boards.filter(board => (board.name || '').toLowerCase().includes(filter)),
     currentUserId: state.auth.isSignedIn ? state.auth.userProfile.id : null,
     isSignedIn: state.auth.isSignedIn
   };

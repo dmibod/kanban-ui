@@ -1,5 +1,5 @@
-//const api = 'https://dmitrybodnar.com';
-const api = 'http://localhost:3001';
+const api = 'https://dmitrybodnar.com';
+//const api = 'http://localhost:3001';
 
 this.addEventListener('connect', event => {
   console.log(event);

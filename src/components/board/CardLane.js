@@ -26,10 +26,10 @@ class CardLane extends React.Component {
   };
 
   deleteCard = (id) => {
-    const { lane, deleteCard } = this.props;
+    const { lane, board, deleteCard } = this.props;
 
     if (lane && deleteCard) {
-      deleteCard(id, lane.id);
+      deleteCard(board.id, id, lane.id);
     }
   };
 

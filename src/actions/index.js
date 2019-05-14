@@ -130,8 +130,8 @@ export const createCard = (boardId, name, laneId) => async dispatch => {
   dispatch({ type: CREATE_CARD, payload: response.data });
 };
 
-export const deleteCard = (id, laneId) => dispatch => {
-  worker([{ id: id, type: REMOVECARD, payload: { parent_id: laneId } }]);
+export const deleteCard = (boardId, cardId, laneId) => dispatch => {
+  worker(boardId, [{ id: cardId, board_id: boardId, type: REMOVECARD, payload: { parent_id: laneId } }]);
 
-  dispatch({ type: DELETE_CARD, payload: id });
+  dispatch({ type: DELETE_CARD, payload: cardId });
 };

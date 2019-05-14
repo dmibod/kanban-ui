@@ -1,4 +1,3 @@
-import { wsapi } from './urls';
 import { fetchBoard } from '../actions';
 import store from '../store';
 
@@ -12,7 +11,7 @@ const REMOVEBOARDNOTIFICATION = 5;
 let socket = null;
 
 function createSocket(msg) {
-  let conn = new WebSocket(`${wsapi}/v1/api/notify`);
+  let conn = new WebSocket(`${process.env.REACT_APP_WS_URL}/v1/api/notify`);
 
   conn.onopen = function(evt) {
     console.log('websocket opened');
@@ -49,7 +48,7 @@ function processNotification(msg) {
     case REFRESHCARDNOTIFICATION:
     case REFRESHLANENOTIFICATION:
     case REFRESHBOARDNOTIFICATION:
-      console.log('REFRESHBOARDNOTIFICATION: fetchBoard', msg);
+      console.log(msg);
       fetchBoard(msg.board_id)(store.dispatch);
       return;
     case REMOVECARDNOTIFICATION:

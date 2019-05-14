@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { renameBoard, layoutBoard, createLane } from '../../actions';
-import { root } from '../../apis/urls';
 
 const Header = ({ editable, update, layout, lane, board }) => {
   let input;
@@ -77,7 +76,7 @@ const Header = ({ editable, update, layout, lane, board }) => {
           >
             <div className="input-group">
               <div className="input-group-prepend">
-                <Link to={`${root}/`} className="btn btn-success btn-sm">
+                <Link to={`${process.env.REACT_APP_CONTEXT_ROOT}/`} className="btn btn-success btn-sm">
                   <i className="fa fa-fw fa-home" />
                 </Link>
               </div>

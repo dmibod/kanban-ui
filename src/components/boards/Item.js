@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { root } from '../../apis/urls';
 
 const Item = ({ id, name, description, shared, editable, shareBoard, deleteBoard }) => (
   <div id={`${id}`} className="card-wrapper float-left m-3">
@@ -13,7 +12,7 @@ const Item = ({ id, name, description, shared, editable, shareBoard, deleteBoard
               <Link
                 className="text-info"
                 style={{ textDecoration: 'none', fontWeight: '500' }}
-                to={`${root}/board/${id}`}
+                to={`${process.env.REACT_APP_CONTEXT_ROOT}/board/${id}`}
               >
                 {name}
               </Link>

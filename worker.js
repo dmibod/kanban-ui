@@ -1,8 +1,3 @@
-const api = 'https://dmitrybodnar.com';
-//const api = 'http://localhost:3001';
-//const api = 'http://it-practicioner.com:8080';
-//const api = 'http://46.101.154.144:8080';
-
 this.addEventListener('connect', event => {
   console.log(event);
 
@@ -14,7 +9,7 @@ this.addEventListener('connect', event => {
     if (e.data && e.data.boardId) {
       console.log(e.data);
       try {
-        self.fetch(`${api}/v1/api/command/${e.data.boardId}`, {
+        self.fetch(`%REACT_APP_API_URL%/v1/api/command/${e.data.boardId}`, {
           method: 'post',
           body: JSON.stringify(e.data.commands)
         })

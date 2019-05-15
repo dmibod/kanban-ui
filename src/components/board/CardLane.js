@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {
   createCard,
   deleteCard
-} from '../../actions';
+} from '../../actions/card';
 import Card from './Card';
 
 class CardLane extends React.Component {

@@ -1,4 +1,4 @@
-import { fetchBoard } from '../actions';
+import { fetchBoard } from '../actions/board';
 import store from '../store';
 
 const REFRESHCARDNOTIFICATION = 0;
@@ -44,11 +44,11 @@ function sendMessage(ws, msg) {
 }
 
 function processNotification(msg) {
+  console.log(msg);
   switch (msg.type) {
     case REFRESHCARDNOTIFICATION:
     case REFRESHLANENOTIFICATION:
     case REFRESHBOARDNOTIFICATION:
-      console.log(msg);
       fetchBoard(msg.board_id)(store.dispatch);
       return;
     case REMOVECARDNOTIFICATION:

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createLane, createCardLane } from '../../actions';
+import { createLane, createCardLane } from '../../actions/lane';
 import Lane from './Lane';
 
 class CompositeLane extends React.Component {

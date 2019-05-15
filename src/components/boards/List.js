@@ -5,7 +5,7 @@ import {
   fetchBoards,
   shareBoard,
   deleteBoard
-} from '../../actions';
+} from '../../actions/board';
 
 class List extends React.Component {
   componentDidMount() {

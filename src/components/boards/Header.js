@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createBoard, setVisibilityFilter } from '../../actions';
+import { createBoard, setVisibilityFilter } from '../../actions/board';
 import GoogleAuth from '../GoogleAuth';
 
 const Header = ({ secure, owner, create, filter }) => {

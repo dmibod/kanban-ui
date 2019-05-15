@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Header from './board/Header';
 import Body from './board/Body';
 import socket from '../apis/socket';
-import { fetchBoard } from '../actions';
+import { fetchBoard } from '../actions/board';
 
 class Board extends React.Component {
   componentDidMount() {

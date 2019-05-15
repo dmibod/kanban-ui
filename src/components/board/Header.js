@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { renameBoard, layoutBoard, createLane } from '../../actions';
+import { renameBoard, layoutBoard } from '../../actions/board';
+import { createLane } from '../../actions/lane';
 
 const Header = ({ editable, update, layout, lane, board }) => {
   let input;

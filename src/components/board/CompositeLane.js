@@ -28,7 +28,7 @@ class CompositeLane extends React.Component {
     const { lane, editable } = this.props;
 
     return (
-      <div className="lane-wrapper">
+      <div id={lane.id} className="lane-wrapper">
         <div className="lane-header card-header border rounded-0">
           <div className="card-title mb-0">
             <div className="row mx-0">

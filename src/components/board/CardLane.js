@@ -1,9 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-  createCard,
-  deleteCard
-} from '../../actions/card';
+import { createCard, moveCard, deleteCard } from '../../actions/card';
 import Card from './Card';
 
 class CardLane extends React.Component {
@@ -14,7 +11,17 @@ class CardLane extends React.Component {
       return null;
     }
 
-    return lane.children.map(id => board.cards[id]).map(card => <Card key={card.id} card={card} deleteCard={this.deleteCard} editable={editable}/>);
+    return lane.children
+      .map(id => board.cards[id])
+      .map(card => (
+        <Card
+          key={card.id}
+          card={card}
+          lane={lane}
+          deleteCard={this.deleteCard}
+          editable={editable}
+        />
+      ));
   }
 
   createCard = () => {
@@ -25,7 +32,15 @@ class CardLane extends React.Component {
     }
   };
 
-  deleteCard = (id) => {
+  moveCard = (cardId, fromLaneId) => {
+    const { lane, board, moveCard, editable } = this.props;
+
+    if (editable && lane && moveCard) {
+      moveCard(board.id, fromLaneId, lane.id, cardId);
+    }
+  };
+
+  deleteCard = id => {
     const { lane, board, deleteCard, editable } = this.props;
 
     if (editable && lane && deleteCard) {
@@ -61,7 +76,22 @@ class CardLane extends React.Component {
             </div>
           </div>
         </div>
-        <div className="lane-body">{this.renderCards()}</div>
+        <div
+          className="lane-body"
+          onDragOver={e => {
+            if (e.dataTransfer.types.includes('card')) {
+              e.preventDefault();
+            }
+          }}
+          onDrop={e => {
+            e.preventDefault();
+            let cardId = e.dataTransfer.getData('card');
+            let laneId = e.dataTransfer.getData('parent');
+            this.moveCard(cardId, laneId);
+          }}
+        >
+          {this.renderCards()}
+        </div>
       </div>
     );
   }
@@ -69,11 +99,11 @@ class CardLane extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   let board = state.boards[ownProps.board.id];
-  let lane  = board.lanes[ownProps.lane.id];
+  let lane = board.lanes[ownProps.lane.id];
   return { board, lane };
 };
 
 export default connect(
   mapStateToProps,
-  { createCard, deleteCard }
+  { createCard, moveCard, deleteCard }
 )(CardLane);

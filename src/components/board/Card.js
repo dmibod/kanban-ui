@@ -1,12 +1,22 @@
 import React from 'react';
 
-export default ({ card, deleteCard, editable }) => {
+export default ({ card, lane, deleteCard, editable }) => {
   return (
-    <div className="card-wrapper float-left m-3">
+    <div
+      id={card.id}
+      className="card-wrapper float-left m-3"
+      draggable={editable ? 'true' : 'false'}
+      onDragStart={e => {
+        //e.dataTransfer.setData('id', e.target.id);
+        //e.dataTransfer.setData('card', e.target.id);
+        e.dataTransfer.setData('card', card.id);
+        e.dataTransfer.setData('parent', lane.id);
+      }}
+    >
       <div className="card shadow item">
         <div className="card-header">
           <div className="card-title mb-0">
-          <div className="row mx-0">
+            <div className="row mx-0">
               <div className="mr-auto">{card.name}</div>
               <div
                 className="hover-card-badges"
@@ -24,7 +34,9 @@ export default ({ card, deleteCard, editable }) => {
         </div>
         <div className="card-body py-2" style={{ overflow: 'hidden' }}>
           <div className="card-body-wrapper">
-            <div className="card-text small text-justify">{card.description}</div>
+            <div className="card-text small text-justify">
+              {card.description}
+            </div>
           </div>
         </div>
       </div>

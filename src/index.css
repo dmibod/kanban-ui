@@ -56,11 +56,11 @@ ul.card-badges {
   visibility: hidden;
 }
 
-.card-wrapper:hover .hover-card-badges {
+.card-header:hover .hover-card-badges {
   visibility: visible;
 }
 
-.lane-wrapper:hover .hover-card-badges {
+.lane-header:hover .hover-card-badges {
   visibility: visible;
 }
 

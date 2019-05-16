@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import {
-  FETCH_BOARD_LANES,
+  FETCH_CARD,
   FETCH_BOARD,
   FETCH_BOARDS,
   CREATE_BOARD,
@@ -48,12 +48,6 @@ const formatBoard = payload => {
 export default (state = {}, action) => {
   let board = null;
   switch (action.type) {
-    case FETCH_BOARD_LANES:
-      board = {
-        ...state[action.payload.id],
-        lanes: action.payload.lanes
-      };
-      return { ...state, [action.payload.id]: board };
     case FETCH_BOARDS:
       return { ..._.mapKeys(action.payload, 'id') };
     case FETCH_BOARD:
@@ -83,6 +77,10 @@ export default (state = {}, action) => {
         { ...action.payload, children: [] },
         'boardId'
       );
+      return { ...state, [board.id]: board };
+    case FETCH_CARD:
+      board = state[action.payload.boardId];
+      board.cards[action.payload.id] = _.omit(action.payload, 'boardId');
       return { ...state, [board.id]: board };
     default:
       return state;

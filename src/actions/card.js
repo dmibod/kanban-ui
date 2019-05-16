@@ -2,12 +2,19 @@ import server from '../apis/index';
 import worker, { APPENDCHILD, EXCLUDECHILD, REMOVECARD } from '../apis/worker';
 
 import {
+  FETCH_CARD,
   CREATE_CARD,
   APPEND_CARD,
   EXCLUDE_CARD,
   DELETE_CARD
 
 } from './types';
+
+export const fetchCard = (boardId, cardId) => async dispatch => {
+  const response = await server.get(`/v1/api/board/${boardId}/cards/${cardId}`);
+
+  dispatch({ type: FETCH_CARD, payload: { ...response.data, boardId }  });
+};
 
 export const createCard = (boardId, laneId, name) => async dispatch => {
   const response = await server.post(`/v1/api/board/${boardId}/cards`, { name });

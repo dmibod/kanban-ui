@@ -8,19 +8,20 @@ import {
   SHARE_BOARD,
   DELETE_BOARD,
   LAYOUT_BOARD,
+  FETCH_LANE,
   CREATE_LANE
 } from '../actions/types';
 
 const formatBoard = payload => {
   let walkFn = (el, visitFn) => {
-    visitFn(el)
+    visitFn(el);
 
     if (el.lanes) {
       el.lanes.forEach(i => walkFn(i, visitFn));
     }
 
     if (el.cards) {
-      el.cards.forEach(i => walkFn(i, visitFn)) 
+      el.cards.forEach(i => walkFn(i, visitFn));
     }
   };
 
@@ -28,16 +29,20 @@ const formatBoard = payload => {
   let cards = [];
 
   walkFn(payload, el => {
-
-    if (el.type) { 
+    if (el.type) {
       let children = (el.lanes || el.cards || []).map(i => i.id);
-      lanes.push(_.omit({ ...el, children }, [ 'lanes', 'cards' ])); 
-    } else if (el.id !== payload.id) { 
-      cards.push(el); 
-    } 
+      lanes.push(_.omit({ ...el, children }, ['lanes', 'cards']));
+    } else if (el.id !== payload.id) {
+      cards.push(el);
+    }
   });
 
-  return { ...payload, children: (payload.lanes || []).map(i => i.id), lanes: _.mapKeys(lanes, 'id'), cards: _.mapKeys(cards, 'id') };
+  return {
+    ...payload,
+    children: (payload.lanes || []).map(i => i.id),
+    lanes: _.mapKeys(lanes, 'id'),
+    cards: _.mapKeys(cards, 'id')
+  };
 };
 
 export default (state = {}, action) => {
@@ -67,9 +72,17 @@ export default (state = {}, action) => {
         layout: action.payload.layout
       };
       return { ...state, [action.payload.id]: board };
+    case FETCH_LANE:
+      board = state[action.payload.boardId];
+      let lane = board.lanes[action.payload.laneId];
+      lane.children = action.payload.cards.map(i => i.id);
+      return { ...state, [action.payload.boardId]: { ...board } };
     case CREATE_LANE:
       board = state[action.payload.boardId];
-      board.lanes[action.payload.id] = _.omit({ ...action.payload, children: [] }, 'boardId');
+      board.lanes[action.payload.id] = _.omit(
+        { ...action.payload, children: [] },
+        'boardId'
+      );
       return { ...state, [board.id]: board };
     default:
       return state;

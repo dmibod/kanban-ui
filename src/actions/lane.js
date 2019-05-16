@@ -2,17 +2,15 @@ import server from '../apis/index';
 import worker, { APPENDCHILD } from '../apis/worker';
 
 import {
-  FETCH_LANE_LANES,
-  CREATE_LANE,
-
-  FETCH_LANE_CARDS
+  FETCH_LANE,
+  CREATE_LANE
 
 } from './types';
 
-export const fetchLaneLanes = id => async dispatch => {
-  const response = await server.get(`/v1/api/lane/${id}/lane`);
+export const fetchLane = (boardId, laneId) => async dispatch => {
+  const response = await server.get(`/v1/api/board/${boardId}/lanes/${laneId}/cards`);
 
-  dispatch({ type: FETCH_LANE_LANES, payload: { id, lanes: response.data }});
+  dispatch({ type: FETCH_LANE, payload: { boardId, laneId, cards: response.data }  });
 };
 
 export const createLane = (boardId, name) => async dispatch => {
@@ -29,10 +27,4 @@ export const createCardLane = (boardId, laneId, name) => async dispatch => {
   worker(boardId, [{ id: response.data.id, board_id: boardId, type: APPENDCHILD, payload: { parent_id: laneId } }]);
 
   dispatch({ type: CREATE_LANE, payload: { ...response.data, boardId } });
-};
-
-export const fetchLaneCards = id => async dispatch => {
-  const response = await server.get(`/v1/api/lane/${id}/card`);
-
-  dispatch({ type: FETCH_LANE_CARDS, payload: { id, cards: response.data }});
 };

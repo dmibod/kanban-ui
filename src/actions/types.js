@@ -11,11 +11,8 @@ export const RENAME_BOARD = 'RENAME_BOARD';
 export const SHARE_BOARD = 'SHARE_BOARD';
 export const LAYOUT_BOARD = 'LAYOUT_BOARD';
 
-export const FETCH_LANE_LANES = 'FETCH_LANE_LANES'
-
+export const FETCH_LANE = 'FETCH_LANE'
 export const CREATE_LANE = 'CREATE_LANE';
-
-export const FETCH_LANE_CARDS = 'FETCH_LANE_CARDS'
 
 export const CREATE_CARD = 'CREATE_CARD';
 export const APPEND_CARD = 'APPEND_CARD';

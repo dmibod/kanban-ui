@@ -4,8 +4,6 @@ import worker, { LAYOUTBOARD } from '../apis/worker';
 //import history from '../history';
 
 import {
-  FETCH_BOARD_LANES,
-
   CREATE_BOARD,
   FETCH_BOARDS,
   FETCH_BOARD,
@@ -20,12 +18,6 @@ export const setVisibilityFilter = filter => ({
   type: 'SET_VISIBILITY_FILTER',
   filter
 });
-
-export const fetchBoardLanes = id => async dispatch => {
-  const response = await server.get(`/v1/api/board/${id}/lanes`);
-
-  dispatch({ type: FETCH_BOARD_LANES, payload: { id, lanes: response.data }});
-};
 
 export const fetchBoards = owner => async dispatch => {
   const response = owner

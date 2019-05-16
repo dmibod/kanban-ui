@@ -1,5 +1,6 @@
 import { fetchBoard } from '../actions/board';
 import { fetchLane } from '../actions/lane';
+import { fetchCard } from '../actions/card';
 import store from '../store';
 
 const REFRESHCARDNOTIFICATION = 0;
@@ -47,10 +48,12 @@ function sendMessage(ws, msg) {
 function processNotification(msg) {
   switch (msg.type) {
     case REFRESHCARDNOTIFICATION:
+      fetchCard(msg.board_id, msg.id)(store.dispatch);
+      return;
     case REFRESHLANENOTIFICATION:
-    fetchLane(msg.board_id, msg.id)(store.dispatch);
-    return;
-  case REFRESHBOARDNOTIFICATION:
+      fetchLane(msg.board_id, msg.id)(store.dispatch);
+      return;
+    case REFRESHBOARDNOTIFICATION:
       fetchBoard(msg.board_id)(store.dispatch);
       return;
     case REMOVECARDNOTIFICATION:

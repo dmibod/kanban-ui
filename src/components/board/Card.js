@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default ({ card, deleteCard }) => {
+export default ({ card, deleteCard, editable }) => {
   return (
     <div className="card-wrapper float-left m-3">
       <div className="card shadow item">
@@ -10,7 +10,7 @@ export default ({ card, deleteCard }) => {
               <div className="mr-auto">{card.name}</div>
               <div
                 className="hover-card-badges"
-                style={{ display: /*editable*/ true ? 'inline' : 'none' }}
+                style={{ display: editable ? 'inline' : 'none' }}
               >
                 <i className="fa fa-fw fa-pencil text-muted" title="edit" />
                 <i
@@ -24,12 +24,7 @@ export default ({ card, deleteCard }) => {
         </div>
         <div className="card-body py-2" style={{ overflow: 'hidden' }}>
           <div className="card-body-wrapper">
-            <div className="card-text small text-justify">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Aspernatur odio fuga perspiciatis nesciunt rem quasi vero deleniti
-              sed beatae ex laborum dignissimos ipsam doloremque, expedita, quae
-              eum voluptates! Ut, necessitatibus!
-            </div>
+            <div className="card-text small text-justify">{card.description}</div>
           </div>
         </div>
       </div>

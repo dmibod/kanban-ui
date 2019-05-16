@@ -8,41 +8,43 @@ import Card from './Card';
 
 class CardLane extends React.Component {
   renderCards() {
-    const { lane } = this.props;
+    const { lane, board, editable } = this.props;
 
-    if (!lane || !lane.cards) {
+    if (!lane || !lane.children) {
       return null;
     }
 
-    return lane.cards.map(card => <Card key={card.id} card={card} deleteCard={this.deleteCard}/>);
+    return lane.children.map(id => board.cards[id]).map(card => <Card key={card.id} card={card} deleteCard={this.deleteCard} editable={editable}/>);
   }
 
   createCard = () => {
-    const { lane, board, createCard } = this.props;
+    const { lane, board, createCard, editable } = this.props;
 
-    if (lane && createCard) {
-      createCard(board.id, 'Card', lane.id);
+    if (editable && lane && createCard) {
+      createCard(board.id, lane.id, 'Card');
     }
   };
 
   deleteCard = (id) => {
-    const { lane, board, deleteCard } = this.props;
+    const { lane, board, deleteCard, editable } = this.props;
 
-    if (lane && deleteCard) {
+    if (editable && lane && deleteCard) {
       deleteCard(board.id, id, lane.id);
     }
   };
 
   render() {
+    const { lane, editable } = this.props;
+
     return (
       <div className="lane-wrapper">
         <div className="lane-header card-header border rounded-0">
           <div className="card-title mb-0">
             <div className="row mx-0">
-              <div className="mr-auto">{this.props.lane.name}</div>
+              <div className="mr-auto">{lane.name}</div>
               <div
                 className="hover-card-badges"
-                style={{ display: /*editable*/ true ? 'inline' : 'none' }}
+                style={{ display: editable ? 'inline' : 'none' }}
               >
                 <i
                   className="fa fa-fw fa-file text-muted"
@@ -65,28 +67,9 @@ class CardLane extends React.Component {
   }
 }
 
-function findLane(lanes, id) {
-  lanes = lanes || [];
-
-  let found = lanes.find(el => el.id === id);
-
-  if (found) {
-    return found;
-  }
-
-  for (let i = 0; i < lanes.length; i++) {
-    found = findLane(lanes[i].lanes, id);
-    if (found) {
-      return found;
-    }
-  }
-
-  return null;
-}
-
 const mapStateToProps = (state, ownProps) => {
   let board = state.boards[ownProps.board.id];
-  let lane  = findLane(board.lanes, ownProps.lane.id);
+  let lane  = board.lanes[ownProps.lane.id];
   return { board, lane };
 };
 

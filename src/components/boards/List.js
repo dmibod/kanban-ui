@@ -9,12 +9,16 @@ import {
 
 class List extends React.Component {
   componentDidMount() {
-    this.props.fetchBoards(this.props.currentUserId);
+    let { fetchBoards, currentUserId } = this.props;
+
+    fetchBoards(currentUserId);
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.currentUserId !== prevProps.currentUserId) {
-      this.props.fetchBoards(this.props.currentUserId);
+    let { fetchBoards, currentUserId } = this.props;
+
+    if (currentUserId !== prevProps.currentUserId) {
+      fetchBoards(currentUserId);
     }
   }
 

@@ -57,7 +57,7 @@ const Header = ({ editable, update, layout, lane, board }) => {
       <button
         className="btn btn-sm text-white"
         onClick={e => {
-          lane('Lane', board.id);
+          lane(board.id, 'Lane');
         }}
       >
         <i className="fa fa-fw fa-file" />
@@ -109,12 +109,8 @@ const Header = ({ editable, update, layout, lane, board }) => {
   );
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = () => {
   return {
-    editable:
-      state.auth.isSignedIn &&
-      ownProps.board &&
-      ownProps.board.owner === state.auth.userProfile.id
   };
 };
 

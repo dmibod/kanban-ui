@@ -7,7 +7,7 @@ import {
 
 } from './types';
 
-export const createCard = (boardId, name, laneId) => async dispatch => {
+export const createCard = (boardId, laneId, name) => async dispatch => {
   const response = await server.post(`/v1/api/board/${boardId}/cards`, { name });
 
   worker(boardId, [{ id: response.data.id, board_id: boardId, type: APPENDCHILD, payload: { parent_id: laneId } }]);

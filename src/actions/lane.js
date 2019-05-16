@@ -15,20 +15,20 @@ export const fetchLaneLanes = id => async dispatch => {
   dispatch({ type: FETCH_LANE_LANES, payload: { id, lanes: response.data }});
 };
 
-export const createLane = (name, parentId) => async dispatch => {
-  const response = await server.post(`/v1/api/board/${parentId}/lanes`, { name, layout: 'H', type: 'L' });
+export const createLane = (boardId, name) => async dispatch => {
+  const response = await server.post(`/v1/api/board/${boardId}/lanes`, { name, layout: 'H', type: 'L' });
 
-  worker(parentId, [{ id: response.data.id, board_id: parentId, type: APPENDCHILD, payload: { parent_id: parentId } }]);
+  worker(boardId, [{ id: response.data.id, board_id: boardId, type: APPENDCHILD, payload: { parent_id: boardId } }]);
 
-  dispatch({ type: CREATE_LANE, payload: response.data });
+  dispatch({ type: CREATE_LANE, payload: { ...response.data, boardId } });
 };
 
-export const createCardLane = (boardId, name, laneId) => async dispatch => {
+export const createCardLane = (boardId, laneId, name) => async dispatch => {
   const response = await server.post(`/v1/api/board/${boardId}/lanes`, { name, type: 'C' });
 
   worker(boardId, [{ id: response.data.id, board_id: boardId, type: APPENDCHILD, payload: { parent_id: laneId } }]);
 
-  dispatch({ type: CREATE_LANE, payload: response.data });
+  dispatch({ type: CREATE_LANE, payload: { ...response.data, boardId } });
 };
 
 export const fetchLaneCards = id => async dispatch => {

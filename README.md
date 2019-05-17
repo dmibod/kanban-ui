@@ -1,3 +1,3 @@
 # Kanban
 
-## [URL](https://dmibod.github.io/kanban-ui/)
+## [Live Demo](https://dmibod.github.io/kanban-ui/)

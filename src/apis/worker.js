@@ -2,11 +2,13 @@ import server from './index';
 
 export const UPDATECARD = 0;
 export const REMOVECARD = 1;
-export const EXCLUDECHILD = 2;
-export const APPENDCHILD = 3;
-export const INSERTBEFORE = 4;
-export const INSERTAFTER = 5;
-export const LAYOUTBOARD = 6;
+export const UPDATELANE = 2;
+export const REMOVELANE = 3;
+export const EXCLUDECHILD = 4;
+export const APPENDCHILD = 5;
+export const INSERTBEFORE = 6;
+export const INSERTAFTER = 7;
+export const LAYOUTBOARD = 8;
 
 let sharedWorker = null;
 

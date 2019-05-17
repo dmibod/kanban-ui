@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { deleteLane } from '../../actions/lane';
 import { createCard, moveCard, deleteCard } from '../../actions/card';
 import Card from './Card';
 
@@ -48,6 +49,14 @@ class CardLane extends React.Component {
     }
   };
 
+  deleteLane = () => {
+    const { lane, board, deleteLane, parentId, editable } = this.props;
+
+    if (editable && lane && deleteLane) {
+      deleteLane(board.id, lane.id, parentId);
+    }
+  };
+
   render() {
     const { lane, editable } = this.props;
 
@@ -70,7 +79,7 @@ class CardLane extends React.Component {
                 <i
                   className="fa fa-fw fa-trash text-muted"
                   title="delete"
-                  /*onClick={() => deleteLane(id)}*/
+                  onClick={this.deleteLane}
                 />
               </div>
             </div>
@@ -105,5 +114,5 @@ const mapStateToProps = (state, ownProps) => {
 
 export default connect(
   mapStateToProps,
-  { createCard, moveCard, deleteCard }
+  { createCard, moveCard, deleteCard, deleteLane }
 )(CardLane);

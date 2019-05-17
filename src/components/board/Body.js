@@ -10,7 +10,7 @@ class Body extends React.Component {
       return null;
     }
 
-    return board.children.map(id => board.lanes[id]).map(lane => <Lane key={lane.id} lane={lane} board={board} editable={editable}/>);
+    return board.children.map(id => board.lanes[id]).map(lane => <Lane key={lane.id} lane={lane} board={board} parentId={board.id} editable={editable}/>);
   }
 
   render() {

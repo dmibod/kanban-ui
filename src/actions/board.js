@@ -10,7 +10,8 @@ import {
   DELETE_BOARD,
   RENAME_BOARD,
   SHARE_BOARD,
-  LAYOUT_BOARD
+  LAYOUT_BOARD,
+  NOTIFY_DELETE_BOARD
 
 } from './types';
 
@@ -63,3 +64,6 @@ export const deleteBoard = id => async dispatch => {
   dispatch({ type: DELETE_BOARD, payload: id });
 };
 
+export const notifyDeleteBoard = id => dispatch => {
+  dispatch({ type: NOTIFY_DELETE_BOARD, payload: id });
+};

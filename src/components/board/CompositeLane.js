@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createLane, createCardLane } from '../../actions/lane';
+import { createLane, createCardLane, deleteLane } from '../../actions/lane';
 import Lane from './Lane';
 
 class CompositeLane extends React.Component {
@@ -11,8 +11,8 @@ class CompositeLane extends React.Component {
       return null;
     }
 
-    return lane.children.map(id => board.lanes[id]).map(lane => (
-      <Lane key={lane.id} lane={lane} board={board} editable={editable}/>
+    return lane.children.map(id => board.lanes[id]).map(child => (
+      <Lane key={child.id} lane={child} board={board} parentId={lane.id} editable={editable}/>
     ));
   }
 
@@ -21,6 +21,14 @@ class CompositeLane extends React.Component {
 
     if (editable && lane && createCardLane) {
       createCardLane(board.id, lane.id, 'CardLane');
+    }
+  };
+
+  deleteLane = () => {
+    const { lane, board, deleteLane, parentId, editable } = this.props;
+
+    if (editable && lane && deleteLane) {
+      deleteLane(board.id, lane.id, parentId);
     }
   };
 
@@ -46,7 +54,7 @@ class CompositeLane extends React.Component {
                 <i
                   className="fa fa-fw fa-trash text-muted"
                   title="delete"
-                  /*onClick={() => deleteLane(id)}*/
+                  onClick={this.deleteLane}
                 />
               </div>
             </div>
@@ -66,5 +74,5 @@ const mapStateToProps = (state, ownProps) => {
 
 export default connect(
   mapStateToProps,
-  { createLane, createCardLane }
+  { createLane, createCardLane, deleteLane }
 )(CompositeLane);

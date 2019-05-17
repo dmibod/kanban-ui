@@ -26,15 +26,15 @@ export const createCard = (boardId, laneId, name) => async dispatch => {
 };
 
 export const moveCard = (boardId, fromLaneId, toLaneId, cardId) => async dispatch => {
+  dispatch({ type: EXCLUDE_CARD, payload: { boardId, laneId: fromLaneId, cardId } });
+  dispatch({ type: APPEND_CARD, payload: { boardId, laneId: toLaneId, cardId } });
+
   let cmds = [
     { id: cardId, board_id: boardId, type: EXCLUDECHILD, payload: { parent_id: fromLaneId } },
     { id: cardId, board_id: boardId, type: APPENDCHILD, payload: { parent_id: toLaneId } }
   ];
 
   worker(boardId, cmds);
-
-  dispatch({ type: EXCLUDE_CARD, payload: { boardId, fromLaneId, cardId } });
-  dispatch({ type: APPEND_CARD, payload: { boardId, toLaneId, cardId } });
 };
 
 export const excludeCard = (boardId, laneId, cardId) => async dispatch => {

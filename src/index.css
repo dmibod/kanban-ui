@@ -56,6 +56,10 @@ ul.card-badges {
   visibility: hidden;
 }
 
+.hover-card-badges > i.fa {
+  margin-left: 5px;
+}
+
 .card-header:hover .hover-card-badges {
   visibility: visible;
 }

@@ -105,8 +105,10 @@ export default (state = {}, action) => {
 
     case APPEND_LANE:
       board = state[action.payload.boardId];
-      if (board.lanes[action.payload.parentId]) {
-        board.lanes[action.payload.parentId].children.push(
+      let lane = board.lanes[action.payload.parentId];
+      if (lane) {
+        lane.children = lane.children || [];
+        lane.children.push(
           action.payload.laneId
         );
       } else {

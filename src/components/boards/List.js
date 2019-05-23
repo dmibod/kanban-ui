@@ -61,7 +61,7 @@ TodoList.propTypes = {
 
 const mapStateToProps = state => {
   let boards = Object.values(state.boards);
-  let filter = state.visibilityFilter.toLowerCase();
+  let filter = state.filter.toLowerCase();
 
   return {
     boards: boards.filter(board => (board.name || '').toLowerCase().includes(filter)),

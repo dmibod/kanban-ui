@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
 import authReducer from './authReducer';
 import boardReducer from './boardReducer';
-import visibilityFilter from './visibilityFilter'
+import filterReducer from './filterReducer'
 
 export default combineReducers({
   auth: authReducer,
   boards: boardReducer,
-  visibilityFilter
+  filter: filterReducer
 })

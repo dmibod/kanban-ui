@@ -1,10 +1,9 @@
 import server from '../apis/index';
 import worker, { LAYOUTBOARD } from '../apis/worker';
-//import { root } from '../apis/urls';
-//import history from '../history';
 
 import {
   CREATE_BOARD,
+  FILTER_BOARDS,
   FETCH_BOARDS,
   FETCH_BOARD,
   DELETE_BOARD,
@@ -15,8 +14,8 @@ import {
 
 } from './types';
 
-export const setVisibilityFilter = filter => ({
-  type: 'SET_VISIBILITY_FILTER',
+export const filterBoards = filter => ({
+  type: FILTER_BOARDS,
   filter
 });
 

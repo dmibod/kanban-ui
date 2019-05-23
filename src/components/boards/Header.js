@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createBoard, setVisibilityFilter } from '../../actions/board';
+import { createBoard, filterBoards } from '../../actions/board';
 import GoogleAuth from '../GoogleAuth';
 
 const Header = ({ secure, owner, create, filter }) => {
@@ -76,7 +76,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   create: (title, owner) => createBoard(title, owner)(dispatch),
-  filter: title => dispatch(setVisibilityFilter(title))
+  filter: title => dispatch(filterBoards(title))
 });
 
 export default connect(

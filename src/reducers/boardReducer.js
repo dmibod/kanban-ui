@@ -57,6 +57,7 @@ const formatBoard = payload => {
 
 export default (state = {}, action) => {
   let board = null;
+  let lane = null;
   switch (action.type) {
     case FETCH_BOARDS:
       return { ..._.mapKeys(action.payload, 'id') };
@@ -82,7 +83,9 @@ export default (state = {}, action) => {
 
     case FETCH_LANE:
       board = state[action.payload.boardId];
-      board.lanes[action.payload.id] = _.omit(action.payload, 'boardId');
+      lane = _.omit(action.payload, 'boardId');
+      lane.children = lane.children || [];
+      board.lanes[action.payload.id] = lane;
       return { ...state, [board.id]: { ...board } };
 
     case CREATE_LANE:
@@ -105,7 +108,7 @@ export default (state = {}, action) => {
 
     case APPEND_LANE:
       board = state[action.payload.boardId];
-      let lane = board.lanes[action.payload.parentId];
+      lane = board.lanes[action.payload.parentId];
       if (lane) {
         lane.children = lane.children || [];
         lane.children.push(

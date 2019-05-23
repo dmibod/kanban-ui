@@ -4,13 +4,24 @@ import Lane from './Lane';
 
 class Body extends React.Component {
   renderLanes() {
-    const { board, editable } = this.props;
+    const { board, editable, onConfirm } = this.props;
 
     if (!board || !board.children) {
       return null;
     }
 
-    return board.children.map(id => board.lanes[id]).map(lane => <Lane key={lane.id} lane={lane} board={board} parentId={board.id} editable={editable}/>);
+    return board.children
+      .map(id => board.lanes[id])
+      .map(lane => (
+        <Lane
+          key={lane.id}
+          lane={lane}
+          board={board}
+          parentId={board.id}
+          editable={editable}
+          onConfirm={onConfirm}
+        />
+      ));
   }
 
   render() {
@@ -28,4 +39,3 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 export default connect(mapStateToProps)(Body);
-

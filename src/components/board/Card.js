@@ -1,6 +1,7 @@
 import React from 'react';
+import Body from './card/Body';
 
-export default ({ card, lane, deleteCard, editable }) => {
+export default ({ board, lane, card, deleteCard, editable }) => {
   return (
     <div
       id={card.id}
@@ -22,23 +23,17 @@ export default ({ card, lane, deleteCard, editable }) => {
                 className="hover-card-badges"
                 style={{ display: editable ? 'inline' : 'none' }}
               >
-                <i className="fa fa-fw fa-pencil text-muted" title="edit" />
+                <i className="fa fa-fw fa-pencil text-muted card-badge" title="edit" />
                 <i
-                  className="fa fa-fw fa-trash text-muted"
-                  title="delete"
+                  className="fa fa-fw fa-trash text-muted card-badge"
+                  title="edit"
                   onClick={() => deleteCard(card.id)}
                 />
               </div>
             </div>
           </div>
         </div>
-        <div className="card-body py-2" style={{ overflow: 'hidden' }}>
-          <div className="card-body-wrapper">
-            <div className="card-text small text-justify">
-              {card.description}
-            </div>
-          </div>
-        </div>
+        <Body card={card} />
       </div>
     </div>
   );

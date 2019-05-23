@@ -17,6 +17,7 @@ class CardLane extends React.Component {
       .map(card => (
         <Card
           key={card.id}
+          board={board}
           card={card}
           lane={lane}
           deleteCard={this.deleteCard}
@@ -42,18 +43,19 @@ class CardLane extends React.Component {
   };
 
   deleteCard = id => {
-    const { lane, board, deleteCard, editable } = this.props;
+    const { lane, board, deleteCard, editable, onConfirm } = this.props;
 
     if (editable && lane && deleteCard) {
-      deleteCard(board.id, id, lane.id);
+      let card = board.cards[id];
+      onConfirm(undefined, `Delete ${card.name}?`, () => deleteCard(board.id, id, lane.id));
     }
   };
 
   deleteLane = () => {
-    const { lane, board, deleteLane, parentId, editable } = this.props;
+    const { lane, board, deleteLane, parentId, editable, onConfirm } = this.props;
 
     if (editable && lane && deleteLane) {
-      deleteLane(board.id, lane.id, parentId);
+      onConfirm(undefined, `Delete ${lane.name}?`, () => deleteLane(board.id, lane.id, parentId));
     }
   };
 

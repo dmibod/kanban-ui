@@ -5,14 +5,14 @@ import Lane from './Lane';
 
 class CompositeLane extends React.Component {
   renderLanes() {
-    const { lane, board, editable } = this.props;
+    const { lane, board, editable, onConfirm } = this.props;
 
     if (!lane || !lane.children) {
       return null;
     }
 
     return lane.children.map(id => board.lanes[id]).map(child => (
-      <Lane key={child.id} lane={child} board={board} parentId={lane.id} editable={editable}/>
+      <Lane key={child.id} lane={child} board={board} parentId={lane.id} editable={editable} onConfirm={onConfirm}/>
     ));
   }
 
@@ -25,10 +25,10 @@ class CompositeLane extends React.Component {
   };
 
   deleteLane = () => {
-    const { lane, board, deleteLane, parentId, editable } = this.props;
+    const { lane, board, deleteLane, parentId, editable, onConfirm } = this.props;
 
     if (editable && lane && deleteLane) {
-      deleteLane(board.id, lane.id, parentId);
+      onConfirm(undefined, `Delete ${lane.name}?`, () => deleteLane(board.id, lane.id, parentId));
     }
   };
 

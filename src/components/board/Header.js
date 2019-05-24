@@ -110,8 +110,7 @@ const Header = ({ editable, update, layout, lane, board }) => {
 };
 
 const mapStateToProps = () => {
-  return {
-  };
+  return {};
 };
 
 export default connect(

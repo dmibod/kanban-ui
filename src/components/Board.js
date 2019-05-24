@@ -4,7 +4,7 @@ import Header from './board/Header';
 import Body from './board/Body';
 import socket from '../apis/socket';
 import { Modal, Button } from 'react-bootstrap';
-import { fetchBoard } from '../actions/board';
+import { fetchBoard, cleanBoard } from '../actions/board';
 
 class Board extends React.Component {
   constructor(props, context) {
@@ -31,29 +31,38 @@ class Board extends React.Component {
   }
 
   componentWillUnmount() {
+    const { cleanBoard } = this.props;
+    
+    cleanBoard();
+
     socket(JSON.stringify({ id: '' }));
   }
 
   handleClose(fn) {
     if (fn && typeof fn == 'function') {
-       fn();
+      fn();
     }
     this.setState({ show: false });
   }
 
   handleShow(title = 'Confirm', question = 'Are you sure?', fn) {
-    this.setState({ show: true, title, question, yesFn: () => this.handleClose(fn) });
+    this.setState({
+      show: true,
+      title,
+      question,
+      yesFn: () => this.handleClose(fn)
+    });
   }
 
   render() {
     const { board, editable } = this.props;
 
     if (!board) {
-      return <div>Loading...</div>;
+      return null;
     }
 
     return (
-      <div>
+      <React.Fragment>
         <Header board={board} editable={editable} />
         <Body board={board} editable={editable} onConfirm={this.handleShow} />
         <Modal show={this.state.show} onHide={this.handleClose}>
@@ -69,20 +78,20 @@ class Board extends React.Component {
               Yes
             </Button>
           </Modal.Footer>
-        </Modal>        
-      </div>
+        </Modal>
+      </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  let board = state.boards[ownProps.match.params.id];
-  let editable = state.auth.isSignedIn && board && board.owner === state.auth.userProfile.id
+  let board = state.board && state.board.id === ownProps.match.params.id ? state.board : null;
+  let editable = state.auth.isSignedIn && board && board.owner === state.auth.userProfile.id;
 
   return { board, editable };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchBoard }
+  { fetchBoard, cleanBoard }
 )(Board);

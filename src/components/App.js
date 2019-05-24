@@ -1,17 +1,27 @@
 import React from 'react';
 import Boards from './Boards';
 import Board from './Board';
+import Header from './Header';
 import { Router, Route, Switch } from 'react-router-dom';
 import history from '../history';
 
 const App = () => (
   <Router history={history}>
-    <div>
+    <React.Fragment>
+      <Header />
       <Switch>
-        <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/`} exact component={Boards} />
-        <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/board/:id`} component={Board} />
+        <Route
+          path={`${process.env.REACT_APP_CONTEXT_ROOT}/`}
+          exact
+          component={Boards}
+        />
+        <Route
+          path={`${process.env.REACT_APP_CONTEXT_ROOT}/board/:id`}
+          exact
+          component={Board}
+        />
       </Switch>
-    </div>
+    </React.Fragment>
   </Router>
 );
 

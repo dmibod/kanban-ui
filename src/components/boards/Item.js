@@ -37,7 +37,7 @@ const Item = ({ id, name, description, shared, editable, shareBoard, deleteBoard
               <i
                 className="fa fa-fw fa-trash text-muted"
                 title="delete"
-                onClick={() => deleteBoard(id)}
+                onClick={() => deleteBoard(id, name)}
               />
             </div>
           </div>

@@ -1,6 +1,6 @@
-import { fetchBoard, notifyDeleteBoard } from '../actions/board';
-import { fetchLane, notifyDeleteLane } from '../actions/lane';
-import { fetchCard, notifyDeleteCard } from '../actions/card';
+import { fetchBoard, deleteBoard } from '../actions/board';
+import { fetchLane, deleteLane } from '../actions/lane';
+import { fetchCard, deleteCard } from '../actions/card';
 import store from '../store';
 
 const REFRESHCARDNOTIFICATION = 0;
@@ -31,11 +31,11 @@ function createSocket(msg) {
   };
 
   conn.onmessage = function(evt) {
-    const notifiactions = JSON.parse(evt.data);
-    console.log('websocket: receive', notifiactions);
-    if (notifiactions && notifiactions.length) {
-      for (let notification of notifiactions) {
-        processNotification(notification);
+    const ns = JSON.parse(evt.data);
+    console.log('websocket: receive', ns);
+    if (ns && ns.length) {
+      for (let n of ns) {
+        processNotification(n);
       }
     } else {
       console.log('array is expected by socket!');
@@ -65,13 +65,13 @@ function processNotification(msg) {
       fetchBoard(msg.board_id)(store.dispatch);
       return;
     case REMOVECARDNOTIFICATION:
-      notifyDeleteCard(msg.board_id, msg.id)(store.dispatch);
+      deleteCard(msg.board_id, undefined, msg.id, true)(store.dispatch);
       return;
     case REMOVELANENOTIFICATION:
-      notifyDeleteLane(msg.board_id, msg.id)(store.dispatch);
+      deleteLane(msg.board_id, undefined, msg.id, true)(store.dispatch);
       return;
     case REMOVEBOARDNOTIFICATION:
-      notifyDeleteBoard(msg.board_id)(store.dispatch);
+      deleteBoard(msg.board_id, true)(store.dispatch);
       return;
     default:
   }

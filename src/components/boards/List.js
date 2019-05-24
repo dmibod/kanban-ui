@@ -22,6 +22,14 @@ class List extends React.Component {
     }
   }
 
+  deleteBoard = (id, name) => {
+    const { onConfirm, deleteBoard } = this.props;
+
+    if (onConfirm && deleteBoard) {
+      onConfirm(undefined, `Delete ${name}?`, () => deleteBoard(id, false));
+    }
+  };
+
   render() {
     return (
       <div className="container-fluid board-list">
@@ -34,7 +42,7 @@ class List extends React.Component {
                   ...board,
                   editable: this.props.isSignedIn && this.props.currentUserId === board.owner,
                   shareBoard: this.props.shareBoard,
-                  deleteBoard: this.props.deleteBoard
+                  deleteBoard: this.deleteBoard
                 }}
               />
             ))}

@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createBoard, filterBoards } from '../../actions/board';
-import GoogleAuth from '../GoogleAuth';
+import { createBoard, filterBoards } from '../actions/board';
+import GoogleAuth from './GoogleAuth';
 
-const Header = ({ secure, owner, create, filter }) => {
+const Header = ({ secure, owner, visible, createBoard, filterBoards }) => {
   let input;
 
   const createButton = () => {
@@ -20,7 +20,7 @@ const Header = ({ secure, owner, create, filter }) => {
               return;
             }
             console.log(secure, owner);
-            create(input.value, secure ? owner : 'anonymous');
+            createBoard(input.value, secure ? owner : 'anonymous');
             input.value = '';
           }}
         >
@@ -31,7 +31,7 @@ const Header = ({ secure, owner, create, filter }) => {
   };
 
   return (
-    <nav className="navbar bg-dark navbar-dark fixed-top">
+    <nav className="navbar bg-dark navbar-dark fixed-top" style={{visibility: visible ? 'visible' : 'hidden'}}>
       <div className="container-fluid no-gutters">
         <div className="col-12 col-sm-9 col-md-6 col-lg-3 ml-auto mr-auto">
           <form
@@ -55,7 +55,7 @@ const Header = ({ secure, owner, create, filter }) => {
                 <button
                   className="btn btn-info btn-sm"
                   onClick={e => {
-                    filter(input.value.trim());
+                    filterBoards(input.value.trim());
                   }}
                 >
                   <i className="fa fa-fw fa-search" />
@@ -71,15 +71,11 @@ const Header = ({ secure, owner, create, filter }) => {
 
 const mapStateToProps = state => ({
   secure: state.auth.isSignedIn,
-  owner: state.auth.userProfile && state.auth.userProfile.id
-});
-
-const mapDispatchToProps = dispatch => ({
-  create: (title, owner) => createBoard(title, owner)(dispatch),
-  filter: title => dispatch(filterBoards(title))
+  owner: state.auth.userProfile && state.auth.userProfile.id,
+  visible: state.board == null
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { createBoard, filterBoards }
 )(Header);

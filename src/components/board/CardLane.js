@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { deleteLane } from '../../actions/lane';
-import { createCard, moveCard, deleteCard } from '../../actions/card';
+import { excludeAndDeleteLane } from '../../actions/lane';
+import { createCard, moveCard, excludeAndDeleteCard } from '../../actions/card';
 import Card from './Card';
 
 class CardLane extends React.Component {
@@ -14,6 +14,7 @@ class CardLane extends React.Component {
 
     return lane.children
       .map(id => board.cards[id])
+      .filter(card => card)
       .map(card => (
         <Card
           key={card.id}
@@ -43,19 +44,19 @@ class CardLane extends React.Component {
   };
 
   deleteCard = id => {
-    const { lane, board, deleteCard, editable, onConfirm } = this.props;
+    const { lane, board, excludeAndDeleteCard, editable, onConfirm } = this.props;
 
-    if (editable && lane && deleteCard) {
+    if (editable && lane && excludeAndDeleteCard) {
       let card = board.cards[id];
-      onConfirm(undefined, `Delete ${card.name}?`, () => deleteCard(board.id, id, lane.id));
+      onConfirm(undefined, `Delete ${card.name}?`, () => excludeAndDeleteCard(board.id, lane.id, id));
     }
   };
 
   deleteLane = () => {
-    const { lane, board, deleteLane, parentId, editable, onConfirm } = this.props;
+    const { lane, board, excludeAndDeleteLane, parentId, editable, onConfirm } = this.props;
 
-    if (editable && lane && deleteLane) {
-      onConfirm(undefined, `Delete ${lane.name}?`, () => deleteLane(board.id, lane.id, parentId));
+    if (editable && lane && excludeAndDeleteLane) {
+      onConfirm(undefined, `Delete ${lane.name}?`, () => excludeAndDeleteLane(board.id, parentId, lane.id));
     }
   };
 
@@ -109,12 +110,12 @@ class CardLane extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  let board = state.boards[ownProps.board.id];
+  let board = state.board;
   let lane = board.lanes[ownProps.lane.id];
   return { board, lane };
 };
 
 export default connect(
   mapStateToProps,
-  { createCard, moveCard, deleteCard, deleteLane }
+  { createCard, moveCard, excludeAndDeleteCard, excludeAndDeleteLane }
 )(CardLane);

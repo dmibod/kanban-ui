@@ -1,25 +1,18 @@
 import _ from 'lodash';
 import {
-  FETCH_BOARDS,
   FETCH_BOARD,
-  CREATE_BOARD,
-  RENAME_BOARD,
-  SHARE_BOARD,
-  DELETE_BOARD,
+  CLEAN_BOARD,
   LAYOUT_BOARD,
-  NOTIFY_DELETE_BOARD,
   FETCH_LANE,
   APPEND_LANE,
   EXCLUDE_LANE,
   CREATE_LANE,
   DELETE_LANE,
-  NOTIFY_DELETE_LANE,
   FETCH_CARD,
   APPEND_CARD,
   EXCLUDE_CARD,
   CREATE_CARD,
-  DELETE_CARD,
-  NOTIFY_DELETE_CARD
+  DELETE_CARD
 } from '../actions/types';
 
 const formatBoard = payload => {
@@ -55,106 +48,100 @@ const formatBoard = payload => {
   };
 };
 
-export default (state = {}, action) => {
-  let board = null;
+export default (state = null, action) => {
   let lane = null;
   switch (action.type) {
-    case FETCH_BOARDS:
-      return { ..._.mapKeys(action.payload, 'id') };
     case FETCH_BOARD:
-      return { ...state, [action.payload.id]: formatBoard(action.payload) };
-    case CREATE_BOARD:
-      return { ...state, [action.payload.id]: action.payload };
-    case RENAME_BOARD:
-      return { ...state, [action.payload.id]: action.payload };
-    case SHARE_BOARD:
-      return { ...state, [action.payload.id]: action.payload };
-
-    case NOTIFY_DELETE_BOARD:
-    case DELETE_BOARD:
-      return _.omit(state, action.payload);
+      return formatBoard(action.payload);
+    case CLEAN_BOARD:
+      return null;
 
     case LAYOUT_BOARD:
-      board = {
-        ...state[action.payload.id],
-        layout: action.payload.layout
-      };
-      return { ...state, [action.payload.id]: board };
+      return { ...state, layout: action.payload };
 
     case FETCH_LANE:
-      board = state[action.payload.boardId];
-      lane = _.omit(action.payload, 'boardId');
-      lane.children = lane.children || [];
-      board.lanes[action.payload.id] = lane;
-      return { ...state, [board.id]: { ...board } };
+      return {
+        ...state,
+        lanes: {
+          ...state.lanes,
+          [action.payload.id]: {
+            ...action.payload,
+            children: action.payload.children || []
+          }
+        }
+      };
 
     case CREATE_LANE:
-      board = state[action.payload.boardId];
-      board.lanes[action.payload.id] = _.omit(
-        { ...action.payload, children: [] },
-        'boardId'
-      );
-      return { ...state, [board.id]: board };
+      return {
+        ...state,
+        lanes: {
+          ...state.lanes,
+          [action.payload.id]: {
+            ...action.payload,
+            children: []
+          }
+        }
+      };
 
     case DELETE_LANE:
-    case NOTIFY_DELETE_LANE:
-      board = state[action.payload.boardId];
-      if (board.lanes[action.payload.laneId]) {
-        board.lanes = _.omit(board.lanes, action.payload.laneId);
-        return { ...state, [board.id]: { ...board } };
+      return state.lanes[action.payload.laneId]
+        ? { ...state, lanes: _.omit(state.lanes, action.payload.laneId) }
+        : state;
+
+    case APPEND_LANE:
+      lane = state.lanes[action.payload.parentId];
+      if (lane) {
+        lane.children = lane.children || [];
+        lane.children.push(action.payload.laneId);
+      } else {
+        state.children.push(action.payload.laneId);
+      }
+      return { ...state };
+
+    case EXCLUDE_LANE:
+      if (state.lanes[action.payload.parentId]) {
+        state.lanes[action.payload.parentId].children = _.pull(
+          state.lanes[action.payload.parentId].children,
+          action.payload.laneId
+        );
+      } else {
+        state.children = _.pull(state.children, action.payload.laneId);
+      }
+      return { ...state };
+
+    case APPEND_CARD:
+      if (state.lanes[action.payload.laneId]) {
+        state.lanes[action.payload.laneId].children.push(action.payload.cardId);
+        return { ...state };
       } else {
         return state;
       }
 
-    case APPEND_LANE:
-      board = state[action.payload.boardId];
-      lane = board.lanes[action.payload.parentId];
-      if (lane) {
-        lane.children = lane.children || [];
-        lane.children.push(
-          action.payload.laneId
-        );
-      } else {
-        board.children.push(action.payload.laneId);
-      }
-      return { ...state, [board.id]: board };
-
-    case EXCLUDE_LANE:
-      board = state[action.payload.boardId];
-      if (board.lanes[action.payload.parentId]) {
-        board.lanes[action.payload.parentId].children = _.pull(
-          board.lanes[action.payload.parentId].children,
-          action.payload.laneId
-        );
-      } else {
-        board.children = _.pull(board.children, action.payload.laneId);
-      }
-      return { ...state, [board.id]: { ...board } };
-
-    case APPEND_CARD:
-      board = state[action.payload.boardId];
-      board.lanes[action.payload.laneId].children.push(action.payload.cardId);
-      return { ...state, [board.id]: board };
-
     case EXCLUDE_CARD:
-      board = state[action.payload.boardId];
-      board.lanes[action.payload.laneId].children = _.pull(
-        board.lanes[action.payload.laneId].children,
-        action.payload.cardId
-      );
-      return { ...state, [board.id]: board };
+      if (state.lanes[action.payload.laneId]) {
+        state.lanes[action.payload.laneId].children = _.pull(
+          state.lanes[action.payload.laneId].children,
+          action.payload.cardId
+        );
+        return { ...state };
+      } else {
+        return state;
+      }
 
     case CREATE_CARD:
     case FETCH_CARD:
-      board = state[action.payload.boardId];
-      board.cards[action.payload.id] = _.omit(action.payload, 'boardId');
-      return { ...state, [board.id]: board };
+      return {
+        ...state,
+        cards: {
+          ...state.cards,
+          [action.payload.id]: action.payload
+        }
+      };
 
     case DELETE_CARD:
-    case NOTIFY_DELETE_CARD:
-      board = state[action.payload.boardId];
-      board.cards = _.omit(board.cards, action.payload.cardId);
-      return { ...state, [board.id]: board };
+      return state.cards[action.payload.cardId]
+        ? { ...state, cards: _.omit(state.cards, action.payload.cardId) }
+        : state;
 
     default:
       return state;

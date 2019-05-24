@@ -6,12 +6,11 @@ import {
   FILTER_BOARDS,
   FETCH_BOARDS,
   FETCH_BOARD,
+  CLEAN_BOARD,
   DELETE_BOARD,
   RENAME_BOARD,
   SHARE_BOARD,
-  LAYOUT_BOARD,
-  NOTIFY_DELETE_BOARD
-
+  LAYOUT_BOARD
 } from './types';
 
 export const filterBoards = filter => ({
@@ -33,8 +32,15 @@ export const fetchBoard = id => async dispatch => {
   dispatch({ type: FETCH_BOARD, payload: response.data });
 };
 
+export const cleanBoard = () => ({ type: CLEAN_BOARD });
+
 export const createBoard = (name, owner) => async dispatch => {
-  const response = await server.post('/v1/api/board', { name, owner, layout: 'H', shared: false });
+  const response = await server.post('/v1/api/board', {
+    name,
+    owner,
+    layout: 'H',
+    shared: false
+  });
 
   dispatch({ type: CREATE_BOARD, payload: response.data });
 };
@@ -42,7 +48,7 @@ export const createBoard = (name, owner) => async dispatch => {
 export const layoutBoard = (id, layout) => async dispatch => {
   worker(id, [{ id, board_id: id, type: LAYOUTBOARD, payload: { layout } }]);
 
-  dispatch({ type: LAYOUT_BOARD, payload: { id, layout } });
+  dispatch({ type: LAYOUT_BOARD, payload: layout });
 };
 
 export const renameBoard = (id, name) => async dispatch => {
@@ -57,12 +63,10 @@ export const shareBoard = (id, shared) => async dispatch => {
   dispatch({ type: SHARE_BOARD, payload: response.data });
 };
 
-export const deleteBoard = id => async dispatch => {
-  await server.delete(`/v1/api/board/${id}`);
+export const deleteBoard = (id, notification) => async dispatch => {
+  if (!notification) {
+    await server.delete(`/v1/api/board/${id}`);
+  }
 
   dispatch({ type: DELETE_BOARD, payload: id });
-};
-
-export const notifyDeleteBoard = id => dispatch => {
-  dispatch({ type: NOTIFY_DELETE_BOARD, payload: id });
 };

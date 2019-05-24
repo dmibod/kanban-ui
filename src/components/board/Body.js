@@ -12,6 +12,7 @@ class Body extends React.Component {
 
     return board.children
       .map(id => board.lanes[id])
+      .filter(lane => lane)
       .map(lane => (
         <Lane
           key={lane.id}
@@ -28,14 +29,15 @@ class Body extends React.Component {
     const board = this.props.board;
     const layout = (board && board.layout) || 'V';
     const style = layout === 'V' ? 'flex-column' : 'flex-row';
-    return <div className={`d-flex ${style}`}>{this.renderLanes()}</div>;
+
+    return (
+      <div className={`board-body d-flex ${style}`}>{this.renderLanes()}</div>
+    );
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return {
-    board: state.boards[ownProps.board.id]
-  };
+  return { board: state.board };
 };
 
 export default connect(mapStateToProps)(Body);

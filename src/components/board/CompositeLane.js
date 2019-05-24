@@ -1,6 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createLane, createCardLane, deleteLane } from '../../actions/lane';
+import {
+  createLane,
+  createCardLane,
+  excludeAndDeleteLane
+} from '../../actions/lane';
 import Lane from './Lane';
 
 class CompositeLane extends React.Component {
@@ -11,9 +15,19 @@ class CompositeLane extends React.Component {
       return null;
     }
 
-    return lane.children.map(id => board.lanes[id]).map(child => (
-      <Lane key={child.id} lane={child} board={board} parentId={lane.id} editable={editable} onConfirm={onConfirm}/>
-    ));
+    return lane.children
+      .map(id => board.lanes[id])
+      .filter(lane => lane)
+      .map(child => (
+        <Lane
+          key={child.id}
+          lane={child}
+          board={board}
+          parentId={lane.id}
+          editable={editable}
+          onConfirm={onConfirm}
+        />
+      ));
   }
 
   createChild = () => {
@@ -25,10 +39,19 @@ class CompositeLane extends React.Component {
   };
 
   deleteLane = () => {
-    const { lane, board, deleteLane, parentId, editable, onConfirm } = this.props;
+    const {
+      lane,
+      board,
+      excludeAndDeleteLane,
+      parentId,
+      editable,
+      onConfirm
+    } = this.props;
 
-    if (editable && lane && deleteLane) {
-      onConfirm(undefined, `Delete ${lane.name}?`, () => deleteLane(board.id, lane.id, parentId));
+    if (editable && lane && excludeAndDeleteLane) {
+      onConfirm(undefined, `Delete ${lane.name}?`, () =>
+        excludeAndDeleteLane(board.id, parentId, lane.id)
+      );
     }
   };
 
@@ -67,12 +90,12 @@ class CompositeLane extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  let board = state.boards[ownProps.board.id];
+  let board = state.board;
   let lane = board.lanes[ownProps.lane.id];
   return { board, lane };
 };
 
 export default connect(
   mapStateToProps,
-  { createLane, createCardLane, deleteLane }
+  { createLane, createCardLane, excludeAndDeleteLane }
 )(CompositeLane);

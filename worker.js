@@ -1,6 +1,5 @@
 this.addEventListener('connect', event => {
-  
-  //console.log(event);
+  console.log(event);
 
   let port = event.ports[0];
   port.start();

@@ -2,6 +2,7 @@ import _ from 'lodash';
 import {
   FETCH_BOARDS,
   CREATE_BOARD,
+  FETCH_BOARD,
   RENAME_BOARD,
   SHARE_BOARD,
   DELETE_BOARD
@@ -15,6 +16,9 @@ export default (state = {}, action) => {
     case CREATE_BOARD:
       return { ...state, [action.payload.id]: action.payload };
 
+    case FETCH_BOARD:
+      return { ...state, [action.payload.id]: action.payload };
+  
     case RENAME_BOARD:
       return { ...state, [action.payload.id]: action.payload };
 

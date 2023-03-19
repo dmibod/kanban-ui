@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import Item from './Item';
 import {
   fetchBoards,
+  fetchBoard,
   shareBoard,
+  createBoard,
   deleteBoard
 } from '../../actions/board';
 
@@ -53,20 +55,6 @@ class List extends React.Component {
   }
 }
 
-/*
-TodoList.propTypes = {
-  todos: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      selected: PropTypes.bool.isRequired,
-      text: PropTypes.string.isRequired
-    }).isRequired
-  ).isRequired,
-  toggleTodo: PropTypes.func.isRequired,
-  removeTodo: PropTypes.func.isRequired
-};
-*/
-
 const mapStateToProps = state => {
   let boards = Object.values(state.boards);
   let filter = state.filter.toLowerCase();
@@ -80,5 +68,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchBoards, shareBoard, deleteBoard }
+  { fetchBoards, fetchBoard, shareBoard, createBoard, deleteBoard }
 )(List);

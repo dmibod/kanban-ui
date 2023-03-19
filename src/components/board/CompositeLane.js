@@ -60,6 +60,9 @@ class CompositeLane extends React.Component {
 
     var text = lane.name + (lane.description ? ':' : '');
 
+    const layout = (lane && lane.layout) || 'V';
+    const style = layout === 'V' ? 'flex-column' : 'flex-row';
+
     return (
       <div id={lane.id} className="lane-wrapper composite-lane flex-fill">
         <div className="lane-header card-header border rounded-0">
@@ -85,7 +88,7 @@ class CompositeLane extends React.Component {
             </div>
           </div>
         </div>
-        <div className="lane-body">{this.renderLanes()}</div>
+        <div className={`lane-body d-flex ${style}`}>{this.renderLanes()}</div>
       </div>
     );
   }

@@ -93,7 +93,7 @@ ul.card-badges {
 
 .card-body-wrapper {
   height: 90px;
-  overflow: hidden;
+/*  overflow: hidden;*/
 }
 
 .lane-title {

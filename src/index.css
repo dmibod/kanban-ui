@@ -6,8 +6,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 .navbar {
@@ -93,6 +92,35 @@ ul.card-badges {
 }
 
 .card-body-wrapper {
-  height: 80px;
+  height: 90px;
   overflow: hidden;
+}
+
+.lane-title {
+  font-size: small;
+}
+
+.card-title {
+  font-size: xx-small;
+}
+
+.card-body {
+  font-size: x-small;
+}
+
+.desc-container {
+  display: flex;
+  flex-direction: row;  
+}
+
+.desc-container > .label {
+  flex: auto;
+}
+
+.desc-container > .value {
+  width: 3rem;
+}
+
+.composite-lane {
+  min-width: 182px;
 }

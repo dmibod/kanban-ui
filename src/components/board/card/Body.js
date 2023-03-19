@@ -1,10 +1,11 @@
 import React from 'react';
+import Desc from './Desc';
 
-export default card => {
+export default ({card}) => {
   return (
     <div className="card-body py-2" style={{ overflow: 'hidden' }}>
       <div className="card-body-wrapper">
-        <div className="card-text small text-justify">{card.description}</div>
+        <Desc key={card.id} {...{id: card.id, description: card.description}}></Desc>
       </div>
     </div>
   );

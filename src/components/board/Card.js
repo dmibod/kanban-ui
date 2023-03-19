@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Body from './card/Body';
+import Form from './card/Form';
 
-export default ({ board, lane, card, deleteCard, editable }) => {
+export default ({ lane, card, editCard, deleteCard, editable, children }) => {
+  const [formVisibility, setFormVisibility] = useState(false);
+
+  console.log(`render card ${card ? card.id : 'N/A'}:${card ? card.name : 'N/A'}`);
+
+  const fn = () => {
+    console.log('setting form visible');
+    setFormVisibility(true);
+  }
+
   return (
     <div
       id={card.id}
@@ -23,10 +33,14 @@ export default ({ board, lane, card, deleteCard, editable }) => {
                 className="hover-card-badges"
                 style={{ display: editable ? 'inline' : 'none' }}
               >
-                <i className="fa fa-fw fa-pencil text-muted card-badge" title="edit" />
+                <i
+                  className="fa fa-fw fa-pencil text-muted card-badge"
+                  title="edit"
+                  onClick={() => fn()}
+                />
                 <i
                   className="fa fa-fw fa-trash text-muted card-badge"
-                  title="edit"
+                  title="delete"
                   onClick={() => deleteCard(card.id)}
                 />
               </div>
@@ -34,6 +48,7 @@ export default ({ board, lane, card, deleteCard, editable }) => {
           </div>
         </div>
         <Body card={card} />
+        <Form visible={formVisibility} initialValues={card}></Form>
       </div>
     </div>
   );

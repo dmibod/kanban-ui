@@ -58,12 +58,14 @@ class CompositeLane extends React.Component {
   render() {
     const { lane, editable } = this.props;
 
+    var text = lane.name + (lane.description ? ':' : '');
+
     return (
-      <div id={lane.id} className="lane-wrapper">
+      <div id={lane.id} className="lane-wrapper composite-lane flex-fill">
         <div className="lane-header card-header border rounded-0">
-          <div className="card-title mb-0">
+          <div className="lane-title mb-0">
             <div className="row mx-0">
-              <div className="mr-auto">{lane.name}</div>
+              <div className="mr-auto"><b>{text}</b> {lane.description}</div>
               <div
                 className="hover-card-badges"
                 style={{ display: editable ? 'inline' : 'none' }}

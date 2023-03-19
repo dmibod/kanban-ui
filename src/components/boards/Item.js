@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Desc from './Desc';
 
 const Item = ({ id, name, description, shared, editable, shareBoard, deleteBoard }) => (
   <div id={`${id}`} className="card-wrapper float-left m-3">
@@ -45,7 +46,7 @@ const Item = ({ id, name, description, shared, editable, shareBoard, deleteBoard
       </div>
       <div className="card-body">
         <div className="board-body-wrapper">
-          <div className="card-text small text-justify">{description}</div>
+          <Desc key={id} {...{id, description}}></Desc>
         </div>
       </div>
     </div>

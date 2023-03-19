@@ -21,6 +21,7 @@ class CardLane extends React.Component {
           board={board}
           card={card}
           lane={lane}
+          editCard={this.editCard}
           deleteCard={this.deleteCard}
           editable={editable}
         />
@@ -43,32 +44,60 @@ class CardLane extends React.Component {
     }
   };
 
+  editCard = id => {
+    const { board, editable, onConfirm } = this.props;
+
+    if (editable) {
+      let card = board.cards[id];
+      onConfirm(undefined, `Edit ${card.name}?`);
+    }
+  };
+
   deleteCard = id => {
-    const { lane, board, excludeAndDeleteCard, editable, onConfirm } = this.props;
+    const {
+      lane,
+      board,
+      excludeAndDeleteCard,
+      editable,
+      onConfirm
+    } = this.props;
 
     if (editable && lane && excludeAndDeleteCard) {
       let card = board.cards[id];
-      onConfirm(undefined, `Delete ${card.name}?`, () => excludeAndDeleteCard(board.id, lane.id, id));
+      onConfirm(undefined, `Delete ${card.name}?`, () =>
+        excludeAndDeleteCard(board.id, lane.id, id)
+      );
     }
   };
 
   deleteLane = () => {
-    const { lane, board, excludeAndDeleteLane, parentId, editable, onConfirm } = this.props;
+    const {
+      lane,
+      board,
+      excludeAndDeleteLane,
+      parentId,
+      editable,
+      onConfirm
+    } = this.props;
 
     if (editable && lane && excludeAndDeleteLane) {
-      onConfirm(undefined, `Delete ${lane.name}?`, () => excludeAndDeleteLane(board.id, parentId, lane.id));
+      onConfirm(undefined, `Delete ${lane.name}?`, () =>
+        excludeAndDeleteLane(board.id, parentId, lane.id)
+      );
     }
   };
 
   render() {
     const { lane, editable } = this.props;
 
+    var text = lane.name + (lane.description ? ':' : '');
+
     return (
       <div id={lane.id} className="lane-wrapper">
         <div className="lane-header card-header border rounded-0">
-          <div className="card-title mb-0">
+          <div className="lane-title mb-0">
             <div className="row mx-0">
-              <div className="mr-auto">{lane.name}</div>
+              <div className="mr-auto"><b>{text}</b> {lane.description}</div>
               <div
                 className="hover-card-badges"
                 style={{ display: editable ? 'inline' : 'none' }}

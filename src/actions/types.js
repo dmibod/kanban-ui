@@ -10,6 +10,7 @@ export const SHARE_BOARD = 'SHARE_BOARD';
 
 export const FETCH_BOARD = 'FETCH_BOARD';
 export const CLEAN_BOARD = 'CLEAN_BOARD';
+export const ACTIVE_BOARD = 'ACTIVE_BOARD';
 export const LAYOUT_BOARD = 'LAYOUT_BOARD';
 
 export const FETCH_LANE = 'FETCH_LANE'

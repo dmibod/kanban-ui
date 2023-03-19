@@ -3,9 +3,7 @@ import { connect } from 'react-redux';
 import Item from './Item';
 import {
   fetchBoards,
-  fetchBoard,
   shareBoard,
-  createBoard,
   deleteBoard
 } from '../../actions/board';
 
@@ -68,5 +66,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchBoards, fetchBoard, shareBoard, createBoard, deleteBoard }
+  { fetchBoards, shareBoard, deleteBoard }
 )(List);

@@ -4,11 +4,13 @@ import boardsReducer from './boardsReducer';
 import boardReducer from './boardReducer';
 import filterReducer from './filterReducer'
 import { reducer as formReducer } from 'redux-form';
+import activeBoardReducer from './activeBoardReducer';
 
 export default combineReducers({
   auth: authReducer,
   boards: boardsReducer,
   board: boardReducer,
   filter: filterReducer,
-  form: formReducer
+  form: formReducer,
+  activeBoard: activeBoardReducer
 })

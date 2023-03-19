@@ -9,7 +9,7 @@ class Form extends React.Component {
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
 
-    console.log(`create form`);
+    //console.log(`create form`);
 
     this.state = {
       show: !!props.visible,
@@ -65,7 +65,7 @@ class Form extends React.Component {
   };
 
   render() {
-    console.log(`render form`);
+    //console.log(`render form`);
 
     return (
       <Modal show={this.state.show} onHide={this.handleClose}>

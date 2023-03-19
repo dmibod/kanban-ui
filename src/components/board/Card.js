@@ -5,7 +5,7 @@ import Form from './card/Form';
 export default ({ lane, card, editCard, deleteCard, editable, children }) => {
   const [formVisibility, setFormVisibility] = useState(false);
 
-  console.log(`render card ${card ? card.id : 'N/A'}:${card ? card.name : 'N/A'}`);
+  //console.log(`render card ${card ? card.id : 'N/A'}:${card ? card.name : 'N/A'}`);
 
   const fn = () => {
     console.log('setting form visible');

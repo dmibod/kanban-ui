@@ -7,6 +7,7 @@ import {
   FETCH_BOARDS,
   FETCH_BOARD,
   CLEAN_BOARD,
+  ACTIVE_BOARD,
   DELETE_BOARD,
   RENAME_BOARD,
   SHARE_BOARD,
@@ -33,6 +34,8 @@ export const fetchBoard = id => async dispatch => {
 };
 
 export const cleanBoard = () => ({ type: CLEAN_BOARD });
+
+export const activeBoard = (id) => ({ type: ACTIVE_BOARD, payload: id });
 
 export const createBoard = (name, owner) => async dispatch => {
   const response = await server.post('/v1/api/board', {

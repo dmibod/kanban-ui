@@ -7,7 +7,6 @@ import App from './components/App';
 import store from './store';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
-import socket from './apis/socket';
 
 render(
   <Provider store={store}>
@@ -20,4 +19,3 @@ render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.unregister();
-socket(JSON.stringify({ id: '' }));

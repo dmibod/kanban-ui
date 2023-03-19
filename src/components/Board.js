@@ -4,7 +4,7 @@ import Header from './board/Header';
 import Body from './board/Body';
 import socket from '../apis/socket';
 import { Modal, Button } from 'react-bootstrap';
-import { fetchBoard, cleanBoard } from '../actions/board';
+import { fetchBoard, activeBoard, cleanBoard } from '../actions/board';
 
 class Board extends React.Component {
   constructor(props, context) {
@@ -23,9 +23,11 @@ class Board extends React.Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
-    const { fetchBoard } = this.props;
+    const { fetchBoard, activeBoard } = this.props;
 
     fetchBoard(id);
+
+    activeBoard(id);
 
     socket(JSON.stringify({ id }));
   }
@@ -93,5 +95,5 @@ const mapStateToProps = (state, ownProps) => {
 
 export default connect(
   mapStateToProps,
-  { fetchBoard, cleanBoard }
+  { fetchBoard, activeBoard, cleanBoard }
 )(Board);

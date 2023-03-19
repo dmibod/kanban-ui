@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import {
   FETCH_BOARD,
-  CLEAN_BOARD,
   LAYOUT_BOARD,
   FETCH_LANE,
   APPEND_LANE,
@@ -53,8 +52,6 @@ export default (state = null, action) => {
   switch (action.type) {
     case FETCH_BOARD:
       return formatBoard(action.payload);
-    case CLEAN_BOARD:
-      return null;
 
     case LAYOUT_BOARD:
       return { ...state, layout: action.payload };

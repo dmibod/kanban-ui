@@ -72,7 +72,7 @@ const Header = ({ secure, owner, visible, createBoard, filterBoards }) => {
 const mapStateToProps = state => ({
   secure: state.auth.isSignedIn,
   owner: state.auth.userProfile && state.auth.userProfile.id,
-  visible: state.board == null
+  visible: state.activeBoard == null
 });
 
 export default connect(

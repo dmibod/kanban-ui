@@ -1,6 +1,7 @@
 import React from 'react';
 import List from './boards/List';
 import { Modal, Button } from 'react-bootstrap';
+import socket from '../apis/socket';
 
 class Boards extends React.Component {
   constructor(props, context) {
@@ -15,6 +16,10 @@ class Boards extends React.Component {
       question: 'Are you sure?',
       yesFn: this.handleClose
     };
+  }
+
+  componentDidMount() {
+    socket(JSON.stringify({ id: '' }));
   }
 
   handleClose(fn) {

@@ -102,6 +102,7 @@ ul.card-badges {
 
 .card-title {
   font-size: xx-small;
+  font-weight: 600;
 }
 
 .card-body {
@@ -115,10 +116,12 @@ ul.card-badges {
 
 .desc-container > .label {
   flex: auto;
+  font-weight: 600;
 }
 
 .desc-container > .value {
   width: 3rem;
+  font-style: italic;
 }
 
 .composite-lane {

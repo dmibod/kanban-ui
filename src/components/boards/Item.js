@@ -2,8 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Desc from './Desc';
+import Spinner4 from '../Spinner4';
 
-const Item = ({ id, name, description, shared, editable, shareBoard, deleteBoard }) => (
+const Item = ({ id, name, description, state, shared, editable, shareBoard, deleteBoard }) => (
   <div id={`${id}`} className="card-wrapper float-left m-3">
     <div className="card shadow board">
       <div className="card-header">
@@ -48,6 +49,7 @@ const Item = ({ id, name, description, shared, editable, shareBoard, deleteBoard
         <div className="board-body-wrapper">
           <Desc key={id} {...{id, description}}></Desc>
         </div>
+        <Spinner4 id={`spinner-${id}`} key={id} {...{visible: state == 'loading' }}/>
       </div>
     </div>
   </div>

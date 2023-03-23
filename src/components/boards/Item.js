@@ -49,7 +49,7 @@ const Item = ({ id, name, description, state, shared, editable, shareBoard, dele
         <div className="board-body-wrapper">
           <Desc key={id} {...{id, description}}></Desc>
         </div>
-        <Spinner4 id={`spinner-${id}`} key={id} {...{visible: state == 'loading' }}/>
+        <Spinner4 id={`spinner-${id}`} key={id} {...{visible: state === 'loading' }}/>
       </div>
     </div>
   </div>

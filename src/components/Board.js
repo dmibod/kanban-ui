@@ -36,8 +36,6 @@ class Board extends React.Component {
     const { cleanBoard } = this.props;
     
     cleanBoard();
-
-    socket(JSON.stringify({ id: '' }));
   }
 
   handleClose(fn) {

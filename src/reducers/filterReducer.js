@@ -5,7 +5,7 @@ import {
 export default (state = '', action) => {
   switch (action.type) {
     case FILTER_BOARDS:
-      return action.filter
+      return action.filter.toLowerCase()
     default:
       return state
   }

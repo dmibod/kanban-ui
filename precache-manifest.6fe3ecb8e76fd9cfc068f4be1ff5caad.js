@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e77a38ef36121bc11e949cc2a7f36335",
+    "revision": "c55ca4b61a4c3ba56f6d8b6298628a4e",
     "url": "/kanban-ui/index.html"
   },
   {

@@ -28,6 +28,12 @@
         scroll-behavior: smooth;
       }
 
+      .pri-color {
+        color: #17a2b8;
+      }
+      .sec-color {
+        color: #28a745;
+      }
       #topBtn {
         display: none;
         position: fixed;
@@ -40,7 +46,7 @@
         outline: none;
         text-align: center;
         background-color: transparent;
-        color: #28a745;
+        
         opacity: 50%;
         cursor: pointer;
       }
@@ -65,7 +71,6 @@
     <script>
       // Get the button
       let topBtn = document.getElementById('topBtn');
-      let root = document.getElementById('root');
 
       // When the user scrolls down 20px from the top of the document, show the button
       window.onscroll = function () {
@@ -73,11 +78,15 @@
       };
 
       function scrollFunction() {
-        if (
-          document.body.scrollTop > 20 ||
-          document.documentElement.scrollTop > 20
-        ) {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
           topBtn.style.display = 'block';
+          if(window.location.pathname.endsWith('/')) {
+            topBtn.classList.add("pri-color");
+            topBtn.classList.remove("sec-color");
+          } else {
+            topBtn.classList.remove("pri-color");
+            topBtn.classList.add("sec-color");
+          }
         } else {
           topBtn.style.display = 'none';
         }
@@ -87,7 +96,6 @@
       function scrollTopFn() {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
-        //root.scrollTop = 0;
       }
     </script>
   </body>

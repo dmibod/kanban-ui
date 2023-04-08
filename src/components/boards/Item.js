@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Desc from './Desc';
 import Spinner4 from '../Spinner4';
+import ProgressBar from '../ProgressBar';
 
 const Item = ({ id, name, description, state, shared, editable, shareBoard, deleteBoard }) => (
   <div id={`${id}`} className="card-wrapper float-left m-3">
@@ -50,6 +51,9 @@ const Item = ({ id, name, description, state, shared, editable, shareBoard, dele
           <Desc key={id} {...{id, description}}></Desc>
         </div>
         <Spinner4 id={`spinner-${id}`} key={id} {...{visible: state === 'loading' }}/>
+      </div>
+      <div style={{ display: (state || '').startsWith('progress') ? 'block' : 'none', position: 'absolute', bottom: 0, left: 0, width: '100%' }}>
+        <ProgressBar bgcolor={"#17a2b8"} completed={(state||'').split(':')[1] || 100}/>
       </div>
     </div>
   </div>

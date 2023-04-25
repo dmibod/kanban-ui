@@ -47,7 +47,7 @@ const Header = ({ secure, owner, visible, createBoard, filterBoards }) => {
               <input
                 type="search"
                 className="form-control form-control-sm"
-                placeholder="Board title..."
+                placeholder={secure ? "Board title..." : "Token..."}
                 ref={node => (input = node)}
               />
               {createButton()}

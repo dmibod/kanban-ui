@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createBoard, filterBoards } from '../actions/board';
-import GoogleAuth from './GoogleAuth';
+import Auth from './Auth';
 
 const Header = ({ secure, owner, visible, createBoard, filterBoards }) => {
   let input;
@@ -42,7 +42,7 @@ const Header = ({ secure, owner, visible, createBoard, filterBoards }) => {
           >
             <div className="input-group">
               <div className="input-group-prepend">
-                <GoogleAuth />
+                <Auth getToken={()=>input.value.trim()} clearValue={()=>input.value=''}/>
               </div>
               <input
                 type="search"
@@ -71,7 +71,7 @@ const Header = ({ secure, owner, visible, createBoard, filterBoards }) => {
 
 const mapStateToProps = state => ({
   secure: state.auth.isSignedIn,
-  owner: state.auth.userProfile && state.auth.userProfile.id,
+  owner: state.auth.user,
   visible: state.activeBoard == null
 });
 

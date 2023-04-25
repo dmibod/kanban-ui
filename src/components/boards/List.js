@@ -59,7 +59,7 @@ const mapStateToProps = state => {
 
   return {
     boards: boards.filter(board => (board.name || '').toLowerCase().includes(filter)),
-    currentUserId: state.auth.isSignedIn ? state.auth.userProfile.id : null,
+    currentUserId: state.auth.isSignedIn ? state.auth.user : null,
     isSignedIn: state.auth.isSignedIn
   };
 };

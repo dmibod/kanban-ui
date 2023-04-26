@@ -3,15 +3,24 @@ import { connect } from 'react-redux';
 import { signIn, signOut } from '../actions/auth';
 
 class Auth extends React.Component {
+  componentDidMount() {
+    var token = localStorage.getItem('auth.token');
+    if (token != null){
+      this.props.signIn(token);
+    }
+  }
+
   onSignInClick = () => {
     let token = this.props.getToken();
     this.props.signIn(token);
+    localStorage.setItem('auth.token', token);
     this.props.clearValue()
   };
 
   onSignOutClick = () => {
     this.props.signOut();
     this.props.clearValue()
+    localStorage.removeItem('auth.token');
   };
 
   render() {

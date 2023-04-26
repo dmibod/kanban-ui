@@ -86,7 +86,7 @@ class Board extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   let board = state.board && state.board.id === ownProps.match.params.id ? state.board : null;
-  let editable = state.auth.isSignedIn && board && board.owner === state.auth.userProfile.id;
+  let editable = state.auth.isSignedIn && board && board.owner === state.auth.user;
 
   return { board, editable };
 };

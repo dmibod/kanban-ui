@@ -24,3 +24,8 @@ export const CREATE_CARD = 'CREATE_CARD';
 export const APPEND_CARD = 'APPEND_CARD';
 export const EXCLUDE_CARD = 'EXCLUDE_CARD';
 export const DELETE_CARD = 'DELETE_CARD';
+
+export const SPEECH_ON = 'SPEECH_ON';
+export const SPEECH_OFF = 'SPEECH_OFF';
+export const SPEECH_CMD = 'SPEECH_CMD';
+export const SPEECH_LANG = 'SPEECH_LANG';

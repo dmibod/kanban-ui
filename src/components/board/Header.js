@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { renameBoard, layoutBoard } from '../../actions/board';
 import { createLane } from '../../actions/lane';
+import Speech from '../Speech';
 
 const Header = ({ editable, update, layout, lane, board }) => {
   let input;
@@ -81,6 +82,7 @@ const Header = ({ editable, update, layout, lane, board }) => {
                   <i className="fa fa-fw fa-home" />
                 </Link>
               </div>
+              <Speech greenBg={true}/>
               <input
                 type="search"
                 className="form-control form-control-sm"

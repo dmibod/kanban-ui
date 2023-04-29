@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createBoard, filterBoards } from '../actions/board';
 import Auth from './Auth';
+import Speech from './Speech';
 
 const Header = ({ secure, owner, visible, createBoard, filterBoards }) => {
   let input;
@@ -15,7 +16,7 @@ const Header = ({ secure, owner, visible, createBoard, filterBoards }) => {
       <div className="input-group-append">
         <button
           className="btn btn-info btn-sm"
-          onClick={e => {
+          onClick={(e) => {
             if (!input.value.trim()) {
               return;
             }
@@ -31,30 +32,37 @@ const Header = ({ secure, owner, visible, createBoard, filterBoards }) => {
   };
 
   return (
-    <nav className="navbar bg-dark navbar-dark fixed-top" style={{visibility: visible ? 'visible' : 'hidden'}}>
+    <nav
+      className="navbar bg-dark navbar-dark fixed-top"
+      style={{ visibility: visible ? 'visible' : 'hidden' }}
+    >
       <div className="container-fluid no-gutters">
         <div className="col-12 col-sm-9 col-md-6 col-lg-3 ml-auto mr-auto">
           <form
             className="input-group"
-            onSubmit={e => {
+            onSubmit={(e) => {
               e.preventDefault();
             }}
           >
             <div className="input-group">
               <div className="input-group-prepend">
-                <Auth getToken={()=>input.value.trim()} clearValue={()=>input.value=''}/>
+                <Auth
+                  getToken={() => input.value.trim()}
+                  clearValue={() => (input.value = '')}
+                />
               </div>
+              <Speech greenBg={false}/>
               <input
                 type="search"
                 className="form-control form-control-sm"
-                placeholder={secure ? "Board title..." : "Token..."}
-                ref={node => (input = node)}
+                placeholder={secure ? 'Board title...' : 'Token...'}
+                ref={(node) => (input = node)}
               />
               {createButton()}
               <div className="input-group-append">
                 <button
                   className="btn btn-info btn-sm"
-                  onClick={e => {
+                  onClick={(e) => {
                     filterBoards(input.value.trim());
                   }}
                 >
@@ -69,13 +77,10 @@ const Header = ({ secure, owner, visible, createBoard, filterBoards }) => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   secure: state.auth.isSignedIn,
   owner: state.auth.user,
-  visible: state.activeBoard == null
+  visible: state.activeBoard == null,
 });
 
-export default connect(
-  mapStateToProps,
-  { createBoard, filterBoards }
-)(Header);
+export default connect(mapStateToProps, { createBoard, filterBoards })(Header);

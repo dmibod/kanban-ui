@@ -5,6 +5,7 @@ import boardReducer from './boardReducer';
 import filterReducer from './filterReducer'
 import { reducer as formReducer } from 'redux-form';
 import activeBoardReducer from './activeBoardReducer';
+import speechReducer from './speechReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
   board: boardReducer,
   filter: filterReducer,
   form: formReducer,
-  activeBoard: activeBoardReducer
+  activeBoard: activeBoardReducer,
+  speech: speechReducer
 })

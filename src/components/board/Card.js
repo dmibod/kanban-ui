@@ -48,7 +48,7 @@ export default ({ lane, card, editCard, deleteCard, editable, children }) => {
           </div>
         </div>
         <Body card={card} />
-        <Form visible={formVisibility} initialValues={card}></Form>
+        {/*<Form visible={formVisibility} initialValues={card}></Form>*/}
       </div>
     </div>
   );

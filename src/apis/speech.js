@@ -44,9 +44,17 @@ export const isSpeechEnabled = () => {
   return SpeechRecognition !== undefined;
 };
 
-export const speechLanguage = (lang, callback) => {
+export const speechLanguage = (lang) => {
   console.log('Language:' + lang);
+  if (speechLang === lang){
+    return;
+  }
+  var cb = speechCallback;
   speechLang = lang;
+  stopSpeech();
+  setTimeout(() => {
+    startSpeech(cb);
+  }, 2000);
 };
 
 export const startSpeech = (callback) => {

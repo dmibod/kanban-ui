@@ -7,6 +7,7 @@ import {
   EXCLUDE_LANE,
   CREATE_LANE,
   DELETE_LANE,
+  LAYOUT_LANE,
   FETCH_CARD,
   APPEND_CARD,
   EXCLUDE_CARD,
@@ -106,6 +107,14 @@ export default (state = null, action) => {
       }
       return { ...state };
 
+      case LAYOUT_LANE:
+        if (state.lanes[action.payload.laneId]) {
+          state.lanes[action.payload.laneId].layout = action.payload.layout;
+          return { ...state };
+        } else {
+          return state;
+        }
+  
     case APPEND_CARD:
       if (state.lanes[action.payload.laneId]) {
         state.lanes[action.payload.laneId].children.push(action.payload.cardId);

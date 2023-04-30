@@ -1,3 +1,4 @@
+import React from 'react';
 import _ from 'lodash';
 import history from '../history';
 import { SPEECH_ON, SPEECH_OFF, SPEECH_CMD, SPEECH_LANG } from './types';
@@ -19,7 +20,7 @@ export const speechOff = () => {
 
 export const speechCmd = (cmd, props, helpShow, helpClose) => {
   cmd = cmd.toLowerCase();
-  var handler = getHandler(cmd);
+  var handler = getHandler(cmd, props);
   if (handler) {
     console.log('found: ' + cmd);
     handler.fn(cmd, props, helpShow, helpClose);
@@ -41,163 +42,239 @@ export const speechLang = (lang) => {
 };
 
 const controlHandlers = {
-   mute: {
-    commands: [
-      'mute',
-      'виключити'
-    ],
-    fn: mute
-   }
+  mute: {
+    commands: ['mute', 'виключити'],
+    fn: mute,
+  },
+  reload: {
+    commands: ['reload', 'оновити'],
+    fn: reloadPage,
+  },
 };
 
 function mute(cmd, props) {
   props.speechOff();
 }
 
-const helpHandlers = {
-  help: {
-    commands: [
-      'help',
-      'допомога'
-    ],
-    fn: helpShow
-  },
-  close: {
-    commands: [
-      'close',
-      'закрити'
-    ],
-    fn: helpClose
-  }
-};
-
-function helpShow(cmd, props, show, close){
-  show('Voice commands', _.map(_.map(handlers, (handler, handlerKey) => `Category "${handlerKey}": ` + _.map(handler, (command, cmdKey) => `function "${cmdKey}" (say: ` + command.commands.join(', ') + ')'))).join('\n'));
+function reloadPage(cmd, props) {
+  window.location.reload();
 }
 
-function helpClose(cmd, props, show, close){
+const helpHandlers = {
+  help: {
+    commands: ['help', 'допомога'],
+    fn: helpShow,
+  },
+  close: {
+    commands: ['close', 'закрити'],
+    fn: helpClose,
+  },
+};
+
+function helpShow(cmd, props, show, close) {
+  var mapCommand = (command, cmdKey) => (
+    <li key={cmdKey}>
+      {cmdKey}
+      {isEnabled(command, cmd, props) ? '' : '*'} (say:{' '}
+      {command.commands.join(', ')})
+    </li>
+  );
+  var mapCategory = (handler, handlerKey) => (
+    <div key={handlerKey}>
+      <b>{handlerKey.toUpperCase()}</b>
+      <br />
+      <ul>{_.map(handler, mapCommand)}</ul>
+    </div>
+  );
+
+  var body = _.map(_.map(handlers, mapCategory));
+
+  show('Voice commands', body);
+}
+
+function helpClose(cmd, props, show, close) {
   close();
+}
+
+const laneHandlers = {
+  create: {
+    commands: ['create', 'створити'],
+    enabled: isActiveBoard,
+    fn: createLane,
+  },
+  vertical: {
+    commands: ['layout vertical', 'vertical', 'rows', 'рядки', 'вертикальний'],
+    enabled: () => false,
+    fn: layoutLaneVertical,
+  },
+  horizontal: {
+    commands: [
+      'layout horizontal',
+      'horizontal',
+      'columns',
+      'колонки',
+      'стовпчики',
+      'горизонтальний',
+    ],
+    enabled: () => false,
+    fn: layoutLaneHorizontal,
+  },
+};
+
+
+function isActiveBoard(cmd, props) {
+  return props.owner && props.activeBoardId;
+}
+
+function createLane(cmd, props) {
+  props.createLane(props.activeBoardId, 'Lane');
+}
+
+function layoutLaneVertical(cmd, props) {
+  props.layoutLane(props.activeBoardId, undefined, 'V');
+}
+
+function layoutLaneHorizontal(cmd, props) {
+  props.layoutLane(props.activeBoardId, undefined, 'H');
 }
 
 const boardHandlers = {
   create: {
-    commands: [
-      'create',
-      'створити'
-    ],
-    fn: createBoard
+    commands: ['create', 'створити'],
+    enabled: createBoardEnabled,
+    fn: createBoard,
   },
-  'delete': {
-    commands: [
-      'delete',
-      'remove',
-      'видалити'
-    ],
-    fn: removeBoard
+  delete: {
+    commands: ['delete', 'remove', 'видалити'],
+    enabled: removeBoardEnabled,
+    fn: removeBoard,
   },
   name: {
+    commands: ['name', 'назвати'],
+    enabled: isOwnerDefined,
+    fn: nameBoard,
+  },
+  vertical: {
+    commands: ['layout vertical', 'vertical', 'rows', 'рядки', 'вертикальний'],
+    enabled: isActiveBoard,
+    fn: layoutBoardVertical,
+  },
+  horizontal: {
     commands: [
-      'name',
-      'назвати'
+      'layout horizontal',
+      'horizontal',
+      'columns',
+      'колонки',
+      'стовпчики',
+      'горизонтальний',
     ],
-    fn: nameBoard
+    enabled: isActiveBoard,
+    fn: layoutBoardHorizontal,
   },
   share: {
-    commands: [
-      'share',
-      'публічна'
-    ],
-    fn: shareBoard
+    commands: ['share', 'публічна'],
+    enabled: isOwnerDefined,
+    fn: shareBoard,
   },
   private: {
-    commands: [
-      'private',
-      'приватна'
-    ],
-    fn: privateBoard
+    commands: ['private', 'приватна'],
+    enabled: isOwnerDefined,
+    fn: privateBoard,
   },
   count: {
-    commands: [
-      'count'
-    ],
-    fn: countBoard
-  }
+    commands: ['count'],
+    fn: countBoard,
+  },
 };
 
+function createBoardEnabled(cmd, props) {
+  return props.owner && !props.activeBoardId;
+}
+
 function createBoard(cmd, props) {
-  if (props.owner) {
-    props.createBoard('Board', props.owner);
-  }
+  props.createBoard('Board', props.owner);
+}
+
+function layoutBoardVertical(cmd, props) {
+  props.layoutBoard(props.activeBoardId, 'V');
+}
+
+function layoutBoardHorizontal(cmd, props) {
+  props.layoutBoard(props.activeBoardId, 'H');
 }
 
 function shareBoard(cmd, props) {
-  if (props.owner) {
-    _.each(_.keys(getFilteredBoards(props)), id => props.shareBoard(id, true));
+  if (props.activeBoardId) {
+    props.shareBoard(props.activeBoardId, true);
+  } else {
+    _.each(_.keys(getOwnerBoards(props)), (id) => props.shareBoard(id, true)
+    );
   }
 }
 
 function privateBoard(cmd, props) {
-  if (props.owner) {
-    _.each(_.keys(getFilteredBoards(props)), id => props.shareBoard(id, false));
+  if (props.activeBoardId) {
+    props.shareBoard(props.activeBoardId, false);
+  } else {
+    _.each(_.keys(getOwnerBoards(props)), (id) => props.shareBoard(id, false)
+    );
   }
 }
 
-function removeBoard(cmd, props, show, close){
-  if (props.owner) {
-    var keys = _.keys(getFilteredBoards(props));
-    show('Confirm', `Remove ${keys.length} boards?`, () => {
+function removeBoardEnabled(cmd, props) {
+  return props.owner && !props.activeBoardId;
+}
+
+function removeBoard(cmd, props, show, close) {
+  var keys = _.keys(getOwnerBoards(props));
+  show('Confirm', `Remove ${keys.length} boards?`, () => {
+    close();
+    _.each(keys, (id) => props.deleteBoard(id, false));
+  });
+}
+
+function isOwnerDefined(cmd, props) {
+  return props.owner;
+}
+
+function nameBoard(cmd, props, show, close) {
+  var name = cmd.slice('name'.length).trim();
+  if (!name) {
+    return;
+  }
+  if (props.activeBoardId) {
+    props.renameBoard(props.activeBoardId, name);
+  } else {
+    var keys = _.keys(getOwnerBoards(props));
+    show('Confirm', `Rename ${keys.length} boards to "${name}"?`, () => {
       close();
-      _.each(keys, id => props.deleteBoard(id, false));
+      _.each(keys, (id) => props.renameBoard(id, name));
     });
   }
 }
 
-function nameBoard(cmd, props){
-  if (props.owner) {
-    var name = cmd.split(' ')[1];
-    if (!name) {
-      return;
-    }
-    _.each(_.keys(getFilteredBoards(props)), id => props.renameBoard(id, name));
-  }
-}
-
-function countBoard(cmd, props){
+function countBoard(cmd, props) {
   var boards = getFilteredBoards(props);
   console.log(_.keys(boards).length);
 }
 
 const navigationHandlers = {
-  'home': {
-    commands: [
-      'go home',
-      'додому'
-    ],
-    fn: goHome
+  home: {
+    commands: ['go home', 'додому'],
+    fn: goHome,
   },
-  'first':{
-    commands: [
-      'first',
-      'перша',
-      'перший'
-    ],
-    fn: firstItem
+  first: {
+    commands: ['first', 'перша', 'перший'],
+    fn: firstItem,
   },
   last: {
-    commands: [
-      'last',
-      'останній',
-      'остання'
-    ],
-    fn: lastItem
+    commands: ['last', 'останній', 'остання'],
+    fn: lastItem,
   },
   open: {
-    commands: [
-      'open',
-      'відкрити'
-    ],
-    fn: openItem
-  }
+    commands: ['open', 'відкрити'],
+    fn: openItem,
+  },
 };
 
 function goHome() {
@@ -256,27 +333,38 @@ function openItem(cmd, props) {
     return;
   }
   ticker = ticker.toLowerCase();
-  var key = _.findKey(getFilteredBoards(props), val => (val.description || '').toLowerCase().includes(ticker));
+  var key = _.findKey(
+    getFilteredBoards(props),
+    (val) =>
+      (val.name || '').toLowerCase().includes(ticker) ||
+      (val.description || '').toLowerCase().includes(ticker)
+  );
   if (key) {
     history.push(`${process.env.REACT_APP_CONTEXT_ROOT}/board/${key}`);
   }
 }
 
 const filterHandlers = {
-  'filter': {
-    commands:[
-      'filter',
-      'фільтр'
-    ],
-    fn: filterBoards
+  filter: {
+    commands: ['filter', 'фільтр'],
+    fn: filterBoards,
   },
-  'drop': {
-    commands:[
+  own: {
+    commands: ['owner', 'own', 'мої', 'моє'],
+    fn: filterOwn,
+  },
+  drop: {
+    commands: [
       'drop filter',
-      'скинути фільтр'
+      'скинути фільтр',
+      'all',
+      'everything',
+      'unfiltered',
+      'все',
+      'без фільтра',
     ],
-    fn: dropFilter
-  }
+    fn: dropFilter,
+  },
 };
 
 function filterBoards(cmd, props) {
@@ -288,25 +376,24 @@ function filterBoards(cmd, props) {
   props.filterBoards(filter);
 }
 
+function filterOwn(cmd, props) {
+  props.filterBoards(props.owner || '');
+}
+
 function dropFilter(cmd, props) {
   props.filterBoards('');
 }
 
 const languageHandlers = {
-  'english': {
-    commands: [
-      'англійська',
-      'english'
-    ],
-    fn: languageUs
+  english: {
+    commands: ['англійська', 'english'],
+    fn: languageUs,
   },
 
-  'ukrainian': {
-    commands: [
-      'ukrainian'
-    ],
-    fn: languageUa
-  }
+  ukrainian: {
+    commands: ['ukrainian'],
+    fn: languageUa,
+  },
 };
 
 function languageUa(cmd, props) {
@@ -318,15 +405,10 @@ function languageUs(cmd, props) {
 }
 
 const consoleHandlers = {
-  'clear': {
-    commands: [
-      'clear',
-      'очистити',
-      'почистити',
-      'стерти'
-    ],
-    fn: clearConsole
-  }
+  clear: {
+    commands: ['clear', 'очистити', 'почистити', 'стерти'],
+    fn: clearConsole,
+  },
 };
 
 function clearConsole() {
@@ -334,25 +416,21 @@ function clearConsole() {
 }
 
 const scrollHandlers = {
-  'top': {
+  top: {
     commands: [
       'вгору',
       'вверх',
       'scroll top',
       'scroll up',
-      'scroll start'
+      'scroll start',
+      'go up',
     ],
-    fn: scrollTop
+    fn: scrollTop,
   },
-  'bottom': {
-    commands: [
-      'вниз',
-      'scroll bottom',
-      'scroll down',
-      'scroll end'
-    ],
-    fn: scrollBottom
-  }
+  bottom: {
+    commands: ['вниз', 'scroll bottom', 'scroll down', 'scroll end', 'go down'],
+    fn: scrollBottom,
+  },
 };
 
 function scrollTop() {
@@ -368,34 +446,25 @@ function scrollBottom() {
 }
 
 const zoomHandlers = {
-  'in': {
-    commands: [
-      'збільшити',
-      'більше',
-      'zoom',
-      'zoom zoom',
-      'zoom in'
-    ],
-    fn: zoomIn
+  in: {
+    commands: ['збільшити', 'більше', 'zoom', 'zoom zoom', 'zoom in', 'bigger'],
+    fn: zoomIn,
   },
-  'out': {
-    commands: [
-      'zoom out',
-      'зменшити',
-      'менше'
-    ],
-    fn: zoomOut
+  out: {
+    commands: ['zoom out', 'зменшити', 'менше', 'smaller'],
+    fn: zoomOut,
   },
-  'reset': {
+  reset: {
     commands: [
       'zoom reset',
       'reset zoom',
       'normal zoom',
-      'оригінал'
+      'original',
+      'оригінал',
     ],
-    fn: zoom100
-  }
-}
+    fn: zoom100,
+  },
+};
 
 let zoom = 100;
 
@@ -414,26 +483,63 @@ function zoom100() {
   document.body.style.zoom = `${zoom}%`;
 }
 
-function getFilteredBoards(props){
+function getFilteredBoards(props) {
   var filter = props.filter.toLowerCase();
-  var filteredBoards = _.omitBy(props.boards, board => !board.name.toLowerCase().includes(filter));
-  console.log(filteredBoards);
+  var filteredBoards = _.omitBy(
+    props.boards,
+    (board) =>
+      !(
+        (board.name || '').toLowerCase().includes(filter) ||
+        (board.description || '').toLowerCase().includes(filter) ||
+        (board.owner || '').toLowerCase().includes(filter)
+      )
+  );
   return filteredBoards;
+}
+
+function getOwnerBoards(props) {
+  return _.omitBy(
+    getFilteredBoards(props),
+    (board) => !((board.owner || '') == (props.owner || ''))
+  );
 }
 
 const handlers = {
   control: controlHandlers,
   help: helpHandlers,
   board: boardHandlers,
+  lane: laneHandlers,
   navigation: navigationHandlers,
   filter: filterHandlers,
   language: languageHandlers,
   console: consoleHandlers,
   scroll: scrollHandlers,
-  zoom: zoomHandlers
+  zoom: zoomHandlers,
 };
 
-function getHandler(speechCmd){
-  var commands = _.flatMap(handlers, category => _.map(category, command => command));
-  return _.find(commands, command => _.includes(command.commands, speechCmd)) || _.find(commands, command => _.some(command.commands, cmd => speechCmd.startsWith(cmd)));
+function getHandler(speechCmd, props) {
+  var commands = _.flatMap(handlers, (category) =>
+    _.map(category, (command) => command)
+  );
+  return (
+    _.find(
+      commands,
+      (command) =>
+        _.includes(command.commands, speechCmd) &&
+        isEnabled(command, speechCmd, props)
+    ) ||
+    _.find(
+      commands,
+      (command) =>
+        _.some(command.commands, (cmd) => speechCmd.startsWith(cmd)) &&
+        isEnabled(command, speechCmd, props)
+    )
+  );
+}
+
+function isEnabled(command, cmd, props) {
+  if (command.enabled) {
+    return command.enabled(cmd, props);
+  }
+  return command;
 }

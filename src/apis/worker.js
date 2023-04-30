@@ -9,6 +9,7 @@ export const APPENDCHILD = 5;
 export const INSERTBEFORE = 6;
 export const INSERTAFTER = 7;
 export const LAYOUTBOARD = 8;
+export const LAYOUTLANE = 9;
 
 let sharedWorker = null;
 

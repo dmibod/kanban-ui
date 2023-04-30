@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
-import { filterBoards, createBoard, deleteBoard, shareBoard, renameBoard } from '../actions/board';
+import { filterBoards, createBoard, deleteBoard, shareBoard, renameBoard, layoutBoard } from '../actions/board';
+import { createLane, createCardLane, layoutLane } from '../actions/lane';
 import { speechOn, speechOff, speechCmd, speechLang } from '../actions/speech';
 
 class Speech extends React.Component {
@@ -55,7 +56,7 @@ class Speech extends React.Component {
           <Modal.Header closeButton>
             <Modal.Title>{this.state.title}</Modal.Title>
           </Modal.Header>
-          <Modal.Body>{this.state.info}</Modal.Body>
+          <Modal.Body><div>{this.state.info}</div></Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.handleClose}>
               Close
@@ -78,7 +79,8 @@ const mapStateToProps = (state) => {
     lang: state.speech.speechLang,
     filter: state.filter,
     boards: state.boards,
-    owner: state.auth.user
+    owner: state.auth.user,
+    activeBoardId: state.activeBoard
   };
 };
 
@@ -91,5 +93,9 @@ export default connect(mapStateToProps, {
   createBoard,
   deleteBoard,
   shareBoard,
-  renameBoard
+  renameBoard,
+  layoutBoard,
+  createLane,
+  createCardLane,
+  layoutLane
 })(Speech);

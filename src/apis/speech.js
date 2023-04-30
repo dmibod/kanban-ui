@@ -3,7 +3,7 @@ const SpeechRecognition =
 
 var recognition = null;
 var speechCallback = null;
-var speechLang = "en-US";
+var speechLang = localStorage.getItem('speech.lang') || "en-US";
 
 function create() {
   var speech = new SpeechRecognition();
@@ -49,6 +49,7 @@ export const speechLanguage = (lang) => {
   if (speechLang === lang){
     return;
   }
+  localStorage.setItem('speech.lang', lang);
   var cb = speechCallback;
   speechLang = lang;
   stopSpeech();

@@ -1,12 +1,13 @@
 import server from '../apis/index';
-import worker, { APPENDCHILD, EXCLUDECHILD, REMOVELANE } from '../apis/worker';
+import worker, { APPENDCHILD, EXCLUDECHILD, REMOVELANE, LAYOUTLANE } from '../apis/worker';
 
 import {
   FETCH_LANE,
   CREATE_LANE,
   APPEND_LANE,
   EXCLUDE_LANE,
-  DELETE_LANE
+  DELETE_LANE,
+  LAYOUT_LANE
 } from './types';
 
 export const fetchLane = (boardId, laneId) => async dispatch => {
@@ -50,6 +51,12 @@ export const createCardLane = (boardId, laneId, name) => async dispatch => {
       payload: { parent_id: laneId }
     }
   ]);
+};
+
+export const layoutLane = (boardId, laneId, layout) => async dispatch => {
+  worker(boardId, [{ id: laneId, board_id: boardId, type: LAYOUTLANE, payload: { layout } }]);
+
+  dispatch({ type: LAYOUT_LANE, payload: { boardId, laneId, layout }});
 };
 
 export const excludeLane = (boardId, parentId, laneId) => dispatch => {

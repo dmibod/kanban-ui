@@ -9,7 +9,7 @@ import { isSpeechEnabled } from '../apis/speech';
 const INTIAL_STATE = {
   isSpeechEnabled: isSpeechEnabled(),
   isSpeechOn: false,
-  speechLang: 'en-US',
+  speechLang: localStorage.getItem('speech.lang') || 'en-US',
   speechCmd: ''
 };
 

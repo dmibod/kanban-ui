@@ -18,6 +18,7 @@ export const CREATE_LANE = 'CREATE_LANE';
 export const APPEND_LANE = 'APPEND_LANE';
 export const EXCLUDE_LANE = 'EXCLUDE_LANE';
 export const DELETE_LANE = 'DELETE_LANE';
+export const LAYOUT_LANE = 'LAYOUT_LANE';
 
 export const FETCH_CARD = 'FETCH_CARD'
 export const CREATE_CARD = 'CREATE_CARD';

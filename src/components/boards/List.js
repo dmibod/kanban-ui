@@ -58,7 +58,7 @@ const mapStateToProps = state => {
   let filter = state.filter.toLowerCase();
 
   return {
-    boards: boards.filter(board => (board.name || '').toLowerCase().includes(filter)),
+    boards: boards.filter(board => (board.name || '').toLowerCase().includes(filter) || (board.description || '').toLowerCase().includes(filter) || (board.owner || '').toLowerCase().includes(filter)),
     currentUserId: state.auth.isSignedIn ? state.auth.user : null,
     isSignedIn: state.auth.isSignedIn
   };

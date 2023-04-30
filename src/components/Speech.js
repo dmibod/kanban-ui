@@ -19,7 +19,7 @@ class Speech extends React.Component {
   }
 
   onSpeechOnClick = () => {
-    this.props.speechOn(cmd => this.props.speechCmd(cmd, this.props, (t, i) => !this.state.show && this.handleShow(t, i), () => this.state.show && this.handleClose()));
+    this.props.speechOn(cmd => this.props.speechCmd(cmd, this.props, (t, i, y) => !this.state.show && this.handleShow(t, i, y), () => this.state.show && this.handleClose()));
   };
 
   onSpeechOffClick = () => {
@@ -30,28 +30,25 @@ class Speech extends React.Component {
     this.setState({ show: false });
   }
 
-  handleShow(title = '', info = '') {
-    this.setState({ show: true, title: title, info: info });
+  handleShow(title = '', info = '', yesFn = undefined) {
+    this.setState({ show: true, title: title, info: info, yesFn: yesFn });
   }
 
   render() {
-    if (!this.props.isEnabled) {
-      return null;
-    }
-    if (this.props.isOn) {
       return (
         <React.Fragment>
         <div className="input-group-append">
           <button
+            disabled={!this.props.isEnabled}
             className={
               this.props.greenBg
                 ? 'btn btn-sm btn-success'
                 : 'btn btn-info btn-sm'
             }
-            onClick={this.onSpeechOffClick}
+            onClick={() => this.props.isOn ? this.onSpeechOffClick() : this.onSpeechOnClick()}
             title={`${this.props.lang}:${this.props.cmd}`}
           >
-            <i className="fa fa-fw fa-microphone-slash" />
+            <i className={this.props.isOn ? 'fa fa-fw fa-microphone-slash' : 'fa fa-fw fa-microphone'} />
           </button>
         </div>
         <Modal show={this.state.show} onHide={this.handleClose}>
@@ -63,42 +60,13 @@ class Speech extends React.Component {
             <Button variant="secondary" onClick={this.handleClose}>
               Close
             </Button>
-          </Modal.Footer>
-        </Modal>
-        </React.Fragment>
-      );
-    } else {
-      return (
-        <React.Fragment>
-        <div className="input-group-append">
-          <button
-            className={
-              this.props.greenBg
-                ? 'btn btn-sm btn-success'
-                : 'btn btn-info btn-sm'
-            }
-            onClick={this.onSpeechOnClick}
-          >
-            <i className="fa fa-fw fa-microphone" />
-          </button>
-        </div>
-        <Modal show={this.state.show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>{this.state.title}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>{this.state.question}</Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={this.state.yesFn}>
+            <Button variant="primary" onClick={() => this.state.yesFn()} disabled={this.state.yesFn===undefined}>
               Yes
             </Button>
           </Modal.Footer>
         </Modal>
         </React.Fragment>
       );
-    }
   }
 }
 

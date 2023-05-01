@@ -2,7 +2,8 @@
   "name": "kanban-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://dmibod.github.io/kanban-ui",
+  "homepage1": "https://dmibod.github.io/kanban-ui",
+  "homepage": "https://assistant.dmitrybodnar.com",
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",

@@ -74,9 +74,7 @@ class Speech extends React.Component {
             <Button variant="secondary" onClick={this.handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={() => this.state.yesFn()} disabled={this.state.yesFn===undefined}>
-              Yes
-            </Button>
+            {this.state.yesFn?(<Button variant="primary" onClick={() => this.state.yesFn()} disabled={!this.state.yesFn}>Yes</Button>):''}
           </Modal.Footer>
         </Modal>
         </React.Fragment>

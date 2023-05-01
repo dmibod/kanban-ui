@@ -31,7 +31,9 @@ class Body extends React.Component {
     const style = layout === 'V' ? 'flex-column' : 'flex-row';
 
     return (
-      <div className={`board-body d-flex ${style}`}>{this.renderLanes()}</div>
+      <div className="container-fluid board-list">
+        <div className={`board-body d-flex ${style}`}>{this.renderLanes()}</div>
+      </div>
     );
   }
 }

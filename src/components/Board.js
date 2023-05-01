@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Header from './board/Header';
 import Body from './board/Body';
 import socket from '../apis/socket';
 import { Modal, Button } from 'react-bootstrap';
@@ -63,7 +62,6 @@ class Board extends React.Component {
 
     return (
       <React.Fragment>
-        <Header board={board} editable={editable} />
         <Body board={board} editable={editable} onConfirm={this.handleShow} />
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>

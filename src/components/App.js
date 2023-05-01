@@ -1,13 +1,15 @@
 import React from 'react';
 import Boards from './Boards';
 import Board from './Board';
-import Header from './Header';
+import MainHeader from './Header';
+import Header from './board/Header';
 import { Router, Route, Switch } from 'react-router-dom';
 import history from '../history';
 
 const App = () => (
   <Router history={history}>
     <React.Fragment>
+      <MainHeader />
       <Header />
       <Switch>
         <Route

@@ -5,7 +5,7 @@ import { renameBoard, layoutBoard } from '../../actions/board';
 import { createLane } from '../../actions/lane';
 import Speech from '../Speech';
 
-const Header = ({ editable, update, layout, lane, board }) => {
+const Header = ({ editable, update, visible, layout, lane, board }) => {
   let input;
 
   const updateButton = () => {
@@ -67,7 +67,8 @@ const Header = ({ editable, update, layout, lane, board }) => {
   };
 
   return (
-    <nav className="navbar bg-dark navbar-dark">
+    <nav className="navbar bg-dark navbar-dark fixed-top"
+    style={{ visibility: visible ? 'visible' : 'hidden' }}>
       <div className="container-fluid no-gutters">
         <div className="col-12 col-sm-12 col-md-6 col-lg-3 ml-auto">
           <form
@@ -86,7 +87,7 @@ const Header = ({ editable, update, layout, lane, board }) => {
               <input
                 type="search"
                 className="form-control form-control-sm"
-                defaultValue={board.name}
+                defaultValue={board ? board.name : ''}
                 ref={node => (input = node)}
               />
               {updateButton()}
@@ -111,8 +112,15 @@ const Header = ({ editable, update, layout, lane, board }) => {
   );
 };
 
-const mapStateToProps = () => {
-  return {};
+const mapStateToProps = (state, ownProps) => {
+  let board = state.board && state.activeBoard && state.board.id === state.activeBoard ? state.board : null;
+  let editable = state.auth.isSignedIn && board && board.owner === state.auth.user;
+
+  return {
+    board,
+    editable,
+    visible: state.activeBoard != null,
+  };
 };
 
 export default connect(

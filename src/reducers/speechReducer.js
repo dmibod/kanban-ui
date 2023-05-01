@@ -10,7 +10,8 @@ const INTIAL_STATE = {
   isSpeechEnabled: isSpeechEnabled(),
   isSpeechOn: false,
   speechLang: localStorage.getItem('speech.lang') || 'en-US',
-  speechCmd: ''
+  speechCmd: '',
+  speechResult: true
 };
 
 export default (state = INTIAL_STATE, action) => {
@@ -20,7 +21,7 @@ export default (state = INTIAL_STATE, action) => {
     case SPEECH_OFF:
       return { ...state, isSpeechOn: false, speechCmd: '' };
       case SPEECH_CMD:
-        return { ...state, speechCmd: action.payload };
+        return { ...state, speechCmd: action.payload.cmd, speechResult: action.payload.executed };
       case SPEECH_LANG:
         return { ...state, speechLang: action.payload };
       default:

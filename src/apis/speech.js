@@ -8,10 +8,10 @@ var counter = 0;
 var speechCallbacks = {};
 var speechLang = localStorage.getItem('speech.lang') || 'en-US';
 
-function onResult(result) {
+function onResult(success, result) {
   //_.each(speechCallbacks, (cb) => cb && cb(result));
-  var cb = _.find(speechCallbacks, cb => cb instanceof Function);
-  if (cb) cb(result);
+  var cb = _.findLast(speechCallbacks, cb => cb instanceof Function);
+  if (cb) cb(success, result);
 }
 
 function create() {
@@ -21,13 +21,18 @@ function create() {
   speech.interimResults = false;
   speech.maxAlternatives = 5;
   speech.onspeechend = () => {
+    console.log('speech end');
     speech.stop();
     start();
   };
   speech.onresult = (event) => {
-    onResult(event.results[0][0].transcript);
+    var cmd = event.results[0][0].transcript;
+    console.log('speech success: ' + cmd);
+    onResult(true, cmd);
   };
   speech.onerror = (event) => {
+    console.log('speech error');
+    onResult(false);
     start();
   };
   return speech;
@@ -78,8 +83,9 @@ export const stopSpeech = () => {
 export const subscribe = (callback) => {
   if (!callback) return -1;
   counter++;
-  speechCallbacks[counter] = callback;
-  return `cb_${counter}`;
+  var handle = `cb_${counter}`;
+  speechCallbacks[handle] = callback;
+  return handle;
 };
 
 export const unsubscribe = (handle) => {

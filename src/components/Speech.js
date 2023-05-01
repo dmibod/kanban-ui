@@ -16,14 +16,19 @@ class Speech extends React.Component {
     this.state = {
       show: false,
       title: '',
-      info: ''
+      info: '',
+      error: false
     };
   }
 
   componentDidMount() {
     const showFn = (t, i, y) => !this.state.show && this.handleShow(t, i, y);
     const closeFn = () => this.state.show && this.handleClose();
-    this.speechHandle = subscribe(cmd => this.props.speechCmd(cmd, this.props, showFn, closeFn));
+    const speechFn = cmd => this.props.speechCmd(cmd, this.props, showFn, closeFn);
+    this.speechHandle = subscribe((success, cmd) => {
+      this.setState({ error: !success });
+      success && speechFn(cmd);
+    });
     console.log('sub: ' + this.speechHandle);
   }
 
@@ -55,7 +60,11 @@ class Speech extends React.Component {
           <button
             disabled={!this.props.isEnabled}
             className={
-              this.props.greenBg
+              this.state.error 
+              ? 'btn btn-sm btn-danger' 
+              : this.props.yellowBg 
+              ? 'btn btn-sm btn-warning' 
+              : this.props.greenBg
                 ? 'btn btn-sm btn-success'
                 : 'btn btn-info btn-sm'
             }
@@ -87,6 +96,7 @@ const mapStateToProps = (state) => {
     isEnabled: state.speech.isSpeechEnabled,
     isOn: state.speech.isSpeechOn,
     cmd: state.speech.speechCmd,
+    yellowBg: !state.speech.speechResult,
     lang: state.speech.speechLang,
     filter: state.filter,
     boards: state.boards,

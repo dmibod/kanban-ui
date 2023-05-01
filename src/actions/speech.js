@@ -27,7 +27,10 @@ export const speechCmd = (cmd, props, helpShow, helpClose) => {
   }
   return {
     type: SPEECH_CMD,
-    payload: cmd,
+    payload: {
+      cmd: cmd,
+      executed: handler != null
+    }
   };
 };
 

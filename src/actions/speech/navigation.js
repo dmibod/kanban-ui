@@ -8,11 +8,11 @@ export const navigationHandlers = {
     fn: goHome,
   },
   first: {
-    commands: ['first', 'перша', 'перший'],
+    commands: ['first', 'перша', 'перший', 'першу'],
     fn: firstItem,
   },
   last: {
-    commands: ['last', 'останній', 'остання'],
+    commands: ['last', 'останній', 'остання', 'останню'],
     fn: lastItem,
   },
   open: {

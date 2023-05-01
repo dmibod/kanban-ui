@@ -102,7 +102,7 @@ function isOwnerDefined(cmd, props) {
 }
 
 function nameBoard(cmd, props, show, close) {
-  var name = cmd.slice('name'.length).trim();
+  var name = cmd.slice(cmd.indexOf(' ')).trim();
   if (!name) {
     return;
   }

@@ -4,8 +4,8 @@ import history from '../history';
 import { SPEECH_ON, SPEECH_OFF, SPEECH_CMD, SPEECH_LANG } from './types';
 import { startSpeech, stopSpeech, speechLanguage } from '../apis/speech';
 
-export const speechOn = (callBack) => {
-  startSpeech(callBack);
+export const speechOn = () => {
+  startSpeech();
   return {
     type: SPEECH_ON,
   };
@@ -62,11 +62,11 @@ function reloadPage(cmd, props) {
 
 const helpHandlers = {
   help: {
-    commands: ['help', 'допомога'],
+    commands: ['help', 'commands', 'допомога'],
     fn: helpShow,
   },
   close: {
-    commands: ['close', 'закрити'],
+    commands: ['close', 'cancel', 'закрити'],
     fn: helpClose,
   },
 };
@@ -89,7 +89,7 @@ function helpShow(cmd, props, show, close) {
 
   var body = _.map(_.map(handlers, mapCategory));
 
-  show('Voice commands', body);
+  show('Voice commands', /*body*/<div className='' style={{fontSize:'x-small'}}>{body}</div>);
 }
 
 function helpClose(cmd, props, show, close) {
@@ -423,7 +423,7 @@ const scrollHandlers = {
       'scroll top',
       'scroll up',
       'scroll start',
-      'go up',
+      'go up'
     ],
     fn: scrollTop,
   },
@@ -431,7 +431,39 @@ const scrollHandlers = {
     commands: ['вниз', 'scroll bottom', 'scroll down', 'scroll end', 'go down'],
     fn: scrollBottom,
   },
+  up: {
+    commands: ['up', 'north', 'вище', 'північ'],
+    fn: scrollUp
+  },
+  down: {
+    commands: ['down', 'south', 'нижче', 'південь'],
+    fn: scrollDown
+  },
+  left: {
+    commands: ['left', 'west', 'ліво', 'лівіше', 'захід'],
+    fn: scrollLeft
+  },
+  right: {
+    commands: ['right', 'east', 'право', 'правіше', 'схід'],
+    fn: scrollRight
+  }
 };
+
+function scrollLeft(){
+  window.scrollBy(-300, 0);
+}
+
+function scrollRight(){
+  window.scrollBy(300, 0);
+}
+
+function scrollUp(){
+  window.scrollBy(0, -300);
+}
+
+function scrollDown(){
+  window.scrollBy(0, 300);
+}
 
 function scrollTop() {
   window.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
@@ -505,16 +537,16 @@ function getOwnerBoards(props) {
 }
 
 const handlers = {
-  control: controlHandlers,
-  help: helpHandlers,
   board: boardHandlers,
-  lane: laneHandlers,
-  navigation: navigationHandlers,
-  filter: filterHandlers,
-  language: languageHandlers,
   console: consoleHandlers,
+  control: controlHandlers,
+  filter: filterHandlers,
+  help: helpHandlers,
+  lane: laneHandlers,
+  language: languageHandlers,
+  navigation: navigationHandlers,
   scroll: scrollHandlers,
-  zoom: zoomHandlers,
+  zoom: zoomHandlers
 };
 
 function getHandler(speechCmd, props) {

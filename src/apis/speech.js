@@ -1,9 +1,18 @@
+import _, { find } from 'lodash';
+
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
 
 var recognition = null;
-var speechCallback = null;
-var speechLang = localStorage.getItem('speech.lang') || "en-US";
+var counter = 0;
+var speechCallbacks = {};
+var speechLang = localStorage.getItem('speech.lang') || 'en-US';
+
+function onResult(result) {
+  //_.each(speechCallbacks, (cb) => cb && cb(result));
+  var cb = _.find(speechCallbacks, cb => cb instanceof Function);
+  if (cb) cb(result);
+}
 
 function create() {
   var speech = new SpeechRecognition();
@@ -12,20 +21,13 @@ function create() {
   speech.interimResults = false;
   speech.maxAlternatives = 5;
   speech.onspeechend = () => {
-    //console.log('Speech end');
     speech.stop();
     start();
   };
   speech.onresult = (event) => {
-    //console.log('Speech success');
-    //console.log(event);
-    if (speechCallback) {
-      speechCallback(event.results[0][0].transcript);
-    }
+    onResult(event.results[0][0].transcript);
   };
   speech.onerror = (event) => {
-    //console.log('Speech error');
-    //console.log(event);
     start();
   };
   return speech;
@@ -33,7 +35,6 @@ function create() {
 
 function start() {
   setTimeout(() => {
-    //console.log('Listen');
     if (recognition) {
       recognition.start();
     }
@@ -46,30 +47,43 @@ export const isSpeechEnabled = () => {
 
 export const speechLanguage = (lang) => {
   console.log('Language:' + lang);
-  if (speechLang === lang){
+  if (speechLang === lang) {
     return;
   }
   localStorage.setItem('speech.lang', lang);
-  var cb = speechCallback;
   speechLang = lang;
+  var cb = speechCallbacks;
   stopSpeech();
   setTimeout(() => {
-    startSpeech(cb);
+    speechCallbacks = cb;
+    startSpeech();
   }, 2000);
 };
 
-export const startSpeech = (callback) => {
+export const startSpeech = () => {
   console.log('Listen');
-  speechCallback = callback;
   recognition = create();
   recognition.start();
 };
 
 export const stopSpeech = () => {
   console.log('Stop');
-  speechCallback = null;
+  speechCallbacks = {};
   if (recognition) {
     recognition.stop();
     recognition = null;
+  }
+};
+
+export const subscribe = (callback) => {
+  if (!callback) return -1;
+  counter++;
+  speechCallbacks[counter] = callback;
+  return `cb_${counter}`;
+};
+
+export const unsubscribe = (handle) => {
+  if (speechCallbacks[handle]) {
+    delete speechCallbacks[handle];
   }
 };

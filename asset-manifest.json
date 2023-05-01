@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/kanban-ui/static/css/main.2c084556.chunk.css",
-    "main.js": "/kanban-ui/static/js/main.34d426e6.chunk.js",
-    "main.js.map": "/kanban-ui/static/js/main.34d426e6.chunk.js.map",
-    "runtime~main.js": "/kanban-ui/static/js/runtime~main.d5f475d1.js",
-    "runtime~main.js.map": "/kanban-ui/static/js/runtime~main.d5f475d1.js.map",
-    "static/css/2.99ed1a77.chunk.css": "/kanban-ui/static/css/2.99ed1a77.chunk.css",
-    "static/js/2.899c87d1.chunk.js": "/kanban-ui/static/js/2.899c87d1.chunk.js",
-    "static/js/2.899c87d1.chunk.js.map": "/kanban-ui/static/js/2.899c87d1.chunk.js.map",
-    "index.html": "/kanban-ui/index.html",
-    "precache-manifest.ba17e29d04ede799a53e6a4d309279f9.js": "/kanban-ui/precache-manifest.ba17e29d04ede799a53e6a4d309279f9.js",
-    "service-worker.js": "/kanban-ui/service-worker.js",
-    "static/css/2.99ed1a77.chunk.css.map": "/kanban-ui/static/css/2.99ed1a77.chunk.css.map",
-    "static/css/main.2c084556.chunk.css.map": "/kanban-ui/static/css/main.2c084556.chunk.css.map",
-    "static/media/font-awesome.min.css": "/kanban-ui/static/media/fontawesome-webfont.fee66e71.woff"
+    "main.css": "/static/css/main.2c084556.chunk.css",
+    "main.js": "/static/js/main.2da765c7.chunk.js",
+    "main.js.map": "/static/js/main.2da765c7.chunk.js.map",
+    "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
+    "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
+    "static/css/2.297ebbb0.chunk.css": "/static/css/2.297ebbb0.chunk.css",
+    "static/js/2.918a3935.chunk.js": "/static/js/2.918a3935.chunk.js",
+    "static/js/2.918a3935.chunk.js.map": "/static/js/2.918a3935.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.dccafa0bfa672eb4351a3b1ed6d7aed6.js": "/precache-manifest.dccafa0bfa672eb4351a3b1ed6d7aed6.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.297ebbb0.chunk.css.map": "/static/css/2.297ebbb0.chunk.css.map",
+    "static/css/main.2c084556.chunk.css.map": "/static/css/main.2c084556.chunk.css.map",
+    "static/media/font-awesome.min.css": "/static/media/fontawesome-webfont.fee66e71.woff"
   }
 }

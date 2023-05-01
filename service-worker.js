@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/kanban-ui/precache-manifest.d6566486c0b99031b5b6b7017d063ca5.js"
+  "/kanban-ui/precache-manifest.c2c05e16c720d467521f27d12422b36c.js"
 );
 
 self.addEventListener('message', (event) => {

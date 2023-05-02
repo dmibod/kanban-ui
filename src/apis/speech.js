@@ -10,7 +10,7 @@ var speechLang = localStorage.getItem('speech.lang') || 'en-US';
 
 function onResult(success, result) {
   //_.each(speechCallbacks, (cb) => cb && cb(result));
-  var cb = _.findLast(speechCallbacks, cb => cb instanceof Function);
+  var cb = _.find(speechCallbacks, cb => cb instanceof Function);
   if (cb) cb(success, result);
 }
 

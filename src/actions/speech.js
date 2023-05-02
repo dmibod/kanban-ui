@@ -1,4 +1,4 @@
-import { SPEECH_ON, SPEECH_OFF, SPEECH_CMD, SPEECH_LANG } from './types';
+import { SPEECH_ON, SPEECH_OFF, SPEECH_ERROR, SPEECH_CMD, SPEECH_LANG } from './types';
 import { startSpeech, stopSpeech, speechLanguage } from '../apis/speech';
 import { getHandler } from './speech/handlers';
 
@@ -13,6 +13,12 @@ export const speechOff = () => {
   stopSpeech();
   return {
     type: SPEECH_OFF,
+  };
+};
+
+export const speechError = () => {
+  return {
+    type: SPEECH_ERROR,
   };
 };
 

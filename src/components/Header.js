@@ -51,7 +51,7 @@ const Header = ({ secure, owner, visible, createBoard, filterBoards }) => {
                   clearValue={() => (input.value = '')}
                 />
               </div>
-              <Microphone greenBg={false}/>
+              <Microphone home={true}/>
               <input
                 type="search"
                 className="form-control form-control-sm"

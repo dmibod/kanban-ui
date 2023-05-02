@@ -3,10 +3,12 @@ import Boards from './Boards';
 import Board from './Board';
 import { Router, Route, Switch } from 'react-router-dom';
 import history from '../history';
+import Speech from './Speech';
 
 const App = () => (
   <Router history={history}>
     <React.Fragment>
+      <Speech />
       <Switch>
         <Route
           path={`${process.env.REACT_APP_CONTEXT_ROOT}/`}

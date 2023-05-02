@@ -1,10 +1,12 @@
 import _ from 'lodash';
 import history from '../../history';
 import { getFilteredBoards } from './common';
+import { isActiveBoard } from './common';
 
 export const navigationHandlers = {
   home: {
     commands: ['go home', 'додому'],
+    enabled: isActiveBoard,
     fn: goHome,
   },
   first: {

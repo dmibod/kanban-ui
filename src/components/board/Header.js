@@ -83,7 +83,7 @@ const Header = ({ editable, update, visible, layout, lane, board }) => {
                   <i className="fa fa-fw fa-home" />
                 </Link>
               </div>
-              <Microphone greenBg={true}/>
+              <Microphone home={false}/>
               <input
                 type="search"
                 className="form-control form-control-sm"

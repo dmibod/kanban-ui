@@ -49,7 +49,7 @@ class Speech extends React.Component {
 
   render() {
       return (
-        <Modal show={this.state.show} onHide={this.handleClose} size='lg'>
+        <Modal show={this.state.show} onHide={this.handleClose} size='lg' backdropClassName='full-screen-size'>
           <Modal.Header closeButton>
             <Modal.Title>{this.state.title}</Modal.Title>
           </Modal.Header>

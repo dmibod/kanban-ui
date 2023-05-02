@@ -4,6 +4,7 @@ import Body from './board/Body';
 import socket from '../apis/socket';
 import { Modal, Button } from 'react-bootstrap';
 import { fetchBoard, activeBoard, cleanBoard } from '../actions/board';
+import Header from './board/Header';
 
 class Board extends React.Component {
   constructor(props, context) {
@@ -62,6 +63,7 @@ class Board extends React.Component {
 
     return (
       <React.Fragment>
+        <Header/>
         <Body board={board} editable={editable} onConfirm={this.handleShow} />
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>

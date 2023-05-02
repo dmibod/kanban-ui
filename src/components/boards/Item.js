@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Desc from './Desc';
-import Spinner4 from '../Spinner4';
+import Spinner4 from '../spinners/Spinner4';
 import ProgressBar from '../ProgressBar';
 
 const Item = ({ id, name, description, state, shared, editable, shareBoard, deleteBoard }) => (

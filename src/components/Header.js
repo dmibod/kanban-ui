@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createBoard, filterBoards } from '../actions/board';
 import Auth from './Auth';
-import Speech from './Speech';
+import Microphone from './Microphone';
 
 const Header = ({ secure, owner, visible, createBoard, filterBoards }) => {
   let input;
@@ -51,7 +51,7 @@ const Header = ({ secure, owner, visible, createBoard, filterBoards }) => {
                   clearValue={() => (input.value = '')}
                 />
               </div>
-              <Speech greenBg={false}/>
+              <Microphone greenBg={false}/>
               <input
                 type="search"
                 className="form-control form-control-sm"

@@ -6,7 +6,7 @@ import { createLane, createCardLane, layoutLane } from '../actions/lane';
 import { speechOn, speechOff, speechCmd, speechLang } from '../actions/speech';
 import { subscribe, unsubscribe } from '../apis/speech';
 
-class Speech extends React.Component {
+class Microphone extends React.Component {
   constructor(props, context) {
     super(props, context);
 
@@ -119,4 +119,4 @@ export default connect(mapStateToProps, {
   createLane,
   createCardLane,
   layoutLane
-})(Speech);
+})(Microphone);

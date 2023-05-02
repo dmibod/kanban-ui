@@ -2,6 +2,7 @@ import React from 'react';
 import List from './boards/List';
 import { Modal, Button } from 'react-bootstrap';
 import socket from '../apis/socket';
+import Header from './Header';
 
 class Boards extends React.Component {
   constructor(props, context) {
@@ -41,6 +42,7 @@ class Boards extends React.Component {
   render() {
     return (
       <React.Fragment>
+        <Header/>
         <List onConfirm={this.handleShow}/>
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>

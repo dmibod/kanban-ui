@@ -1,5 +1,6 @@
+import React from 'react';
 import _ from 'lodash';
-import { isActiveBoard, getFilteredBoards } from './common';
+import { isActiveBoard, isNotActiveBoard, getFilteredBoards } from './common';
 
 export const boardHandlers = {
   create: {
@@ -47,7 +48,8 @@ export const boardHandlers = {
   },
   count: {
     commands: ['count'],
-    fn: countBoard,
+    enabled: isNotActiveBoard,
+    fn: countBoards,
   },
 };
 
@@ -117,9 +119,15 @@ function nameBoard(cmd, props, show, close) {
   }
 }
 
-function countBoard(cmd, props) {
+function countBoards(cmd, props, show, close) {
   var boards = getFilteredBoards(props);
-  console.log(_.keys(boards).length);
+  var count = _.keys(boards).length;
+  console.log(count);
+  show(
+    'Hi there:)',
+    <div>You observe {count} board(s) at the moment.</div>
+  );
+  setTimeout(close, 3000);
 }
 
 function getOwnerBoards(props) {

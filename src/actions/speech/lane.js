@@ -52,7 +52,7 @@ function tickers(cmd, props, show, close) {
   }).join(", ");
   console.log(names);
   show(
-    'Hi there:)',
+    'The list of tickers',
     <div>{names || 'There are no tickers'}.</div>
   );
   setTimeout(close, 5000);

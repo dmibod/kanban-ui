@@ -39,13 +39,24 @@ export const laneHandlers = {
   },
   tickers: {
     commands: ['tickers', 'companies', 'компанії', 'тікери'],
-    enabled: isActiveBoard,
+    enabled: tickersEnabled,
     fn: tickers,
   },
 };
 
+function tickersEnabled(cmd, props, show, close){
+  if (!isActiveBoard(cmd, props, show, close)){
+    return false;
+  }
+  var name = props.boards[props.activeBoardId].name;
+  return name.startsWith('Recommendations') || name.startsWith('Market Data');
+}
+
 function tickers(cmd, props, show, close) {
-  var elements = document.querySelectorAll("div.board-body > div.lane-wrapper > div.lane-header > div.lane-title > div.row > div.mr-auto b");
+  var name = props.boards[props.activeBoardId].name;
+  var elements = name.startsWith('Recommendations')
+  ? document.querySelectorAll("div.board-body > div.lane-wrapper > div.lane-body > div.lane-wrapper > div.lane-header > div.lane-title > div.row > div.mr-auto b")
+  : document.querySelectorAll("div.board-body > div.lane-wrapper > div.lane-header > div.lane-title > div.row > div.mr-auto b");
   var names = _.map(elements, el => {
     var text = el.innerText.toUpperCase();
     return text.slice(0, text.length - 1);

@@ -25,7 +25,7 @@ export default ({ lane, card, editCard, deleteCard, editable, children }) => {
       }}
     >
       <div className="card shadow item">
-        <div className="card-header">
+        <div className="card-header p-2">
           <div className="card-title mb-0">
             <div className="row mx-0">
               <div className="mr-auto">{card.name}</div>

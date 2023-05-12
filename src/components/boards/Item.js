@@ -43,6 +43,16 @@ const Item = ({ id, name, description, state, shared, editable, shareBoard, dele
                 onClick={() => deleteBoard(id, name)}
               />
             </div>
+            <div
+              className="hover-card-badges"
+              style={{ display: 'inline' }}
+            >
+              <i
+                className="fa fa-fw fa-copy text-muted"
+                title="copy"
+                onClick={() => navigator.clipboard.writeText(description)}
+              />
+            </div>
           </div>
         </div>
       </div>

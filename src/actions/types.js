@@ -31,3 +31,5 @@ export const SPEECH_OFF = 'SPEECH_OFF';
 export const SPEECH_ERROR = 'SPEECH_ERROR';
 export const SPEECH_CMD = 'SPEECH_CMD';
 export const SPEECH_LANG = 'SPEECH_LANG';
+
+export const EXPAND_CARDS = 'EXPAND_CARDS';

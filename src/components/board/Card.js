@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import Body from './card/Body';
 import Form from './card/Form';
 
-export default ({ lane, card, editCard, deleteCard, editable, children }) => {
+const Card = ({ lane, card, editCard, deleteCard, editable, children, isExpanded }) => {
   const [formVisibility, setFormVisibility] = useState(false);
-  const [fullVisibility, setFullVisibility] = useState(false);
+  const [fullVisibility, setFullVisibility] = useState(isExpanded);
+
+  useEffect(() => setFullVisibility(isExpanded), [isExpanded]);
 
   const fn = () => {
     console.log('setting form visible');
@@ -47,14 +50,14 @@ export default ({ lane, card, editCard, deleteCard, editable, children }) => {
                   onClick={() => deleteCard(card.id)}
                 />
                 <i
-                  className="fa fa-fw fa-eye text-muted card-badge"
-                  title="all"
+                  className="fa fa-fw fa-expand text-muted card-badge"
+                  title="Expand"
                   style={{ display: !fullVisibility ? 'inline' : 'none' }}
                   onClick={() => setFullVisibility(!fullVisibility)}
                 />
                 <i
-                  className="fa fa-fw fa-eye-slash text-muted card-badge"
-                  title="scroll"
+                  className="fa fa-fw fa-compress text-muted card-badge"
+                  title="Scroll"
                   style={{ display: fullVisibility ? 'inline' : 'none' }}
                   onClick={() => setFullVisibility(!fullVisibility)}
                 />
@@ -68,3 +71,12 @@ export default ({ lane, card, editCard, deleteCard, editable, children }) => {
     </div>
   );
 };
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    isExpanded: state.expand
+  };
+};
+
+export default connect(mapStateToProps, {})(Card);
+

@@ -8,7 +8,7 @@ export default ({card, fullVisibility}) => {
       className="card-body-wrapper"
       style={{ height: fullVisibility ? 'auto' : undefined }}
       >
-        <Desc key={card.id} {...{id: card.id, description: card.description}}></Desc>
+        <Desc key={`desc-${card.id}`} {...{id: 'desc-'+card.id, description: card.description}}></Desc>
       </div>
     </div>
   );

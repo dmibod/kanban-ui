@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Body from './board/Body';
 import socket from '../apis/socket';
 import { Modal, Button } from 'react-bootstrap';
-import { fetchBoard, activeBoard, cleanBoard } from '../actions/board';
+import { fetchBoard, activeBoard, cleanBoard, expandCards } from '../actions/board';
 import Header from './board/Header';
 
 class Board extends React.Component {
@@ -33,9 +33,10 @@ class Board extends React.Component {
   }
 
   componentWillUnmount() {
-    const { cleanBoard } = this.props;
+    const { cleanBoard, expandCards } = this.props;
     
     cleanBoard();
+    expandCards(false);
   }
 
   handleClose(fn) {
@@ -93,5 +94,5 @@ const mapStateToProps = (state, ownProps) => {
 
 export default connect(
   mapStateToProps,
-  { fetchBoard, activeBoard, cleanBoard }
+  { fetchBoard, activeBoard, cleanBoard, expandCards }
 )(Board);

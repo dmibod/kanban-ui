@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { renameBoard, layoutBoard } from '../../actions/board';
+import { renameBoard, layoutBoard, expandCards } from '../../actions/board';
 import { createLane } from '../../actions/lane';
 import Microphone from '../Microphone';
 
-const Header = ({ editable, update, visible, layout, lane, board }) => {
+const Header = ({ editable, update, visible, layout, lane, board, isExpanded, expandCards }) => {
   let input;
 
   const updateButton = () => {
@@ -17,7 +17,7 @@ const Header = ({ editable, update, visible, layout, lane, board }) => {
       <div className="input-group-append">
         <button
           className="btn btn-success btn-sm"
-          onClick={e => {
+          onClick={(e) => {
             if (!input.value.trim()) {
               return;
             }
@@ -38,14 +38,16 @@ const Header = ({ editable, update, visible, layout, lane, board }) => {
     const layoutIcon = board.layout === 'V' ? 'fa-table' : 'fa-columns';
 
     return (
-      <button
-        className="btn btn-sm text-white"
-        onClick={e => {
-          layout(board.id, board.layout === 'V' ? 'H' : 'V');
-        }}
-      >
-        <i className={`fa fa-fw ${layoutIcon}`} />
-      </button>
+      <div className="input-group-append">
+        <button
+          className="btn btn-success btn-sm"
+          onClick={(e) => {
+            layout(board.id, board.layout === 'V' ? 'H' : 'V');
+          }}
+        >
+          <i className={`fa fa-fw ${layoutIcon}`} />
+        </button>
+      </div>
     );
   };
 
@@ -55,57 +57,71 @@ const Header = ({ editable, update, visible, layout, lane, board }) => {
     }
 
     return (
-      <button
-        className="btn btn-sm text-white"
-        onClick={e => {
-          lane(board.id, 'Lane');
-        }}
-      >
-        <i className="fa fa-fw fa-file" />
-      </button>
+      <div className="input-group-append">
+        <button
+          className="btn btn-success btn-sm"
+          onClick={(e) => {
+            lane(board.id, 'Lane');
+          }}
+        >
+          <i className="fa fa-fw fa-file" />
+        </button>
+      </div>
+    );
+  };
+
+  const expandButton = () => {
+    const icon = isExpanded ? 'fa-compress' : 'fa-expand';
+    const title = isExpanded ? 'Scroll' : 'Expand';
+
+    return (
+      <div className="input-group-append">
+        <button
+          title={title}
+          className="btn btn-success btn-sm"
+          onClick={() => expandCards(!isExpanded)}
+        >
+          <i className={`fa fa-fw ${icon}`} />
+        </button>
+      </div>
     );
   };
 
   return (
-    <nav className="navbar bg-dark navbar-dark fixed-top"
-    style={{ visibility: visible ? 'visible' : 'hidden' }}>
+    <nav
+      className="navbar bg-dark navbar-dark fixed-top"
+      style={{ visibility: visible ? 'visible' : 'hidden' }}
+    >
       <div className="container-fluid no-gutters">
-        <div className="col-12 col-sm-12 col-md-6 col-lg-3 ml-auto">
+        <div className="col-12 col-sm-12 col-md-6 col-lg-3 ml-auto mr-auto">
           <form
-            className="input-group ml-auto mr-auto"
-            onSubmit={e => {
+            className="input-group"
+            onSubmit={(e) => {
               e.preventDefault();
             }}
           >
             <div className="input-group">
               <div className="input-group-prepend">
-                <Link to={`${process.env.REACT_APP_CONTEXT_ROOT}/`} className="btn btn-success btn-sm">
+                <Link
+                  to={`${process.env.REACT_APP_CONTEXT_ROOT}/`}
+                  className="btn btn-success btn-sm"
+                >
                   <i className="fa fa-fw fa-home" />
                 </Link>
               </div>
-              <Microphone home={false}/>
+              <Microphone home={false} />
               <input
                 type="search"
                 className="form-control form-control-sm"
                 defaultValue={board ? board.name : ''}
-                ref={node => (input = node)}
+                ref={(node) => (input = node)}
               />
               {updateButton()}
+              {laneButton()}
+              {layoutButton()}
+              {expandButton()}
             </div>
           </form>
-        </div>
-        <div className="mr-auto">
-          {laneButton()}
-          <button className="btn btn-sm text-white">
-            <i className="fa fa-fw fa-filter" />
-          </button>
-          {layoutButton()}
-          <button className="btn btn-sm text-white">
-            <i className="fa fa-fw fa-gear" />
-          </button>
-          <button className="btn btn-sm text-white">
-            <i className="fa fa-fw fa-refresh" />
-          </button>
         </div>
       </div>
     </nav>
@@ -113,17 +129,24 @@ const Header = ({ editable, update, visible, layout, lane, board }) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  let board = state.board && state.activeBoard && state.board.id === state.activeBoard ? state.board : null;
-  let editable = state.auth.isSignedIn && board && board.owner === state.auth.user;
+  let board =
+    state.board && state.activeBoard && state.board.id === state.activeBoard
+      ? state.board
+      : null;
+  let editable =
+    state.auth.isSignedIn && board && board.owner === state.auth.user;
 
   return {
     board,
     editable,
     visible: state.activeBoard != null,
+    isExpanded: state.expand
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { update: renameBoard, layout: layoutBoard, lane: createLane }
-)(Header);
+export default connect(mapStateToProps, {
+  update: renameBoard,
+  layout: layoutBoard,
+  lane: createLane,
+  expandCards: expandCards
+})(Header);

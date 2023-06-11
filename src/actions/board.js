@@ -11,12 +11,18 @@ import {
   DELETE_BOARD,
   RENAME_BOARD,
   SHARE_BOARD,
-  LAYOUT_BOARD
+  LAYOUT_BOARD,
+  EXPAND_CARDS
 } from './types';
 
 export const filterBoards = filter => ({
   type: FILTER_BOARDS,
   filter
+});
+
+export const expandCards = expand => ({
+  type: EXPAND_CARDS,
+  expand
 });
 
 export const fetchBoards = owner => async dispatch => {

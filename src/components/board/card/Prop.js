@@ -9,7 +9,7 @@ export default ({id, _key, value}) => {
   value.id = `${id}_v`;
   var values = {};
   if (Array.isArray(value)){
-    values = value.map((i, idx) => (<Value {...{id: `${value.id}_${idx}`, text:i.text, style:i.style}}/>));
+    values = value.map((i, idx) => (<Value key={`${value.id}_${idx}`} {...{id: `${value.id}_${idx}`, text:i.text, style:i.style}}/>));
   } else {
     values = (<Value {...{id: `${value.id}`, text: value.text, style: value.style}}/>);
   }

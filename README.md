@@ -1,7 +1,7 @@
 ### [Kanban - click to try it out](https://dmibod.github.io/kanban-ui/)
 
 * you can turn microphone on and say 'help me' to get a list of available voice commands
-* in order to create, modify or remove board(s) you must obtain token (guest token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Imd1ZXN0Iiwic3ViIjoiZ3Vlc3QiLCJqdGkiOiJmYmMwNzFlZSIsImF1ZCI6ImFzc2lzdGFudC5kbWl0cnlib2RuYXIuY29tIiwibmJmIjoxNjgyMzY4NTI5LCJleHAiOjE2OTAyMzA5MjksImlhdCI6MTY4MjM2ODUzMCwiaXNzIjoiYXNzaXN0YW50In0.mvVCNFKcfY8CF49c7-DIncYkaBMiK6YASphzh0kLQ8g)
+* in order to create, modify or remove board(s) you must obtain token
 * if you want others to see your board, you can publish it, otherwise it will be visible only for you (when you logged in with token)
 * changes to boards are delivered almost instantly to other viewers
 
